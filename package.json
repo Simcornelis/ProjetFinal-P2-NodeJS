@@ -1,0 +1,33 @@
+{
+  "name": "projetpreparatoire-p2-nodejs",
+  "version": "1.0.0",
+  "description": "\"Projet Final Group P\"",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "mongod": "mongod --dbpath ./data --bind_ip 127.0.0.1 --quiet",
+    "initdb": "node ./utils/initialise_db.js",
+    "keys": "openssl req -x509 -newkey rsa:4096 -keyout utils/cert.key -out utils/csr.key -days 365",
+    "env": "copy .\\utils\\.env.example .env & cp ./utils/.env.example .env & exit 0",
+    "postinstall": "npm run-script env && npm run-script initdb && npm run-script start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Simcornelis/ProjetPreparatoire-P2-NodeJS.git"
+  },
+  "author": "Group P",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Simcornelis/ProjetPreparatoire-P2-NodeJS/issues"
+  },
+  "homepage": "https://github.com/Simcornelis/ProjetPreparatoire-P2-NodeJS#readme",
+  "dependencies": {
+    "consolidate": "^0.16.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "https": "^1.0.0",
+    "mongodb": "^3.6.3"
+  }
+}
