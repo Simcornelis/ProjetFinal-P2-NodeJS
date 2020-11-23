@@ -8,7 +8,6 @@
     "start": "node server.js",
     "mongod": "mongod --dbpath ./data --bind_ip 127.0.0.1 --quiet",
     "initdb": "node ./utils/initialise_db.js",
-    "keys": "openssl req -x509 -newkey rsa:4096 -keyout utils/cert.key -out utils/csr.key -days 365",
     "env": "copy .\\utils\\.env.example .env & cp ./utils/.env.example .env & exit 0",
     "postinstall": "npm run-script env && npm run-script initdb && npm run-script start"
   },
