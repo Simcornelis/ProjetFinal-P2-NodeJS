@@ -1,0 +1,28 @@
+form {
+  display: grid;
+  background: #fff;
+  max-width: 500px;
+  width: 100%;
+}
+
+input[type="submit"] {
+  margin-top: 30px;
+}
+
+h1,
+h3 {
+  padding: 0;
+  margin: 1em 5px 0.5em;
+}
+
+@media screen and (min-width: 600px) {
+  body {
+    background: linear-gradient(120deg, #00c9ff 0%, #92fe9d 100%);
+  }
+
+  form {
+    padding: 50px;
+    box-shadow: var(--s-short);
+    border-radius: 3px;
+  }
+}

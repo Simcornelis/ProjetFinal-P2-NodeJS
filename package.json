@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "nodemon server.js",
     "mongod": "mongod --dbpath ./data --bind_ip 127.0.0.1 --quiet",
     "initdb": "node ./utils/initialise_db.js",
     "env": "copy .\\utils\\.env.example .env & cp ./utils/.env.example .env & exit 0",
@@ -26,7 +26,11 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "hogan": "^1.0.2",
     "https": "^1.0.0",
     "mongodb": "^3.6.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }

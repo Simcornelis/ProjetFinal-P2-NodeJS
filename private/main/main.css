@@ -1,0 +1,30 @@
+.account {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  display: grid;
+  gap: 15px;
+}
+
+.menu {
+  display: grid;
+  background: #fff;
+  max-width: 500px;
+  width: 100%;
+  gap: 15px;
+}
+
+.menu > h1 {
+  text-align: center;
+}
+
+@media screen and (min-width: 600px) {
+  body {
+    background: linear-gradient(120deg, #00c9ff 0%, #92fe9d 100%);
+  }
+  .menu {
+    padding: 50px;
+    box-shadow: var(--s-short);
+    border-radius: 3px;
+  }
+}
