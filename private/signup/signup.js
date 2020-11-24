@@ -1,11 +1,14 @@
 function checkPasswordConfirmation() {
-  const password = document.getElementById("pass");
-  const confpassword = document.getElementById("cpass");
+  let password = document.getElementById("pass");
+  let confpassword = document.getElementById("cpass");
 
   if (password.value != confpassword.value) {
     confpassword.style.backgroundColor = "rgba(230, 0, 0, 0.4)";
     confpassword.setCustomValidity(
-      "Passwords don't match! Please enter the same password."
+      "Password's confirmation don't match! Please enter the same password."
     );
+  } else {
+    confpassword.setCustomValidity("");
+    confpassword.style.backgroundColor = "";
   }
 }
