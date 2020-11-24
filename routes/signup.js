@@ -14,7 +14,7 @@ signupRouter.post("/", (req, res, next) => {
 
   checkPasswordConfirmation(password, passwordConfirmation)
     .then(() => {
-      return verifyEmailInDB(email, usersCollection);
+      return verifyEmailNotUsedYet(email, usersCollection);
     })
     .then(() => {
       return insertUserInDB(email, pseudo, password, usersCollection);
@@ -40,7 +40,7 @@ function checkPasswordConfirmation(password, passwordConfirmation) {
   });
 }
 
-function verifyEmailInDB(email, collection) {
+function verifyEmailNotUsedYet(email, collection) {
   return new Promise((resolve, reject) => {
     collection.findOne({ email: email }).then((found) => {
       if (found) {
