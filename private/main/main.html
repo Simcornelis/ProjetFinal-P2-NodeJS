@@ -11,8 +11,19 @@
 
 <body class="center-content">
   <div class="account">
-    <button id="signup" onclick="window.location.href = '../signup/signup.html'">sign up</button>
+    <button id="signup" onclick="window.location.href = '../signup/'">sign up</button>
     <button id="signin" onclick="window.location.href = '../signin/signin.html'">sign in</button>
+
+    <!-- TEMPORAIRE !-->
+    <div id="profile">
+      {{#pseudo}}
+      Pseudo : {{pseudo}} <br>
+      Email : {{email}} <br>
+      <button id="logout" onclick="window.location.href = '../logout'">log out</button>
+      {{/pseudo}}
+    </div>
+    <!-- TEMPORAIRE !-->
+
   </div>
 
   <div class="menu">

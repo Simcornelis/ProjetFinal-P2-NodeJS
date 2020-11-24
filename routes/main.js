@@ -10,10 +10,18 @@ mainRouter.get("/", renderMain);
 function renderMain(req, res) {
   res.status(200).render("main.html", {
     ppic: profilePicture(req),
-    name: req.session.name,
+    pseudo: req.session.pseudo,
+    email: req.session.email,
     id: req.session.id,
   });
 }
+
+mainRouter.get("/logout", (req, res, next) => {
+  req.session.destroy((error) => {
+    if (error) return console.error("[LOG]", error);
+    res.redirect("/");
+  });
+});
 
 /**
  * Determines wich profile picture should be rendered.

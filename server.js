@@ -65,7 +65,7 @@ app.use(
 
 app.use("/global.css", express.static("./private/global.css"));
 
-app.use(express.static("private/main"));
+app.use("/", express.static("private/main"));
 app.use("/signin", express.static("private/signin"));
 app.use("/signup", express.static("private/signup"));
 
