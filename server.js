@@ -21,7 +21,7 @@ const cred = {
   passphrase: process.env.CERT_PASS,
 };
 
-https
+module.exports.server = https
   .createServer(cred, app)
   .listen(process.env.PORT, process.env.HOST, initServer);
 
@@ -44,7 +44,12 @@ function initServer() {
   });
 }
 
-app.set("views", ["private/main", "private/signin", "private/signup"]);
+app.set("views", [
+  "private/main",
+  "private/signin",
+  "private/signup",
+  "private/party",
+]);
 
 app.engine("html", consolidate.hogan);
 
@@ -68,10 +73,12 @@ app.use("/global.css", express.static("./private/global.css"));
 app.use("/", express.static("private/main"));
 app.use("/signin", express.static("private/signin"));
 app.use("/signup", express.static("private/signup"));
+app.use("/party", express.static("private/party"));
 
 app.use(require("./routes/main.js").mainRouter);
 app.use("/signin", require("./routes/signin.js").signinRouter);
 app.use("/signup", require("./routes/signup.js").signupRouter);
+app.use("/party", require("./routes/party.js").partyRouter);
 
 // handle 404 not found error
 app.use(function (req, res) {
