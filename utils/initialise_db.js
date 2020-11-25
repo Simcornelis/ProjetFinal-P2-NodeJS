@@ -49,9 +49,10 @@ function createMiniGamesCollection() {
   return minigamesCollection.createIndex(
     {
       _id: "text",
+      creatorPseudo: "text",
+      creatorID: "text",
       consign: "text",
       description: "text",
-      creator_pseudo: "text",
       categories: "text",
     },
     { default_language: "english" }

@@ -48,6 +48,9 @@ app.set("views", [
   "private/main",
   "private/signin",
   "private/signup",
+  "private/games/gamedata",
+  "private/games/allgames",
+  "private/games/addgame",
   "private/party",
 ]);
 
@@ -73,11 +76,13 @@ app.use("/global.css", express.static("./private/global.css"));
 app.use("/", express.static("private/main"));
 app.use("/signin", express.static("private/signin"));
 app.use("/signup", express.static("private/signup"));
+app.use("/games", express.static("private/games"));
 app.use("/party", express.static("private/party"));
 
 app.use(require("./routes/main.js").mainRouter);
 app.use("/signin", require("./routes/signin.js").signinRouter);
 app.use("/signup", require("./routes/signup.js").signupRouter);
+app.use("/games", require("./routes/games.js").gamesRouter);
 app.use("/party", require("./routes/party.js").partyRouter);
 
 // handle 404 not found error
