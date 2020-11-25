@@ -6,11 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../global.css">
   <link rel="stylesheet" href="party.css">
+
+  <script>
+    const room = "{{ room }}";
+    let username = "{{ pseudo }}" || prompt("What is your username?");
+  </script>
+
   <title>Party</title>
 </head>
 
 <body class="center-content">
   <h1>Let's party!</h1>
+  <button {{^isAdmin}}hidden{{/isAdmin}} id="next-game">Next game</button>
 
   <div id="players-list"></div>
 
