@@ -1,0 +1,43 @@
+textarea {
+  resize: none;
+  margin: 0px 5px;
+  grid-column: 1/4;
+}
+
+.game-details {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: #fff;
+  max-width: 500px;
+  width: 100%;
+  gap: 5px;
+}
+
+h1,
+h3 {
+  padding: 0;
+  margin: 1em 5px 0.5em;
+  grid-column: 1/4;
+}
+
+input[type="submit"] {
+  grid-column: 1/4;
+}
+
+#return {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+
+@media screen and (min-width: 600px) {
+  body {
+    background: linear-gradient(120deg, #00c9ff 0%, #92fe9d 100%);
+  }
+  .game-details {
+    top: 100px;
+    padding: 30px 50px;
+    box-shadow: var(--s-normal);
+    border-radius: 3px;
+  }
+}
