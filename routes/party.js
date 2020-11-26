@@ -47,7 +47,6 @@ io.on("connection", (socket) => {
       if (roomIsEmpty(room)) return delete rooms[room];
       updateAdmin(room, socket.id);
       socket.to(room).emit("all-players", Object.values(rooms[room].players));
-      io.to(getAdmin(room)).emit("you-are-now-admin");
     });
   });
 });
@@ -72,6 +71,7 @@ function updateAdmin(room, oldPlayer) {
   const newAdmin = Object.keys(rooms[room].players)[0];
   rooms[room].admin = {};
   rooms[room].admin[newAdmin] = rooms[room].players[newAdmin];
+  io.to(getAdmin(room)).emit("you-are-now-admin");
 }
 
 module.exports = {

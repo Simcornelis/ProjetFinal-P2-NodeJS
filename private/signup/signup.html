@@ -12,12 +12,16 @@
 </head>
 
 <body class="center-content">
-  <form action="/signup"  method="POST">
+  <form action="/signup" method="POST">
+    {{#error}}
+    <h3 style="color: crimson;">{{error}}</h3>
+    {{/error}}
+
     <h1>Sign up</h1>
     <h3>Email</h3>
-    <input type="text" name="email" id="email">
+    <input type="text" name="email" id="email" value="{{email}}">
     <h3>Pseudo</h3>
-    <input type="text" name="pseudo" id="pseudo">
+    <input type="text" name="pseudo" id="pseudo" value="{{pseudo}}">
     <h3>Password</h3>
     <input type="password" name="pass" id="pass">
     <h3>Password confirmation</h3>
