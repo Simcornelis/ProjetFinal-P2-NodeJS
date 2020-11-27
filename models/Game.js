@@ -1,3 +1,5 @@
+const { ObjectId } = require("mongodb");
+
 class Game {
   _id;
   creatorPseudo;
@@ -7,7 +9,7 @@ class Game {
   categories;
 
   /**
-   * @param {number} _id
+   * @param {ObjectId} _id
    * @param {String} creatorPseudo
    * @param {number} creatorID
    * @param {String} consign

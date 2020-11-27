@@ -1,4 +1,5 @@
-const { server } = require("../server.js");
+const { Party } = require("../models/Party");
+const { server } = require("../server");
 const { Router } = require("express");
 const socketIO = require("socket.io");
 const fs = require("fs");
@@ -6,72 +7,106 @@ const fs = require("fs");
 const partyRouter = new Router();
 const io = socketIO(server);
 
-// TODO implem database interactions
-const rooms = {};
-
-partyRouter.get("/:room?", (req, res, next) => {
-  if (!req.params.room) return res.redirect("/");
-  req.session.isAdmin = rooms[req.params.room] === undefined;
+partyRouter.get("/:partyCode?", (req, res, next) => {
+  if (!req.params.partyCode) return res.redirect("/");
   res.render("party.html", {
-    room: req.params.room,
-    isAdmin: req.session.isAdmin,
+    partyCode: req.params.partyCode,
     pseudo: req.session.pseudo,
   });
 });
 
 io.on("connection", (socket) => {
-  socket.on("new-user", (room, username) => {
-    if (!room || !username) return;
-    if (!rooms[room]) {
-      rooms[room] = { admin: {}, players: {} };
-      rooms[room].admin[socket.id] = username;
-    }
-    socket.join(room);
-    rooms[room].players[socket.id] = username;
-    io.to(room).emit("all-players", Object.values(rooms[room].players));
+  const { partiesCollection } = require("../server.js");
+  socket.on("new-user", (partyCode, username) => {
+    if (!partyCode || !username) return;
+
+    partiesCollection
+      .findOne({ partyCode: partyCode })
+      .then((found) => {
+        if (found) return Object.assign(new Party(), found);
+        else return new Party(partyCode);
+      })
+      .then((party) => {
+        party.connect(socket.id, username, "LesBG"); // TODO change ID
+        socket.join(partyCode);
+        io.to(party.getAdmin().socketID).emit("you-are-now-admin");
+        io.to(partyCode).emit("all-players", party.getPlayers());
+        return party;
+      })
+      .then((party) => updatePartyDB(party))
+      .catch((error) => {
+        console.error("[ERROR] " + error.stack);
+      });
   });
 
-  socket.on("next-game", (room) => {
-    if (getAdmin(room) != socket.id) return socket.emit("you-are-not-admin");
-    console.log("[ROOMS] " + room + ": next game.");
-    io.to(room).emit("message", "Next game started.");
-    fs.readFile("./private/party/game.xml", (error, fileContent) => {
-      if (error) console.error("[ERROR] " + error);
-      io.to(room).emit("game", fileContent.toString());
-    });
+  socket.on("next-game", (partyCode) => {
+    if (!partyCode) return;
+
+    getPartyDB(partyCode)
+      .then((party) => {
+        if (party.getAdmin().socketID !== socket.id) {
+          socket.emit("you-are-not-admin");
+          throw new Error("You are not admin.");
+        }
+
+        console.log("[PARTY] (" + partyCode + ") next game.");
+        io.to(partyCode).emit("message", "Next game started.");
+        fs.readFile("./private/party/game.xml", (error, fileContent) => {
+          if (error) throw new Error("Couldn't get next game.");
+          io.to(partyCode).emit("game", fileContent.toString());
+        });
+      })
+      .catch((error) => {
+        console.error("[ERROR] " + error.stack);
+        socket.emit("message", error.message);
+      });
   });
 
   socket.on("disconnect", () => {
-    findUserRooms(socket).forEach((room) => {
-      delete rooms[room].players[socket.id];
-      if (roomIsEmpty(room)) return delete rooms[room];
-      updateAdmin(room, socket.id);
-      socket.to(room).emit("all-players", Object.values(rooms[room].players));
-    });
+    getUserPartiesDB(socket.id)
+      .map((party) => Object.assign(new Party(), party))
+      .forEach((party) => {
+        party.disconnect(socket.id);
+        if (party.isEmpty()) return removePartyDB(party);
+        io.to(party.getAdmin().socketID).emit("you-are-now-admin");
+        io.to(party.partyCode).emit("all-players", party.getPlayers());
+        updatePartyDB(party);
+      });
   });
 });
 
-function findUserRooms(socket) {
-  return Object.entries(rooms).reduce((players, [player, room]) => {
-    if (room.players[socket.id]) players.push(player);
-    return players;
-  }, []);
+function updatePartyDB(party) {
+  const { partiesCollection } = require("../server.js");
+  partiesCollection
+    .replaceOne({ partyCode: party.partyCode }, party, {
+      upsert: true, // if not found, inserts a new document
+    })
+    .catch((error) => console.error("[ERROR] " + error.stack));
 }
 
-function roomIsEmpty(room) {
-  return Object.values(rooms[room].players).length === 0;
+function getPartyDB(partyCode) {
+  const { partiesCollection } = require("../server.js");
+  return partiesCollection
+    .findOne({ partyCode: partyCode })
+    .then((party) => {
+      if (!party) throw new Error("Party not found.");
+      return party;
+    })
+    .then((party) => Object.assign(new Party(), party));
 }
 
-function getAdmin(room) {
-  return Object.keys(rooms[room].admin)[0];
+function getUserPartiesDB(socket) {
+  const { partiesCollection } = require("../server.js");
+  return partiesCollection.find({
+    players: { $elemMatch: { socketID: socket } },
+  });
 }
 
-function updateAdmin(room, oldPlayer) {
-  if (getAdmin(room) !== oldPlayer) return;
-  const newAdmin = Object.keys(rooms[room].players)[0];
-  rooms[room].admin = {};
-  rooms[room].admin[newAdmin] = rooms[room].players[newAdmin];
-  io.to(getAdmin(room)).emit("you-are-now-admin");
+function removePartyDB(party) {
+  const { partiesCollection } = require("../server.js");
+  partiesCollection
+    .deleteOne({ partyCode: party.partyCode })
+    .catch((error) => console.error("[ERROR] " + error.stack));
 }
 
 module.exports = {

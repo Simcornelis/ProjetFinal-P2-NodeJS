@@ -7,10 +7,10 @@ const nextGameButton = document.getElementById("next-game");
 
 nextGameButton.onclick = askServerForNextGame;
 
-socket.emit("new-user", room, username);
+socket.emit("new-user", partyCode, username);
 
 function askServerForNextGame() {
-  socket.emit("next-game", room);
+  socket.emit("next-game", partyCode);
 }
 
 socket.on("game", (html) => {
@@ -33,7 +33,6 @@ socket.on("you-are-now-admin", () => {
 // TODO transfer admin privileges
 socket.on("you-are-not-admin", () => {
   nextGameButton.hidden = true;
-  alert("You are not admin.");
 });
 
 function addUser(username) {

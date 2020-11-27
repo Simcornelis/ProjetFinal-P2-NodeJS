@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="party.css">
 
   <script>
-    const room = "{{ room }}";
+    const partyCode = "{{ partyCode }}";
     let username = "{{ pseudo }}" || prompt("What is your username?");
   </script>
 
@@ -17,7 +17,7 @@
 
 <body class="center-content">
   <h1>Let's party!</h1>
-  <button {{^isAdmin}}hidden{{/isAdmin}} id="next-game">Next game</button>
+  <button hidden id="next-game">Next game</button>
 
   <div id="players-list"></div>
 
