@@ -12,12 +12,13 @@ partyRouter.get("/:partyCode?", (req, res, next) => {
   res.render("party.html", {
     partyCode: req.params.partyCode,
     pseudo: req.session.pseudo,
+    userID: req.session.userID,
   });
 });
 
 io.on("connection", (socket) => {
   const { partiesCollection } = require("../server.js");
-  socket.on("new-user", (partyCode, username) => {
+  socket.on("new-user", (partyCode, username, userID, team) => {
     if (!partyCode || !username) return;
 
     partiesCollection
@@ -27,16 +28,19 @@ io.on("connection", (socket) => {
         else return new Party(partyCode);
       })
       .then((party) => {
-        party.connect(socket.id, username, "LesBG"); // TODO change ID
+        if (userID && party.isAlreadyConnected(userID)) {
+          socket.emit("already-connected");
+          throw new Error("User already connected.");
+        }
+        party.connect(socket.id, username, team, userID);
         socket.join(partyCode);
         io.to(party.getAdmin().socketID).emit("you-are-now-admin");
-        io.to(partyCode).emit("all-players", party.getPlayers());
+        io.to(partyCode).emit("players-update", party.getPlayers());
+        console.log(party.getTeams());
         return party;
       })
       .then((party) => updatePartyDB(party))
-      .catch((error) => {
-        console.error("[ERROR] " + error.stack);
-      });
+      .catch((error) => console.error("[ERROR] " + error.stack));
   });
 
   socket.on("next-game", (partyCode) => {
@@ -50,7 +54,7 @@ io.on("connection", (socket) => {
         }
 
         console.log("[PARTY] (" + partyCode + ") next game.");
-        io.to(partyCode).emit("message", "Next game started.");
+        // io.to(partyCode).emit("message", "Next game started.");
         fs.readFile("./private/party/game.xml", (error, fileContent) => {
           if (error) throw new Error("Couldn't get next game.");
           io.to(partyCode).emit("game", fileContent.toString());
@@ -69,7 +73,7 @@ io.on("connection", (socket) => {
         party.disconnect(socket.id);
         if (party.isEmpty()) return removePartyDB(party);
         io.to(party.getAdmin().socketID).emit("you-are-now-admin");
-        io.to(party.partyCode).emit("all-players", party.getPlayers());
+        io.to(party.partyCode).emit("players-update", party.getPlayers());
         updatePartyDB(party);
       });
   });

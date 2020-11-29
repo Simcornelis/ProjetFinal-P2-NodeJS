@@ -1,4 +1,10 @@
 #players-list {
+  display: flex;
+  gap: 30px;
+}
+
+#players-list > div {
   border: 1px solid;
-  padding: 50px 90px;
+  padding: 30px;
+  display: grid;
 }

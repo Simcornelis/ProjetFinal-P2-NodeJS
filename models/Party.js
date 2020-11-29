@@ -1,6 +1,7 @@
 class Party {
-  _id;
   partyCode;
+  level;
+  playlistID;
   players;
 
   /**
@@ -9,19 +10,13 @@ class Party {
    */
   constructor(partyCode, players) {
     this.partyCode = partyCode; // TODO "|| randomCode()"
+    this.level = 0;
+    this.playlistID = ""; // TODO link playlists
     this.players = players || [];
   }
 
   connect(socketID, pseudo, team, userID) {
-    const index = this.players.findIndex((player) => {
-      return player.userID === userID;
-    });
-
-    if (index >= 0) {
-      let player = Object.assign(new Player(), this.players[index]);
-      player.updatePlayerData(socketID, pseudo, team);
-      this.players[index] = player;
-    } else this.players.push(new Player(socketID, pseudo, team, userID));
+    return this.players.push(new Player(socketID, pseudo, team, userID));
   }
 
   disconnect(socketID) {
@@ -41,27 +36,40 @@ class Party {
     });
   }
 
+  isAlreadyConnected(userID) {
+    return this.players.some((player) => player.userID === userID);
+  }
+
   getAdmin() {
-    return this.players[0];
+    return this.getOnlinePlayers()[0];
   }
 
   getOnlinePlayers() {
     return this.players.filter((player) => player.online);
   }
 
+  getTeams() {
+    return this.getOnlinePlayers().reduce((teams, player) => {
+      if (!teams[player.team]) teams[player.team] = [];
+      teams[player.team].push(player);
+      return teams;
+    }, {});
+  }
+
   getPlayers() {
-    return this.getOnlinePlayers()
-      .map((player) => Object.assign(new Player(), player))
-      .map((player) => {
-        let username = player.pseudo;
-        if (player.isRegistered()) username += " 🟢";
-        if (player.socketID === this.getAdmin().socketID) username += " 👑";
-        return username;
-      });
+    const teams = {};
+    this.getOnlinePlayers().forEach((player) => {
+      let username = player.pseudo;
+      if (player.userID) username += " 🟢";
+      if (player.socketID === this.getAdmin().socketID) username += " 👑";
+      if (!teams[player.team]) teams[player.team] = [];
+      teams[player.team].push(username);
+    });
+    return teams;
   }
 
   isEmpty() {
-    return this.players.length === 0;
+    return this.getOnlinePlayers().length === 0;
   }
 }
 
@@ -85,17 +93,6 @@ class Player {
     this.team = team;
     this.userID = userID;
   }
-
-  isRegistered() {
-    return this.userID;
-  }
-
-  updatePlayerData(socketID, pseudo, team) {
-    this.socketID = socketID;
-    this.pseudo = pseudo;
-    this.online = true;
-    this.team = team;
-  }
 }
 
-module.exports = { Party, Player };
+module.exports = { Party };
