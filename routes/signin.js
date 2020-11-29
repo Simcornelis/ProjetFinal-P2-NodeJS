@@ -51,6 +51,10 @@ function setUserSession(req, user) {
   req.session.cookie.maxAge = 3600000 * 48; // 2 days // TODO stayLogged
 }
 
+function verifyIfConnected(req) {
+	return Boolean(req.session);
+}
+
 module.exports = {
   signinRouter,
 };

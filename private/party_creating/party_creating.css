@@ -1,0 +1,61 @@
+h1 {
+	text-align: center;
+}
+
+.pseudo {
+	margin: auto;
+	width: fit-content;
+}
+
+main {
+	display: grid;
+	grid-auto-flow: column;
+}
+
+.title {
+	display: grid;
+	background: #fff;
+	max-width: 500px;
+	
+	
+}
+
+section {
+	border: solid 1px gray;
+	border-radius: 10px;
+	margin: 10px;
+	display: grid;
+}
+
+section h2 {
+	background-color: var(--c-accent);
+	border-top-right-radius: 10px;
+	border-top-left-radius: 10px;
+	color: white;
+	text-align: center;
+	padding: 10px;
+	margin: 0;
+	font-size: 1.25em;
+	max-height: 24px;
+}
+
+section ul {
+	list-style: none;
+	padding: 20px;
+}
+
+.buttons {
+	margin: 20px;
+	text-align: center;
+}
+
+@media screen and (min-width: 600px) {
+	body {
+	  background: linear-gradient(120deg, #00c9ff 0%, #92fe9d 100%);
+	}
+	.title {
+	  padding: 50px;
+	  box-shadow: var(--s-short);
+	  border-radius: 3px;
+	}
+  }

@@ -33,12 +33,13 @@ signupRouter.post("/", (req, res, next) => {
 });
 
 function verifyEmailNotUsedYet(email, collection) {
-  return new Promise((resolve, reject) => {
-    collection.findOne({ email: email }).then((found) => {
-      if (found) reject(new Error("This email is already registered."));
-      else resolve();
-    });
-  });
+	return collection
+		.findOne({ email })
+		.then((found) => {
+			if (found) {
+				throw new Error("This email is already used for an other account !");
+			}
+	  	});
 }
 
 function checkPasswordConfirmation(password, passwordConfirmation) {
@@ -47,11 +48,7 @@ function checkPasswordConfirmation(password, passwordConfirmation) {
 }
 
 function insertUserInDB(email, pseudo, password, collection) {
-  return collection.insertOne({
-    email: email,
-    pseudo: pseudo,
-    password: password,
-  }).insertedId;
+  return collection.insertOne({ email, pseudo, password}).insertedId;
 }
 
 function setUserSession(req, pseudo, email, userID) {

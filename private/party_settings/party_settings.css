@@ -1,0 +1,44 @@
+.title {
+	display: grid;
+	background: #fff;
+	max-width: 500px;
+	width: 100%;
+}
+h1 {
+	text-align: center;
+}
+
+section {
+	margin: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	width: fit-content;
+}
+
+section.outline {
+	border: solid #91919180 1px;
+	padding: 10px;
+}
+
+section ul,
+select {
+	list-style: none;
+	padding: 0;
+	text-align: center;
+}
+
+button {
+	padding-right: 18px;
+	padding-left: 18px;
+}
+
+@media screen and (min-width: 600px) {
+	body {
+	  background: linear-gradient(120deg, #00c9ff 0%, #92fe9d 100%);
+	}
+	.title {
+	  padding: 50px;
+	  box-shadow: var(--s-short);
+	  border-radius: 3px;
+	}
+  }
