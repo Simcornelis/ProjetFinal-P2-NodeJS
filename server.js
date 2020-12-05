@@ -48,16 +48,6 @@ function initServer() {
   });
 }
 
-app.set("views", [
-  "private/main",
-  "private/signin",
-  "private/signup",
-  "private/games/gamedata",
-  "private/games/allgames",
-  "private/games/addgame",
-  "private/party",
-]);
-
 app.engine("html", consolidate.hogan);
 
 app.use(express.json());
@@ -75,13 +65,8 @@ app.use(
   })
 );
 
-app.use("/global.css", express.static("./private/global.css"));
-
-app.use("/", express.static("private/main"));
-app.use("/signin", express.static("private/signin"));
-app.use("/signup", express.static("private/signup"));
-app.use("/games", express.static("private/games"));
-app.use("/party", express.static("private/party"));
+app.set("views", "private");
+app.use(express.static("static"));
 
 app.use(require("./routes/main.js").mainRouter);
 app.use("/signin", require("./routes/signin.js").signinRouter);

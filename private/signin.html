@@ -6,45 +6,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
-  <link rel="stylesheet" href="../global.css">
-  <link rel="stylesheet" href="signup.css">
-  <title>Sign up</title>
+  <link rel="stylesheet" href="/global.css">
+  <link rel="stylesheet" href="/css/signin.css">
 
-  <script defer src="signup.js"></script>
+  <title>Sign in</title>
 </head>
 
 <body class="center-content">
   <header></header>
 
   <main class="center-content">
-    <form action="/signup" method="POST">
+    <form action="/signin" method="POST">
       {{#error}}
       <h3 style="color: crimson;">{{error}}</h3>
       {{/error}}
 
-      <h1>Sign up</h1>
+      <h1>Sign in</h1>
 
       <h3>Email</h3>
       <input type="text" name="email" id="email" value="{{email}}">
 
-      <h3>Pseudo</h3>
-      <input type="text" name="pseudo" id="pseudo" value="{{pseudo}}">
-
       <h3>Password</h3>
       <input type="password" name="pass" id="pass">
-
-      <h3>Password confirmation</h3>
-      <input type="password" name="cpass" id="cpass">
 
       <div class="oneline">
         <input type="checkbox" name="stay-logged-in" id="staylogged">
         <label for="staylogged">Stay logged in (you accept cookies)</label>
       </div>
 
-      <input type="submit" onclick="return checkPasswordConfirmation()" value="Sign up">
+      <input type="submit" value="Sign in">
     </form>
 
-    <p>Already have an account? <a href="/signin">Sign in instead.</a></p>
+    <p>Don't have an account yet? <a href="/signup">Sign up instead.</a></p>
   </main>
 
   <footer></footer>
