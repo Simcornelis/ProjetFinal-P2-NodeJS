@@ -1,27 +1,37 @@
-textarea {
-  resize: none;
-  margin: 0px 5px;
-  grid-column: 1/4;
-}
-
-.game-details {
+form {
   display: grid;
-  grid-template-columns: auto auto auto;
-  background-color: #fff;
   max-width: 500px;
   width: 100%;
-  gap: 5px;
+  color: var(--c-text-inverted);
+}
+
+form > h1 {
+  margin-top: 0;
+}
+
+textarea {
+  padding: 5px;
+  margin: 0px 5px;
+  resize: vertical;
+  background: var(--f-transparent);
+  color: var(--c-text-inverted);
+  font-family: inherit;
+  border: none;
 }
 
 h1,
 h3 {
   padding: 0;
   margin: 1em 5px 0.5em;
-  grid-column: 1/4;
+}
+
+div.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(10rem, 100%), 1fr));
 }
 
 input[type="submit"] {
-  grid-column: 1/4;
+  margin-top: 30px;
 }
 
 #return {
@@ -31,13 +41,10 @@ input[type="submit"] {
 }
 
 @media screen and (min-width: 600px) {
-  body {
-    background: linear-gradient(120deg, #00c9ff 0%, #92fe9d 100%);
-  }
-  .game-details {
-    top: 100px;
-    padding: 30px 50px;
-    box-shadow: var(--s-normal);
+  form {
+    padding: 50px;
+    background: var(--f-transparent-inverted);
+    box-shadow: var(--s-short);
     border-radius: 3px;
   }
 }

@@ -4,36 +4,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
   <link rel="stylesheet" href="../global.css">
   <link rel="stylesheet" href="main.css">
-  <title>Projet - main menu</title>
+  <title>Let's Drink</title>
 </head>
 
-<body class="center-content">
-  <div class="account">
-    <button id="signup" onclick="window.location.href = '../signup'">sign up</button>
-    <button id="signin" onclick="window.location.href = '../signin'">sign in</button>
+<body>
+  <header>
+    <div class="account">
+      <button id="signup" onclick="window.location.href = '../signup'">sign up</button>
+      <button id="signin" onclick="window.location.href = '../signin'">sign in</button>
 
-    <!-- TEMPORAIRE !-->
-    <div id="profile">
-      {{#pseudo}}
-      Pseudo : {{pseudo}} <br>
-      Email : {{email}} <br>
-      <button id="logout" onclick="window.location.href = '../logout'">log out</button>
-      {{/pseudo}}
+      <!-- TEMPORAIRE !-->
+      <div id="profile">
+        {{#pseudo}}
+        Pseudo : {{pseudo}} <br>
+        Email : {{email}} <br>
+        <button id="logout" onclick="window.location.href = '../logout'">log out</button>
+        {{/pseudo}}
+      </div>
+      <!-- TEMPORAIRE !-->
+
     </div>
-    <!-- TEMPORAIRE !-->
+  </header>
 
-  </div>
+  <main class="center-content">
+    <div class="menu">
+      <h1>Let's drink</h1>
+      <button>Continue party</button>
+      <button>Host a party</button>
+      <button>Join a party</button>
+      <button id="creategame" onclick="window.location.href = '/games/addgame'">Create a game</button>
+      <button id="allgames" onclick="window.location.href = '/games/allgames'">See all games</button>
+    </div>
+  </main>
+  <footer>
 
-  <div class="menu">
-    <h1>Let's drink</h1>
-    <button>Continue party</button>
-    <button>Host a party</button>
-    <button>Join a party</button>
-    <button id="creategame" onclick="window.location.href = '/games/addgame'">Create a game</button>
-    <button id="allgames" onclick="window.location.href = '/games/allgames'">See all games</button>
-  </div>
+  </footer>
 </body>
 
 </html>

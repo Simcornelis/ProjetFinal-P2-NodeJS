@@ -2,58 +2,65 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../global.css">
-    <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="party_settings.css">
-    <title>Projet - main menu</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../global.css">
+	<link rel="stylesheet" href="main.css">
+	<link rel="stylesheet" href="party_settings.css">
+	<title>Projet - main menu</title>
 </head>
 
-<body class="center-content">
-    <div class="title">
-		<form method="POST" action="/party_settings">
-			<h1 class="party_title">Party Settings</h1>
-			<section class="outline">
-				<div class="code">
-					<span class="highlight">Code</span>
-					<input disabled value="ABCD"></input>
-				</div>
-			</section>
-			<section class="outline">
-				<span class="highlight"># de groupes</span>
-				<input name="groupsCount" value="0" type="number" min="1" max="10" step="1" readonly>
-				<button form="">+</button>
-				<button form="">-</button>
-			</section>
-			<section class="outline">
-				<span class="highlight">My Games Playlists</span>
-				<input type="text" placeholder="Search">
-				<select>
-					<option>Soirée Halloween entre potes</option>
-					<option>Kot à projet jeudi soir</option>
-					<option>Scouts 13/10/2020 activité</option>
-				</select>
-			</section>
-			<section>Or...</section>
-			<section class="outline">
-				<span class="highlight">Create a new playlist</span>
-				<select multiple>
-					<option>Dynamique</option>
-					<option>Questions existentielles</option>
-					<option>Pour les jeunes</option>
-				</select>
-			</section>
-			<section class="outline">
-				<span class="highlight"># de mini-jeux</span>
-				<input name="gamesCount" value="0" type="number" min="1" max="25" step="1" readonly>
-				<button form="">+</button>
-				<button form="">-</button>
-			</section>
-			<section>
-				<input type="submit">Save settings</button>
-			</section>
-		</form>
-    </div>
+<body>
+	<header></header>
+
+	<main class="center-content">
+		<div class="title">
+			<form method="POST" action="/party_settings">
+				<h1 class="party_title">Party Settings</h1>
+				<section class="outline">
+					<div class="code">
+						<span class="highlight">Code</span>
+						<input disabled value="ABCD"></input>
+					</div>
+				</section>
+				<section class="outline">
+					<span class="highlight"># de groupes</span>
+					<input name="groupsCount" value="0" type="number" min="1" max="10" step="1" readonly>
+					<button form="">+</button>
+					<button form="">-</button>
+				</section>
+				<section class="outline">
+					<span class="highlight">My Games Playlists</span>
+					<input type="text" placeholder="Search">
+					<select>
+						<option>Soirée Halloween entre potes</option>
+						<option>Kot à projet jeudi soir</option>
+						<option>Scouts 13/10/2020 activité</option>
+					</select>
+				</section>
+				<section>Or...</section>
+				<section class="outline">
+					<span class="highlight">Create a new playlist</span>
+					<select multiple>
+						<option>Dynamique</option>
+						<option>Questions existentielles</option>
+						<option>Pour les jeunes</option>
+					</select>
+				</section>
+				<section class="outline">
+					<span class="highlight"># de mini-jeux</span>
+					<input name="gamesCount" value="0" type="number" min="1" max="25" step="1" readonly>
+					<button form="">+</button>
+					<button form="">-</button>
+				</section>
+				<section>
+					<input type="submit">Save settings</button>
+				</section>
+			</form>
+		</div>
+	</main>
+
+	<footer></footer>
 </body>
+
 </html>

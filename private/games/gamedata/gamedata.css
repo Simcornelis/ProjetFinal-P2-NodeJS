@@ -7,11 +7,11 @@
 .game-window {
   display: grid;
   grid-template-columns: auto auto auto auto;
-  background-color: #fff;
   max-width: 500px;
   width: 100%;
   gap: 5px;
   padding: 10px;
+  color: var(--c-text-inverted);
 }
 
 .game-window > div {
@@ -27,7 +27,7 @@
   border-radius: 5px 5px 0 0px;
   min-height: 250px;
   grid-column: 1 / 5;
-  background: linear-gradient(120deg, gold, red);
+  background: linear-gradient(120deg, #fff1, #fff3);
 }
 
 #game-consign > p {
@@ -72,12 +72,10 @@
 }
 
 @media screen and (min-width: 600px) {
-  body {
-    background: linear-gradient(120deg, #00c9ff 0%, #92fe9d 100%);
-  }
   .game-window {
     padding: 50px;
-    box-shadow: var(--s-normal);
+    background: var(--f-transparent-inverted);
+    box-shadow: var(--s-short);
     border-radius: 3px;
   }
 }

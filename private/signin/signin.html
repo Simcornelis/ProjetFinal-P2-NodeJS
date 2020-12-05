@@ -4,24 +4,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
   <link rel="stylesheet" href="../global.css">
   <link rel="stylesheet" href="signin.css">
-  <title>Projet - sign in</title>
+  <title>Sign in</title>
 </head>
 
 <body class="center-content">
-  <form action="/signin" method="POST">
-    {{#error}}
-    <h3 style="color: crimson;">{{error}}</h3>
-    {{/error}}
+  <header></header>
 
-    <h1>Sign in</h1>
-    <h3>Email</h3>
-    <input type="text" name="email" id="email" value="{{email}}">
-    <h3>Password</h3>
-    <input type="password" name="pass" id="pass">
-    <input type="submit" value="Sign in">
-  </form>
+  <main class="center-content">
+    <form action="/signin" method="POST">
+      {{#error}}
+      <h3 style="color: crimson;">{{error}}</h3>
+      {{/error}}
+
+      <h1>Sign in</h1>
+
+      <h3>Email</h3>
+      <input type="text" name="email" id="email" value="{{email}}">
+
+      <h3>Password</h3>
+      <input type="password" name="pass" id="pass">
+
+      <div class="oneline">
+        <input type="checkbox" name="stay-logged-in" id="staylogged">
+        <label for="staylogged">Stay logged in (you accept cookies)</label>
+      </div>
+
+      <input type="submit" value="Sign in">
+    </form>
+
+    <p>Don't have an account yet? <a href="/signup">Sign up instead.</a></p>
+  </main>
+
+  <footer></footer>
 </body>
 
 </html>
