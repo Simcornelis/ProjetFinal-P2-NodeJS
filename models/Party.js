@@ -15,8 +15,8 @@ class Party {
     this.players = players || [];
   }
 
-  connect(socketID, pseudo, team, userID) {
-    return this.players.push(new Player(socketID, pseudo, team, userID));
+  connect(socketID, pseudo, userID) {
+    return this.players.push(new Player(socketID, pseudo, this.team(), userID));
   }
 
   disconnect(socketID) {
@@ -31,12 +31,33 @@ class Party {
   }
 
   kick(socketID) {
+    // TODO implement usage
     this.players = this.players.filter((player) => {
       return player.socketID !== socketID;
     });
   }
 
-  isAlreadyConnected(userID) {
+  team() {
+    if (this.isEmpty()) return "Team"; // first team
+    return Object.entries(this.getTeams()).sort(
+      (a, b) => a[1].length - b[1].length
+    )[0][0]; // smallest team
+  }
+
+  teamChange(socketID, newTeam) {
+    const index = this.players.findIndex(
+      (player) => player.socketID === socketID
+    );
+
+    if (index >= 0) this.players[index].team = newTeam;
+    else throw new Error("No player with that socketID.");
+  }
+
+  isSocketUsed(socket) {
+    return this.players.some((player) => player.socketID === socket.id);
+  }
+
+  isUserConnected(userID) {
     return this.players.some((player) => player.userID === userID);
   }
 

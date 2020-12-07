@@ -2,7 +2,7 @@ const { Party } = require("../models/Party");
 const { server } = require("../server");
 const { Router } = require("express");
 const socketIO = require("socket.io");
-const fs = require("fs");
+const consolidate = require("consolidate");
 
 const partyRouter = new Router();
 const io = socketIO(server);
@@ -23,10 +23,10 @@ io.on("connection", (socket) => {
     if (!partyCode || !username) return;
 
     partiesCollection
-      .findOne({ partyCode: partyCode })
+      .findOne({ partyCode })
       .then((found) => assignParty(found, partyCode))
       .then((party) => addPlayerToParty(party, socket, username, userID, team))
-      .then((partyWithPlayer) => updatePartyDB(partyWithPlayer))
+      .then(updatePartyDB)
       .catch((error) => console.error("[ERROR] " + error.stack));
   });
 
@@ -39,6 +39,18 @@ io.on("connection", (socket) => {
         console.error("[ERROR] " + error.stack);
         socket.emit("message", error.message);
       });
+  });
+
+  socket.on("change-team", (partyCode, newTeam) => {
+    if (!partyCode || !newTeam) return;
+    getPartyDB(partyCode)
+      .then((party) => {
+        party.teamChange(socket.id, newTeam);
+        io.to(partyCode).emit("players-update", party.getPlayers());
+        return party;
+      })
+      .then(updatePartyDB)
+      .catch((error) => console.error("[ERROR] " + error.stack));
   });
 
   socket.on("disconnect", () => {
@@ -55,13 +67,13 @@ function assignParty(party, partyCode) {
   else return new Party(partyCode);
 }
 
-function addPlayerToParty(party, socket, username, userID, team) {
-  if (userID && party.isAlreadyConnected(userID)) {
+function addPlayerToParty(party, socket, username, userID) {
+  if (party.isSocketUsed(socket) || (userID && party.isUserConnected(userID))) {
     socket.emit("already-connected");
     throw new Error("User already connected.");
   }
 
-  party.connect(socket.id, username, team, userID);
+  party.connect(socket.id, username, userID);
   socket.join(party.partyCode);
   io.to(party.getAdmin().socketID).emit("you-are-now-admin");
   io.to(party.partyCode).emit("players-update", party.getPlayers());
@@ -77,12 +89,11 @@ function sendNextGame(party, socket) {
     throw new Error("You are not admin.");
   }
 
-  console.log("[PARTY] [" + party.partyCode + "] next game.");
-  // io.to(party.partyCode).emit("message", "Next game started.");
-  fs.readFile("./private/party/game.xml", (error, fileContent) => {
-    if (error) throw new Error("Couldn't get next game.");
-    io.to(party.partyCode).emit("game", fileContent.toString());
-  });
+  console.log("[PARTY:" + party.partyCode + "] next game.");
+  consolidate
+    .hogan("./private/party_settings.xml", { testerio: "Yolo" })
+    .then((html) => io.to(party.partyCode).emit("game", html))
+    .catch(console.error);
 }
 
 function disconnectPlayer(party, socket) {
@@ -107,7 +118,7 @@ function updatePartyDB(party) {
 function getPartyDB(partyCode) {
   const { partiesCollection } = require("../server.js");
   return partiesCollection
-    .findOne({ partyCode: partyCode })
+    .findOne({ partyCode })
     .then((party) => {
       if (!party) throw new Error("Party not found.");
       return party;

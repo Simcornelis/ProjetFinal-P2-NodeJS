@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<div class="title">
+	<h1 class="party_title">Create your party</h1>
+	<div class="pseudo">
+		<span class="highlight">Pseudo</span>
+		<input value="Simon" />
+	</div>
+	<main>
+		<section>
+			<h2>Group 1</h2>
+			<ul>
+				<li>Julien</li>
+				<li>Adrien (admin)</li>
+				<li>Arthur</li>
+			</ul>
+		</section>
+		<section>
+			<h2>Group 2</h2>
+			<ul>
+				<li>Anonymous 2</li>
+				<li>Robert (moi)</li>
+			</ul>
+		</section>
+		<section>
+			<h2>Group 3</h2>
+			<ul>
+				<li>Anonymous 1</li>
+				<li>Pascale</li>
+				<li>Aurore</li>
+			</ul>
+		</section>
+	</main>
+
+	<button>Party Settings</button>
+	<button>Ready !</button>
+</div>

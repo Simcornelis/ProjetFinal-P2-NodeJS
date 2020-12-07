@@ -1,61 +1,98 @@
-const socket = io();
-const players = [];
+window.addEventListener("load", async () => {
+  const socket = io();
+  const players = [];
 
-const body = document.querySelector("body");
-const nextGameButton = document.getElementById("next-game");
-const playerListDiv = document.getElementById("players-list");
+  const main = document.querySelector("body > main");
 
-nextGameButton.onclick = askServerForNextGame;
+  const pseudo = document.querySelector(".pseudo");
+  const usernameInput = document.querySelector(".pseudo>input");
+  const usernameButton = document.querySelector(".pseudo>button");
 
-socket.emit(
-  "new-user",
-  partyCode,
-  username,
-  userID,
-  prompt("What is your team name?", "Auto join") // TODO auto join a team
-);
+  const newTeamButton = document.getElementById("newTeam");
+  const playerListDiv = document.getElementById("players-list");
+  const partySettingsButton = document.getElementById("partySettings");
+  const nextGameButton = document.getElementById("next-game");
 
-function askServerForNextGame() {
-  socket.emit("next-game", partyCode);
-}
+  if (username) submitNewUser();
+  else if (pseudo) {
+    usernameButton.onclick = submitNewUser;
+    usernameInput.addEventListener("keyup", (event) => {
+      // on ENTER key pressed
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        submitNewUser();
+      }
+    });
+  }
 
-socket.on("game", (html) => {
-  body.innerHTML = html;
-});
+  function submitNewUser() {
+    if (!username && !usernameInput.value) return alert("Enter an username.");
+    socket.emit("new-user", partyCode, username || usernameInput.value, userID);
+    if (pseudo) pseudo.remove();
+  }
 
-socket.on("message", (message) => {
-  alert(message);
-});
+  newTeamButton.onclick = () => {
+    const newTeam = prompt("Enter a new team name.");
+    socket.emit("change-team", partyCode, newTeam);
+  };
 
-socket.on("players-update", (teams) => {
-  playerListDiv.innerHTML = "";
-  Object.keys(teams).forEach((team) => {
-    let _team = document.createElement("div");
-    let teamName = document.createElement("h1");
-    teamName.innerText = team;
-    _team.appendChild(teamName);
-    teams[team].forEach((player) => addPlayer(player, _team));
-    playerListDiv.appendChild(_team);
+  nextGameButton.onclick = () => {
+    socket.emit("next-game", partyCode);
+  };
+
+  socket.on("game", (html) => {
+    main.innerHTML = html;
   });
-});
 
-socket.on("you-are-now-admin", () => {
-  nextGameButton.hidden = false;
-});
+  socket.on("message", (message) => {
+    alert(message);
+  });
 
-// TODO transfer admin privileges
-socket.on("you-are-not-admin", () => {
-  nextGameButton.hidden = true;
-});
+  socket.on("players-update", (teams) => {
+    playerListDiv.innerHTML = "";
+    Object.keys(teams).forEach((team) => {
+      let _team = document.createElement("section");
+      let teamName = document.createElement("h2");
+      teamName.innerText = team;
+      _team.appendChild(teamName);
+      let teamPlayers = document.createElement("ul");
+      teams[team].forEach((player) => addPlayer(player, teamPlayers));
+      _team.appendChild(teamPlayers);
+      playerListDiv.appendChild(_team);
+    });
 
-socket.on("already-connected", () => {
-  alert("You already joined this room.");
-  window.location.href = "/";
-});
+    const teamH2s = document.querySelectorAll("#players-list > section > h2");
+    teamH2s.forEach((elem) => {
+      elem.addEventListener("click", () => {
+        socket.emit("change-team", partyCode, elem.textContent);
+      });
+    });
+  });
 
-function addPlayer(player, _team) {
-  players.push(player);
-  let _player = document.createElement("h3");
-  _player.innerText = player;
-  _team.appendChild(_player);
-}
+  socket.on("you-are-now-admin", () => {
+    const adminTools = document.querySelectorAll(".admin");
+    adminTools.forEach((tool) => {
+      tool.hidden = false;
+    });
+  });
+
+  // TODO transfer admin privileges
+  socket.on("you-are-not-admin", () => {
+    const adminTools = document.querySelectorAll(".admin");
+    adminTools.forEach((tool) => {
+      tool.hidden = true;
+    });
+  });
+
+  socket.on("already-connected", () => {
+    alert("You already joined this room.");
+    window.location.href = "/";
+  });
+
+  function addPlayer(player, _team) {
+    players.push(player);
+    let _player = document.createElement("li");
+    _player.innerText = player;
+    _team.appendChild(_player);
+  }
+});
