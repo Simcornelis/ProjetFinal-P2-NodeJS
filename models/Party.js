@@ -15,7 +15,8 @@ class Party {
     this.players = players || [];
   }
 
-  connect(socketID, pseudo, userID) {
+  connect(socketID, pseudo, userID, team) {
+    pseudo = pseudo.replace(/🟢|👑|✋/g, "").trim(); // match all info emojis
     return this.players.push(new Player(socketID, pseudo, this.team(), userID));
   }
 
@@ -37,6 +38,20 @@ class Party {
     });
   }
 
+  /**
+   * @param {socket.io} socketID
+   * @param {boolean} isReady player ready status, if undefined, toggles status
+   */
+  setReadyState(socketID, isReady = undefined) {
+    const index = this.getPlayerIndex(socketID);
+
+    if (index >= 0) {
+      if (isReady === undefined) isReady = !this.players[index].ready;
+      this.players[index].ready = isReady;
+    } else throw new Error("No player with that socketID.");
+    return this;
+  }
+
   team() {
     if (this.isEmpty()) return "Team"; // first team
     return Object.entries(this.getTeams()).sort(
@@ -45,9 +60,7 @@ class Party {
   }
 
   teamChange(socketID, newTeam) {
-    const index = this.players.findIndex(
-      (player) => player.socketID === socketID
-    );
+    const index = this.getPlayerIndex(socketID);
 
     if (index >= 0) this.players[index].team = newTeam;
     else throw new Error("No player with that socketID.");
@@ -65,8 +78,16 @@ class Party {
     return this.getOnlinePlayers()[0];
   }
 
+  getPlayerIndex(socketID) {
+    return this.players.findIndex((player) => player.socketID === socketID);
+  }
+
   getOnlinePlayers() {
     return this.players.filter((player) => player.online);
+  }
+
+  getReadyPlayers() {
+    return this.getOnlinePlayers().filter((player) => player.ready);
   }
 
   getTeams() {
@@ -100,6 +121,7 @@ class Player {
   online;
   team;
   userID;
+  ready;
 
   /**
    * @param {socketId} socketID socket.io module id of the player
@@ -113,6 +135,7 @@ class Player {
     this.online = true;
     this.team = team;
     this.userID = userID;
+    this.ready = false;
   }
 }
 

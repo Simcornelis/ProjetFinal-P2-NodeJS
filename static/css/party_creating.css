@@ -50,3 +50,11 @@ section ul {
     border-radius: 3px;
   }
 }
+
+.green {
+  background: #00800077;
+}
+
+.highlight {
+  background: #fff1;
+}

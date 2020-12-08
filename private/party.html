@@ -13,7 +13,7 @@
 
   <script>
     const partyCode = "{{ partyCode }}";
-    const username = "{{ pseudo }}"; // REMOVE (replaced by pseudo a page before or here)
+    let username = "{{ pseudo }}"; // REMOVE (replaced by pseudo a page before or here)
     const userID = "{{ userID }}"
   </script>
 
@@ -25,24 +25,23 @@
 
   <main class="center-content">
     <div class="title">
-      <h1 class="party_title">Create your party</h1>
+      <h1 class="party_title">Party 🎉 ({{ partyCode }})</h1>
 
       {{^pseudo}}
       <div class="pseudo">
         <span class="highlight">Pseudo</span>
-        <input />
+        <input autofocus />
         <button>Confirm</button>
       </div>
       {{/pseudo}}
 
-      <button id="newTeam">New Team</button>
+      <button hidden class="action" id="newTeam">New Team</button>
       <main id="players-list"></main>
 
       <button hidden class="admin" id="partySettings">Party Settings</button>
-      <button>Ready !</button>
+      <button hidden class="action" id="isReady">Ready!<span></span></button>
+      <button hidden class="admin" id="start">Start</button>
     </div>
-
-    <button hidden class="admin" id="next-game">Next game</button>
   </main>
 
   <footer></footer>
