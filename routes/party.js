@@ -30,11 +30,11 @@ io.on("connection", (socket) => {
       .catch(handleError);
   });
 
-  socket.on("next-game", (partyCode) => {
+  socket.on("next-game", (partyCode, oldGame) => {
     if (!partyCode) return;
 
     getPartyDB(partyCode)
-      .then((party) => sendNextGame(party, socket))
+      .then((party) => sendNextGame(party, socket, oldGame))
       .catch((error) => handleError(error, socket));
   });
 
@@ -61,6 +61,14 @@ io.on("connection", (socket) => {
       .then((party) => party.setReadyState(socket.id, isReady))
       .then(informPlayers)
       .then(updatePartyDB)
+      .catch((error) => handleError(error, socket));
+  });
+
+  socket.on("back-to-party", (partyCode, toClose) => {
+    if (!partyCode) return;
+
+    getPartyDB(partyCode)
+      .then((party) => backToParty(party, socket, toClose))
       .catch((error) => handleError(error, socket));
   });
 
@@ -98,11 +106,20 @@ function changePlayerTeam(party, socket, newTeam) {
 }
 
 function informPlayers(party) {
-  io.to(party.getAdmin().socketID).emit("you-are-now-admin");
+  io.to(party.getAdmin().socketID).emit("you-are-admin");
   io.to(party.partyCode).emit("players-update", sortObject(party.getPlayers()));
   io.to(party.partyCode).emit("ready-players", party.getReadyPlayers());
   console.log(party.getTeams()); // REMOVE
   return party;
+}
+
+function backToParty(party, socket, toClose) {
+  if (party.getAdmin().socketID !== socket.id) {
+    socket.emit("you-are-not-admin");
+    throw new Error("You are not admin.");
+  }
+
+  io.to(party.partyCode).emit("back-to-party", toClose);
 }
 
 function disconnectPlayer(party, socket) {
@@ -114,17 +131,20 @@ function disconnectPlayer(party, socket) {
 
 // --- send html --- //
 
-function sendNextGame(party, socket) {
+function sendNextGame(party, socket, oldGame) {
   if (party.getAdmin().socketID !== socket.id) {
     socket.emit("you-are-not-admin");
     throw new Error("You are not admin.");
   }
 
-  console.log("[PARTY:" + party.partyCode + "] next game.");
+  party.level++;
+  console.log(`[PARTY:${party.partyCode}] Level ${party.level}.`);
   // TODO load game data
   consolidate
-    .hogan("./private/game.xml", {})
-    .then((html) => io.to(party.partyCode).emit("page", html))
+    .hogan("./private/game.xml", { level: party.level })
+    .then((html) => io.to(party.partyCode).emit("game", html, oldGame))
+    .then(() => informPlayers(party))
+    .then(updatePartyDB)
     .catch(handleError);
 }
 
@@ -137,7 +157,7 @@ function sendSettings(party, socket) {
 
   consolidate
     .hogan("./private/party_settings.xml", {})
-    .then((html) => io.to(party.partyCode).emit("settings", html))
+    .then((html) => io.to(socket.id).emit("settings", html))
     .catch(handleError);
 }
 

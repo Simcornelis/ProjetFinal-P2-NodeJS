@@ -7,9 +7,8 @@
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
   <link rel="stylesheet" href="/global.css">
-  <!-- <link rel="stylesheet" href="/css/party.css"> -->
-  <link rel="stylesheet" href="/css/party_settings.css">
-  <link rel="stylesheet" href="/css/party_creating.css">
+  <link rel="stylesheet" href="/css/party.css">
+  <!-- <link rel="stylesheet" href="/css/party_settings.css"> -->
 
   <script>
     const partyCode = "{{ partyCode }}";
@@ -24,19 +23,21 @@
   <header></header>
 
   <main class="center-content">
-    <div class="title">
-      <h1 class="party_title">Party 🎉 ({{ partyCode }})</h1>
+    <div class="party-creation">
+      <h1>Party 🎉 ({{ partyCode }})</h1>
 
       {{^pseudo}}
       <div class="pseudo">
-        <span class="highlight">Pseudo</span>
-        <input autofocus />
+        <div class="oneline">
+          <h2>Pseudo</h2>
+          <input autofocus />
+        </div>
         <button>Confirm</button>
       </div>
       {{/pseudo}}
 
       <button hidden class="action" id="newTeam">New Team</button>
-      <main id="players-list"></main>
+      <div id="players-list"></div>
 
       <button hidden class="admin" id="partySettings">Party Settings</button>
       <button hidden class="action" id="isReady">Ready!<span></span></button>

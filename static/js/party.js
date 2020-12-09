@@ -6,7 +6,7 @@ window.addEventListener("load", async () => {
   const main = document.querySelector("body > main");
 
   const pseudo = document.querySelector(".pseudo");
-  const usernameInput = document.querySelector(".pseudo>input");
+  const usernameInput = document.querySelector(".pseudo>div>input");
   const usernameButton = document.querySelector(".pseudo>button");
 
   const newTeamButton = document.getElementById("newTeam");
@@ -51,7 +51,7 @@ window.addEventListener("load", async () => {
     else alert("Wait for everyone to be ready!");
   };
 
-  socket.on("you-are-now-admin", () => {
+  socket.on("you-are-admin", () => {
     const adminTools = document.querySelectorAll(".admin");
     adminTools.forEach((tool) => (tool.hidden = false));
   });
@@ -60,6 +60,7 @@ window.addEventListener("load", async () => {
   socket.on("you-are-not-admin", () => {
     const adminTools = document.querySelectorAll(".admin");
     adminTools.forEach((tool) => (tool.hidden = true));
+    alert("You are not admin.");
   });
 
   // --- for all users --- //
@@ -74,31 +75,30 @@ window.addEventListener("load", async () => {
     readyButton.classList.toggle("green");
   };
 
-  socket.on("page", (html) => (main.innerHTML = html.replace(/<?[^>]*>/, ""))); // remove XML tag
-  socket.on("settings", loadSettings);
   socket.on("message", alert);
+  socket.on("settings", loadSettings);
+  socket.on("game", loadGame);
 
   socket.on("players-update", (teams) => {
     playerListDiv.innerHTML = "";
     players.splice(0); // empty players array
     Object.keys(teams).forEach((team) => {
-      let _team = document.createElement("section");
-      let teamName = document.createElement("h2");
-      teamName.innerText = team;
-      _team.appendChild(teamName);
-      let teamPlayers = document.createElement("ul");
+      let _team = document.createElement("div");
+      _team.appendChild(document.createElement("h2"));
+      _team.classList.add("team");
+      _team.firstElementChild.innerText = team;
+      let teamPlayers = document.createElement("div");
       teams[team].forEach((player) => addPlayer(player, teamPlayers));
       _team.appendChild(teamPlayers);
       playerListDiv.appendChild(_team);
     });
 
-    document
-      .querySelectorAll("#players-list > section > h2")
-      .forEach((elem) => {
-        elem.addEventListener("click", () => {
-          socket.emit("change-team", partyCode, elem.textContent);
-        });
+    document.querySelectorAll("#players-list > div > h2").forEach((elem) => {
+      elem.title = "Switch to this team.";
+      elem.addEventListener("click", () => {
+        socket.emit("change-team", partyCode, elem.textContent);
       });
+    });
   });
 
   socket.on("ready-players", updateReadyPlayers);
@@ -112,11 +112,15 @@ window.addEventListener("load", async () => {
     window.location.href = "/";
   });
 
+  socket.on("back-to-party", (toClose) => {
+    document.getElementById(toClose).remove();
+    main.firstElementChild.style = "";
+  });
+
   function addPlayer(player, _team) {
     const isMe = player.replace(/🟢|👑|✋/g, "").trim() === username;
-    if (isMe) player += " ✋";
     players.push(player);
-    let _player = document.createElement("li");
+    let _player = document.createElement("h4");
     _player.innerText = player;
     if (isMe) _player.classList.add("highlight");
     _team.appendChild(_player);
@@ -128,16 +132,31 @@ window.addEventListener("load", async () => {
     readyButton.firstElementChild.textContent = ` (${ready.length}/${players.length})`;
   }
 
-  function loadSettings(html) {
+  function loadPage(html, id, oldPage) {
     main.firstElementChild.style = "display:none";
-    const _settingsPage = document.createElement("div");
-    _settingsPage.id = "settingsPage";
-    _settingsPage.innerHTML = html.replace(/<?[^>]*?>/, "");
-    main.append(_settingsPage);
+    if (oldPage) document.getElementById(oldPage).remove();
+    const _page = document.createElement("div");
+    _page.id = id;
+    _page.innerHTML = html.replace(/<?[^>]*?>/, ""); // remove XML tag
+    main.append(_page);
+  }
+
+  function loadSettings(html) {
+    loadPage(html, "settingsPage");
     document.getElementById("saveSettings").onclick = () => {
       socket.emit("update-settings"); // TODO send settings
       document.getElementById("settingsPage").remove();
       main.firstElementChild.style = "";
+    };
+  }
+
+  function loadGame(html, oldGame) {
+    loadPage(html, "gamePage", oldGame);
+    document.getElementById("next").onclick = () => {
+      socket.emit("next-game", partyCode, "gamePage");
+    };
+    document.getElementById("end").onclick = () => {
+      socket.emit("back-to-party", partyCode, "gamePage");
     };
   }
 });
