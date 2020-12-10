@@ -27,13 +27,13 @@ io.on("connection", (socket) => {
       .then((found) => assignParty(found, partyCode))
       .then((party) => addPlayerToParty(party, socket, username, userID, team))
       .then(updatePartyDB)
-      .catch(handleError);
+      .catch((error) => handleError(error, socket));
   });
 
   socket.on("next-game", (partyCode, oldGame) => {
     if (!partyCode) return;
 
-    getPartyDB(partyCode)
+    getPartyDB(partyCode, socket)
       .then((party) => sendNextGame(party, socket, oldGame))
       .catch((error) => handleError(error, socket));
   });
@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
   socket.on("open-settings", (partyCode) => {
     if (!partyCode) return;
 
-    getPartyDB(partyCode)
+    getPartyDB(partyCode, socket)
       .then((party) => sendSettings(party, socket))
       .catch((error) => handleError(error, socket));
   });
@@ -49,15 +49,15 @@ io.on("connection", (socket) => {
   socket.on("change-team", (partyCode, newTeam) => {
     if (!partyCode || !newTeam) return;
 
-    getPartyDB(partyCode)
+    getPartyDB(partyCode, socket)
       .then((party) => changePlayerTeam(party, socket, newTeam))
-      .catch(handleError);
+      .catch((error) => handleError(error, socket));
   });
 
   socket.on("set-ready-state", (partyCode, isReady) => {
     if (!partyCode) return;
 
-    getPartyDB(partyCode)
+    getPartyDB(partyCode, socket)
       .then((party) => party.setReadyState(socket.id, isReady))
       .then(informPlayers)
       .then(updatePartyDB)
@@ -67,8 +67,17 @@ io.on("connection", (socket) => {
   socket.on("back-to-party", (partyCode, toClose) => {
     if (!partyCode) return;
 
-    getPartyDB(partyCode)
+    getPartyDB(partyCode, socket)
       .then((party) => backToParty(party, socket, toClose))
+      .catch((error) => handleError(error, socket));
+  });
+
+  socket.on("update-settings", (partyCode, settings) => {
+    if (!partyCode) return;
+
+    getPartyDB(partyCode, socket)
+      .then((party) => updateSettings(party, settings))
+      .then(updatePartyDB)
       .catch((error) => handleError(error, socket));
   });
 
@@ -87,7 +96,7 @@ function assignParty(party, partyCode) {
 }
 
 function addPlayerToParty(party, socket, username, userID) {
-  if (party.isSocketUsed(socket) || (userID && party.isUserConnected(userID))) {
+  if (userID && party.isUserConnected(userID)) {
     socket.emit("already-connected");
     throw new Error("User already connected.");
   }
@@ -139,26 +148,38 @@ function sendNextGame(party, socket, oldGame) {
 
   party.level++;
   console.log(`[PARTY:${party.partyCode}] Level ${party.level}.`);
-  // TODO load game data
+
   consolidate
-    .hogan("./private/game.xml", { level: party.level })
+    .hogan("./private/game.xml", { level: party.level }) // TODO load game data
     .then((html) => io.to(party.partyCode).emit("game", html, oldGame))
     .then(() => informPlayers(party))
     .then(updatePartyDB)
-    .catch(handleError);
+    .catch((error) => handleError(error, socket));
 }
 
 function sendSettings(party, socket) {
-  // TODO load party settings
   if (party.getAdmin().socketID !== socket.id) {
     socket.emit("you-are-not-admin");
     throw new Error("You are not admin.");
   }
 
+  // TODO add player's playlists, playlistID/name, categories
+  const settings = {
+    partyCode: party.partyCode,
+    maxGroups: party.maxGroups,
+    maxGames: party.maxGames,
+  };
+
   consolidate
-    .hogan("./private/party_settings.xml", {})
+    .hogan("./private/party_settings.xml", settings)
     .then((html) => io.to(socket.id).emit("settings", html))
-    .catch(handleError);
+    .catch((error) => handleError(error, socket));
+}
+
+function updateSettings(party, settings) {
+  party.maxGroups = settings.maxGroups;
+  party.maxGames = settings.maxGames;
+  return party;
 }
 
 // --- database --- //
@@ -169,10 +190,10 @@ function updatePartyDB(party) {
     .replaceOne({ partyCode: party.partyCode }, party, {
       upsert: true, // if not found, inserts a new document
     })
-    .catch(handleError);
+    .catch((error) => handleError(error, socket));
 }
 
-function getPartyDB(partyCode) {
+function getPartyDB(partyCode, socket) {
   const { partiesCollection } = require("../server.js");
   return partiesCollection
     .findOne({ partyCode })
@@ -180,7 +201,11 @@ function getPartyDB(partyCode) {
       if (!party) throw new Error("Party not found.");
       return party;
     })
-    .then((party) => Object.assign(new Party(), party));
+    .then((party) => Object.assign(new Party(), party))
+    .catch((error) => {
+      socket.emit("party-not-found");
+      throw error;
+    });
 }
 
 function getUserPartiesDB(socket) {
@@ -194,7 +219,7 @@ function removePartyDB(party) {
   const { partiesCollection } = require("../server.js");
   partiesCollection
     .deleteOne({ partyCode: party.partyCode })
-    .catch(handleError);
+    .catch((error) => handleError(error, socket));
 }
 
 // --- utilities --- //

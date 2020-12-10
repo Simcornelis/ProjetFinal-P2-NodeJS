@@ -3,6 +3,8 @@ class Party {
   level;
   playlistID;
   players;
+  maxGroups;
+  maxGames;
 
   /**
    * @param {string} partyCode the sharable code to join the party
@@ -13,29 +15,36 @@ class Party {
     this.level = 0;
     this.playlistID = ""; // TODO link playlists
     this.players = players || [];
+    this.maxGroups = 10;
+    this.maxGames = 15;
   }
 
-  connect(socketID, pseudo, userID, team) {
+  connect(socketID, pseudo, userID) {
     pseudo = pseudo.replace(/🟢|👑|✋/g, "").trim(); // match all info emojis
-    return this.players.push(new Player(socketID, pseudo, this.team(), userID));
+    if (!userID)
+      return this.players.push(
+        new Player(socketID, pseudo, this.team(), userID)
+      );
+
+    const index = this.players.findIndex((p) => p.userID === userID);
+    if (index >= 0) {
+      this.players[index].socketID = socketID;
+      this.players[index].pseudo = pseudo;
+      if (!Object.keys(this.getTeams()).includes(this.players[index].team))
+        this.players[index].team = this.team();
+      this.players[index].online = true;
+      this.players[index].ready = false;
+      return;
+    }
   }
 
   disconnect(socketID) {
-    const index = this.players.findIndex((player) => {
-      return player.socketID === socketID;
-    });
+    const index = this.getPlayerIndex(socketID);
 
     if (index >= 0) {
       if (!this.players[index].userID) this.players.splice(index, 1);
       else this.players[index].online = false;
     }
-  }
-
-  kick(socketID) {
-    // TODO implement usage
-    this.players = this.players.filter((player) => {
-      return player.socketID !== socketID;
-    });
   }
 
   /**
@@ -61,17 +70,22 @@ class Party {
 
   teamChange(socketID, newTeam) {
     const index = this.getPlayerIndex(socketID);
+    const existing = Object.keys(this.getTeams());
+
+    if (!existing.includes(newTeam) && existing.length >= this.maxGroups)
+      throw new Error(
+        "The max amount of teams has been reached.\n" +
+          "Ask your party admin to allow more groups."
+      );
 
     if (index >= 0) this.players[index].team = newTeam;
     else throw new Error("No player with that socketID.");
   }
 
-  isSocketUsed(socket) {
-    return this.players.some((player) => player.socketID === socket.id);
-  }
-
   isUserConnected(userID) {
-    return this.players.some((player) => player.userID === userID);
+    return this.players.some(
+      (player) => player.userID === userID && player.online
+    );
   }
 
   getAdmin() {

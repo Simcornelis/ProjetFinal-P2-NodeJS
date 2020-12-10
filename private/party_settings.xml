@@ -1,58 +1,65 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<div class="title">
-	<h1 class="party_title">Party Settings</h1>
-	<section class="outline">
-		<div class="code">
-			<span class="highlight">Code</span>
-			<input disabled="" value="ABCD" />
-		</div>
-	</section>
-	<section class="outline">
-		<span class="highlight"># de groupes</span>
+<div>
+	<h1>Party Settings</h1>
+	<div class="oneline half">
+		<h2>Code</h2>
+		<input disabled="" value="{{ partyCode }}" />
+	</div>
+
+	<div class="oneline half">
+		<h2>
+			Max groups:
+			<span id="nGroups">{{ maxGroups }}</span>
+		</h2>
 		<input
-      name="groupsCount"
-      value="0"
-      type="number"
+      type="range"
+      id="maxGroups"
+      value="{{ maxGroups }}"
       min="1"
-      max="10"
+      max="11"
       step="1"
-      readonly=""
     />
-		<button form="">+</button>
-		<button form="">-</button>
-	</section>
-	<section class="outline">
-		<span class="highlight">My Games Playlists</span>
-		<input type="text" placeholder="Search">
-			<select>
-				<option>Soirée Halloween entre potes</option>
-				<option>Kot à projet jeudi soir</option>
-				<option>Scouts 13/10/2020 activité</option>
-			</select>
-		</input>
-	</section>
-	<section>Or...</section>
-	<section class="outline">
-		<span class="highlight">Create a new playlist</span>
+	</div>
+
+	<div class="oneline half">
+		<button class="green" id="myPlaylists">My playlists</button>
+		<button id="newPlaylist">New playlist</button>
+	</div>
+
+	<div class="playlist" id="my-playlists">
+		<h2>Play my playlists</h2>
+		<input type="text" placeholder="Search..." />
+		<select>
+			<option>Soirée Halloween entre potes</option>
+			<option>Kot à projet jeudi soir</option>
+			<option>Scouts 13/10/2020 activité</option>
+		</select>
+	</div>
+
+	<div class="playlist hide" id="new-playlist">
+		<h2>Create new playlist</h2>
+		<input type="text" placeholder="Search..." />
 		<select>
 			<option>Dynamique</option>
 			<option>Questions existentielles</option>
 			<option>Pour les jeunes</option>
 		</select>
-	</section>
-	<section class="outline">
-		<span class="highlight"># de mini-jeux</span>
+	</div>
+
+	<div class="oneline half">
+		<h2>
+			Max games:
+			<span id="nGames">{{ maxGames }}</span>
+		</h2>
 		<input
-      name="gamesCount"
-      value="0"
-      type="number"
+      type="range"
+      id="maxGames"
+      value="{{ maxGames }}"
       min="1"
-      max="25"
+      max="26"
       step="1"
-      readonly=""
     />
-		<button form="">+</button>
-		<button form="">-</button>
-	</section>
-	<button id="saveSettings">Save</button>
+	</div>
+
+	<button id="save-settings">Save</button>
 </div>

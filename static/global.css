@@ -70,7 +70,7 @@ input[type="submit"]:active {
 }
 
 input:not([type="submit"]) {
-  padding: 1em 1em;
+  padding: 1em;
   margin: 5px;
   background: var(--f-transparent);
   border: none;
