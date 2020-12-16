@@ -6,9 +6,8 @@ main > div {
   color: var(--c-text-inverted);
 }
 
-main > div > h1 {
+main > div h1 {
   margin-top: 0;
-  text-align: center;
 }
 
 h1,
@@ -28,8 +27,6 @@ div.pseudo {
   margin: 5px;
   display: grid;
   gap: 10px;
-  /* Tries to maximise the cols with 40% being the min width (auto-fit to let it grow) */
-  grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
   grid-auto-rows: 1fr;
 }
 
@@ -69,6 +66,51 @@ div.team > div > h4 + h4 {
     box-shadow: var(--s-short);
     border-radius: 3px;
   }
+
+  #players-list {
+    /* Tries to maximise the cols with 40% being the min width (auto-fit to let it grow) */
+    grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+  }
+}
+
+/* game settings */
+
+#settingsPage > div {
+  display: grid;
+  gap: 15px;
+}
+
+div.playlist {
+  margin: 5px;
+  display: grid;
+  background: var(--f-transparent-inverted);
+  box-shadow: var(--s-short);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+div.playlist > h2 {
+  background: var(--f-transparent-inverted);
+  margin: 0;
+}
+
+div.playlist > select {
+  padding: 1em;
+  margin: 5px;
+  color: var(--c-text-inverted);
+  background: var(--f-transparent-inverted);
+  border: none;
+  border-radius: 3px;
+}
+
+div.playlist > select > option {
+  color: var(--c-text);
+  background: var(--f-transparent-inverted);
+  border-bottom: 1px solid red;
+}
+
+input[type="range"] {
+  padding: 1em 0;
 }
 
 /* properties */
@@ -84,8 +126,20 @@ div.oneline > * {
   margin: 0;
 }
 
+div.half {
+  grid-template-columns: 1fr 1fr;
+}
+
+div.half > h2 {
+  text-align: left;
+}
+
 .green {
   background: #00800077;
+}
+
+.hide {
+  display: none !important;
 }
 
 h4.highlight::before {

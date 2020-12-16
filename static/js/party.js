@@ -75,7 +75,7 @@ window.addEventListener("load", async () => {
     readyButton.classList.toggle("green");
   };
 
-  socket.on("message", alert);
+  socket.on("message", (message) => alert(message));
   socket.on("settings", loadSettings);
   socket.on("game", loadGame);
 
@@ -112,6 +112,11 @@ window.addEventListener("load", async () => {
     window.location.href = "/";
   });
 
+  socket.on("party-not-found", () => {
+    alert("Party not found.");
+    location.reload();
+  });
+
   socket.on("back-to-party", (toClose) => {
     document.getElementById(toClose).remove();
     main.firstElementChild.style = "";
@@ -143,11 +148,7 @@ window.addEventListener("load", async () => {
 
   function loadSettings(html) {
     loadPage(html, "settingsPage");
-    document.getElementById("saveSettings").onclick = () => {
-      socket.emit("update-settings"); // TODO send settings
-      document.getElementById("settingsPage").remove();
-      main.firstElementChild.style = "";
-    };
+    setupSettings();
   }
 
   function loadGame(html, oldGame) {
@@ -157,6 +158,62 @@ window.addEventListener("load", async () => {
     };
     document.getElementById("end").onclick = () => {
       socket.emit("back-to-party", partyCode, "gamePage");
+    };
+  }
+
+  // --- game settings --- //
+
+  function setupSettings() {
+    const groupsSlider = document.getElementById("maxGroups");
+    const groupsSpan = document.getElementById("nGroups");
+    const gamesSlider = document.getElementById("maxGames");
+    const gamesSpan = document.getElementById("nGames");
+
+    const myButton = document.getElementById("myPlaylists");
+    const myPlaylists = document.getElementById("my-playlists");
+    const newButton = document.getElementById("newPlaylist");
+    const newPlaylist = document.getElementById("new-playlist");
+
+    const saveButton = document.getElementById("save-settings");
+
+    updateGroups();
+    updateGames();
+
+    groupsSlider.addEventListener("change", updateGroups);
+    function updateGroups() {
+      if (groupsSlider.value == 11) groupsSpan.innerText = "♾";
+      else groupsSpan.innerText = groupsSlider.value;
+    }
+
+    gamesSlider.addEventListener("change", updateGames);
+    function updateGames() {
+      if (gamesSlider.value == 26) gamesSpan.innerText = "♾";
+      else gamesSpan.innerText = gamesSlider.value;
+    }
+
+    myButton.onclick = () => {
+      myButton.classList.add("green");
+      myPlaylists.classList.remove("hide");
+      newButton.classList.remove("green");
+      newPlaylist.classList.add("hide");
+    };
+
+    newButton.onclick = () => {
+      myButton.classList.remove("green");
+      myPlaylists.classList.add("hide");
+      newButton.classList.add("green");
+      newPlaylist.classList.remove("hide");
+    };
+
+    saveButton.onclick = () => {
+      const settings = {
+        // TODO add playlistID
+        maxGroups: groupsSlider.value,
+        maxGames: gamesSlider.value,
+      };
+      socket.emit("update-settings", partyCode, settings);
+      document.getElementById("settingsPage").remove();
+      main.firstElementChild.style = "";
     };
   }
 });
