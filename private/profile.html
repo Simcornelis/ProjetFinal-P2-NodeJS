@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
+  <link rel="stylesheet" href="/global.css">
+  <link rel="stylesheet" href="/css/profile.css">
+
+  <script src="/js/profile.js"></script>
+
+  <title>Profile</title>
+</head>
+
+<body class="center">
+    <main class="center-content">
+        <div>
+            <h1>Profile of {{session.pseudo}}</h1>
+
+            <h5>Pseudo</h5>
+            <h3 id="pseudo">{{session.pseudo}}</h3>
+
+            <h5>Email address</h5>
+            <h3 id="email">{{session.email}}</h3>
+
+            <h5>My games</h5>
+            <h3></h3>
+
+            <h5>Change pseudo</h5>
+            <input type="text" id="sendPseudo"></input>
+            <button onclick="sendPseudo()">Save</button>
+
+            <h5>Change profile picture</h5>
+            <label for="browse">Choose picture</label>
+            <input hidden type="file" name="file" id="browse" accept="image/*" onchange="previewFile()">
+            <button onclick="sendFile()">Save</button>
+            <button onclick="deleteFile()">Delete</button>
+            <img src="{{session.ppic}}" id="ppic" alt="Profile picture">
+        </div>
+
+    </main>
+</body>
+
+</html>
