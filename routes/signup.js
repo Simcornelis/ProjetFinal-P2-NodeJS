@@ -48,12 +48,13 @@ function checkPasswordConfirmation(password, passwordConfirmation) {
 }
 
 function insertUserInDB(email, pseudo, password, collection) {
-  return collection.insertOne({ email, pseudo, password}).insertedId;
+  return collection.insertOne({ email, pseudo, password, ppic: null}).insertedId;
 }
 
 function setUserSession(req, pseudo, email, userID) {
   req.session.pseudo = pseudo;
   req.session.email = email;
+  req.session.ppic = "/img/noid.png";
   if (userID) req.session.userID = userID;
   req.session.cookie.maxAge = 3600000 * 48; // 2 days // TODO stayLogged
 }

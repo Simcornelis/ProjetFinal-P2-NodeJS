@@ -48,6 +48,7 @@ function setUserSession(req, user) {
   req.session.pseudo = user.pseudo;
   req.session.email = user.email;
   req.session.userID = user._id;
+  req.session.ppic = user.ppic ? `./ppic/${user.ppic}` : "/img/noid.png";
   req.session.cookie.maxAge = 3600000 * 48; // 2 days // TODO stayLogged
 }
 

@@ -15,17 +15,20 @@
 <body>
   <header>
     <div class="account">
+      {{^userID}}
       <button id="signup" onclick="window.location.href = '../signup'">sign up</button>
       <button id="signin" onclick="window.location.href = '../signin'">sign in</button>
+      {{/userID}}
 
       <!-- TEMPORAIRE !-->
+      {{#userID}}
       <div id="profile">
-        {{#pseudo}}
         Pseudo : {{pseudo}} <br>
         Email : {{email}} <br>
         <button id="logout" onclick="window.location.href = '../logout'">log out</button>
-        {{/pseudo}}
+        <button id="profile" onclick="window.location.href = '../profile'">profile</button>
       </div>
+      {{/userID}}
       <!-- TEMPORAIRE !-->
 
     </div>

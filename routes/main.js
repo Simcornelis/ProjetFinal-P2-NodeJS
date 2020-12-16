@@ -9,10 +9,10 @@ mainRouter.get("/", renderMain);
  */
 function renderMain(req, res) {
   res.status(200).render("main.html", {
-    ppic: profilePicture(req),
+    ppic: req.session.ppic,
     pseudo: req.session.pseudo,
     email: req.session.email,
-    id: req.session.id,
+    userID: req.session.userID,
   });
 }
 
@@ -23,19 +23,6 @@ mainRouter.get("/logout", (req, res, next) => {
   });
 });
 
-/**
- * Determines wich profile picture should be rendered.
- * @param {object} req http GET request
- */
-function profilePicture(req) {
-  if (!req.session.ppic) req.session.ppic = "noid.png";
-  var ppic = req.session.ppic;
-  if (!ppic.includes("http"))
-    ppic = req.protocol + "://" + req.get("host") + "/ppic/" + ppic;
-  return ppic;
-}
-
 module.exports = {
   mainRouter,
-  profilePicture,
 };

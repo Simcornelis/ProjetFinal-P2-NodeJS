@@ -1,0 +1,58 @@
+div {
+    max-width: 500px;
+    width: 100%;
+    padding: 10px;
+    background: var(--f-transparent-inverted);
+    color: var(--c-text-inverted);
+    margin-top: 50px;
+    
+}
+
+h1 {
+    text-align: center;
+    margin: 0;
+}
+
+h3 {
+    padding: 5px 15px;
+    border-radius: 7px;
+    background-color: #0001;
+    margin: 0;
+}
+
+input {
+    max-width: 300px;
+    width: 100%;
+    margin: 0;
+    max-height: 40px;
+}
+
+button {
+    max-width: 50px;
+    width: 100%;
+    max-height: 40px;
+    margin: 5;
+    padding-right: 18px;
+    padding-left: 18px;
+    text-align: left;
+}
+
+img {
+    max-width: 200px;
+    margin-left: 150px;
+}
+
+@media screen and (min-width: 600px) {
+    .title {
+      padding: 50px;
+      background: var(--f-transparent-inverted);
+      box-shadow: var(--s-short);
+      border-radius: 3px;
+    }
+  }
+
+
+
+
+
+  
