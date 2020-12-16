@@ -149,9 +149,23 @@ function sendNextGame(party, socket, oldGame) {
   party.level++;
   console.log(`[PARTY:${party.partyCode}] Level ${party.level}.`);
 
+  const data = {
+    level: party.level,
+    games: 25,
+    progress: 100 - (party.level / 25) * 100, // TODO change 25 to amount of games
+    instruction:
+      "Chacun dans le groupe fait " +
+      party.level +
+      " pompes à son tour, au premier groupe à finir",
+  };
+
   consolidate
-    .hogan("./private/game.xml", { level: party.level }) // TODO load game data
-    .then((html) => io.to(party.partyCode).emit("game", html, oldGame))
+    .hogan("./private/game.xml", data) // TODO load game data
+    .then((html) =>
+      io
+        .to(party.partyCode)
+        .emit("game", html, oldGame, "5fbec2e12ebb45418446d8d9", "Mohanahhh3")
+    )
     .then(() => informPlayers(party))
     .then(updatePartyDB)
     .catch((error) => handleError(error, socket));

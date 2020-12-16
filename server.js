@@ -83,11 +83,11 @@ app.get("/test", (req, res, next) => {
 
 // handle 404 not found error
 app.use(function (req, res) {
-  res.status(404).send("404: Page not Found");
+  res.status(404).send("404: Page not Found 🤔");
 });
 
 // handle 500 server error
 app.use(function (error, req, res) {
   console.error("[ERROR] " + error.message);
-  res.status(500).send("500: Internal Server Error");
+  res.status(500).send("500: Internal Server Error 🐛");
 });

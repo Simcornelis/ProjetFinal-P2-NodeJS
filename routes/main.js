@@ -16,9 +16,11 @@ function renderMain(req, res) {
   });
 }
 
-mainRouter.get("/logout", (req, res, next) => {
+mainRouter.get("/signout", (req, res, next) => {
+  const email = req.session.email;
   req.session.destroy((error) => {
     if (error) return console.error("[LOG]", error);
+    console.log("[SIGNOUT] " + email);
     res.redirect("/");
   });
 });

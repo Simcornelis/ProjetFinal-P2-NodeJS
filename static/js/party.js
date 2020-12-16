@@ -4,6 +4,7 @@ window.addEventListener("load", async () => {
   const ready = []; // all online and ready players
 
   const main = document.querySelector("body > main");
+  const footer = document.querySelector("body > footer");
 
   const pseudo = document.querySelector(".pseudo");
   const usernameInput = document.querySelector(".pseudo>div>input");
@@ -14,6 +15,8 @@ window.addEventListener("load", async () => {
   const partySettingsButton = document.getElementById("partySettings");
   const readyButton = document.getElementById("isReady");
   const startButton = document.getElementById("start");
+  const gameIDH4 = document.getElementById("gameID");
+  const authorH4 = document.getElementById("author");
 
   const actions = document.querySelectorAll(".action");
 
@@ -37,7 +40,7 @@ window.addEventListener("load", async () => {
       username = usernameInput.value.replace(/🟢|👑|✋/g, "").trim();
     socket.emit("new-user", partyCode, username, userID);
     if (pseudo) pseudo.remove();
-    actions.forEach((elem) => (elem.hidden = false));
+    actions.forEach((elem) => elem.classList.remove("hide"));
   }
 
   // --- only for the admin --- //
@@ -53,13 +56,13 @@ window.addEventListener("load", async () => {
 
   socket.on("you-are-admin", () => {
     const adminTools = document.querySelectorAll(".admin");
-    adminTools.forEach((tool) => (tool.hidden = false));
+    adminTools.forEach((tool) => tool.classList.remove("hide"));
   });
 
   // TODO transfer admin privileges
   socket.on("you-are-not-admin", () => {
     const adminTools = document.querySelectorAll(".admin");
-    adminTools.forEach((tool) => (tool.hidden = true));
+    adminTools.forEach((tool) => tool.classList.add("hide"));
     alert("You are not admin.");
   });
 
@@ -120,6 +123,7 @@ window.addEventListener("load", async () => {
   socket.on("back-to-party", (toClose) => {
     document.getElementById(toClose).remove();
     main.firstElementChild.style = "";
+    footer.classList.remove("game");
   });
 
   function addPlayer(player, _team) {
@@ -151,8 +155,12 @@ window.addEventListener("load", async () => {
     setupSettings();
   }
 
-  function loadGame(html, oldGame) {
+  function loadGame(html, oldGame, gameID, author) {
     loadPage(html, "gamePage", oldGame);
+    footer.classList.add("game");
+    gameIDH4.textContent = gameID;
+    authorH4.textContent = author;
+
     document.getElementById("next").onclick = () => {
       socket.emit("next-game", partyCode, "gamePage");
     };

@@ -34,7 +34,7 @@ body {
 
 header,
 footer {
-  height: calc(3.5em + 1vw);
+  min-height: calc(3.5em + 1vw);
   width: 100%;
   display: flex;
   justify-content: space-between;

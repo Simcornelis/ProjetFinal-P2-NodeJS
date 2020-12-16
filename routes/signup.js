@@ -3,6 +3,7 @@ const { Router } = require("express");
 const signupRouter = new Router();
 
 signupRouter.get("/", (req, res, next) => {
+  if (req.session.email) return res.redirect("/");
   const error = req.session.error;
   delete req.session.error;
   res.render("signup.html", {
@@ -33,13 +34,11 @@ signupRouter.post("/", (req, res, next) => {
 });
 
 function verifyEmailNotUsedYet(email, collection) {
-	return collection
-		.findOne({ email })
-		.then((found) => {
-			if (found) {
-				throw new Error("This email is already used for an other account !");
-			}
-	  	});
+  return collection.findOne({ email }).then((found) => {
+    if (found) {
+      throw new Error("This email is already used for an other account !");
+    }
+  });
 }
 
 function checkPasswordConfirmation(password, passwordConfirmation) {
@@ -48,7 +47,7 @@ function checkPasswordConfirmation(password, passwordConfirmation) {
 }
 
 function insertUserInDB(email, pseudo, password, collection) {
-  return collection.insertOne({ email, pseudo, password}).insertedId;
+  return collection.insertOne({ email, pseudo, password }).insertedId;
 }
 
 function setUserSession(req, pseudo, email, userID) {

@@ -1,0 +1,70 @@
+#progress {
+  position: relative;
+  margin: 5px;
+  background: var(--f-transparent-inverted);
+  z-index: 2;
+}
+
+#progress > span#fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: #00800077;
+  z-index: -1;
+}
+
+#progress > h2 {
+  padding: 5px;
+  margin: 0;
+}
+
+#instruction {
+  padding: 15px;
+  margin: 5px;
+  text-align: center;
+  font-size: larger;
+  background: var(--f-transparent-inverted);
+}
+
+#categories {
+  display: flex;
+  justify-content: center;
+}
+
+#categories > h2 {
+  margin: 5px;
+}
+
+footer.game {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--f-transparent-inverted);
+  color: var(--c-text-inverted);
+}
+
+footer > h4 {
+  display: none; /* display only when footer.game */
+  padding: 0;
+  margin: 15px;
+}
+
+footer.game > h4 {
+  display: unset;
+}
+
+#gameID::before {
+  content: "ID:";
+  padding: 5px;
+  margin-right: 5px;
+  background-color: var(--f-transparent-inverted);
+}
+
+#author::before {
+  content: "By:";
+  padding: 5px;
+  margin-right: 5px;
+  background: var(--f-transparent-inverted);
+}

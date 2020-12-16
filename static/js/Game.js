@@ -3,7 +3,7 @@ class Game extends HTMLElement {
    * @param {number} _id
    * @param {String} creatorPseudo
    * @param {number} creatorID
-   * @param {String} consign
+   * @param {String} instruction
    * @param {String} description
    * @param {Array} categories
    */
@@ -15,7 +15,7 @@ class Game extends HTMLElement {
    * @param {number} _id
    * @param {String} creatorPseudo
    * @param {number} creatorID
-   * @param {String} consign
+   * @param {String} instruction
    * @param {String} description
    * @param {Array} categories
    */
@@ -23,14 +23,14 @@ class Game extends HTMLElement {
     _id,
     creatorPseudo,
     creatorID,
-    consign,
+    instruction,
     description,
     categories,
   }) {
     this._id = _id;
     this.creatorPseudo = creatorPseudo;
     this.creatorID = creatorID;
-    this.consign = consign;
+    this.instruction = instruction;
     this.description = description;
     this.categories = Array.isArray(categories) ? categories : [categories]; //Always be an array (to not split the word)
 
@@ -47,10 +47,10 @@ class Game extends HTMLElement {
     });
     this.appendChild(gameCreator);
 
-    const gameConsign = document.createElement("div");
-    gameConsign.className = "game-consign";
-    gameConsign.innerText = this.consign;
-    this.appendChild(gameConsign);
+    const gameInstruction = document.createElement("div");
+    gameInstruction.className = "game-instruction";
+    gameInstruction.innerText = this.instruction;
+    this.appendChild(gameInstruction);
 
     for (let i = 0; i < this.categories.length; i++) {
       const gameCategories = document.createElement("div");
@@ -69,7 +69,7 @@ class Game extends HTMLElement {
      * <game-box class="box" tabindex="0">
             <div class="game-id">The id</div>
             <div class="game-creator">The creator</div>
-            <div class="game-consign">The consign</div>
+            <div class="game-instruction">The instruction</div>
             <div class="game-category">A category</div>
             <div class="game-category">A category</div>
             <div class="game-category">A category</div>

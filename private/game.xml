@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <div>
-  <h1 style="color:white">This is a game</h1>
-  <h3 style="color:white">Eat {{ level }} tomatoes!</h3>
-  <button hidden="" class="admin" id="next">Next game</button>
-  <button hidden="" class="admin" id="end">End game</button>
+  <div>
+    <div id="progress">
+      <h2>{{ level }}/{{ games }}</h2>
+      <span id="fill" style="right: {{ progress }}%" />
+    </div>
+
+    <p id="instruction">{{ instruction }}</p>
+
+    <div id="categories">
+      <h2>🏓</h2>
+      <h2>🔊</h2>
+      <h2>👪</h2>
+    </div>
+
+    <div class="admin hide oneline half">
+      <button id="next">Next game</button>
+      <button id="end">End game</button>
+    </div>
+  </div>
 </div>

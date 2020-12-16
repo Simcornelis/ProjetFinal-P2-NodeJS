@@ -3,6 +3,7 @@ const { Router } = require("express");
 const signinRouter = new Router();
 
 signinRouter.get("/", (req, res, next) => {
+  if (req.session.email) return res.redirect("/");
   const error = req.session.error;
   delete req.session.error;
   res.render("signin.html", {
@@ -52,7 +53,7 @@ function setUserSession(req, user) {
 }
 
 function verifyIfConnected(req) {
-	return Boolean(req.session);
+  return Boolean(req.session);
 }
 
 module.exports = {

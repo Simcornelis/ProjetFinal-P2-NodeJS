@@ -26,7 +26,7 @@ game-box > .game-creator {
   grid-column: 3/5;
 }
 
-game-box > .game-consign {
+game-box > .game-instruction {
   background: var(--f-transparent);
   grid-column: 1/5;
 }

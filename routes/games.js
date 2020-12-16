@@ -18,7 +18,7 @@ gamesRouter.get("/gamedata/:id?", (req, res, next) => {
         gameID: game._id,
         creatorPseudo: game.creatorPseudo || "Unknown creator",
         creatorID: game.creatorID,
-        gameConsign: game.consign,
+        gameInstruction: game.instruction,
         gameDescription: game.description,
         category1: categories[0],
         category2: categories[1],
@@ -42,7 +42,7 @@ gamesRouter.post("/addgame", (req, res, next) => {
     new game.Game(
       req.session.pseudo,
       req.session._id,
-      req.body.consign,
+      req.body.instruction,
       req.body.description,
       req.body.categories
     )

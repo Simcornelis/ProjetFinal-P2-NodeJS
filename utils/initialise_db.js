@@ -51,7 +51,7 @@ function createMiniGamesCollection() {
       _id: "text",
       creatorPseudo: "text",
       creatorID: "text",
-      consign: "text",
+      instruction: "text",
       description: "text",
       categories: "text",
     },

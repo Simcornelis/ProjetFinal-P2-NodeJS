@@ -35,7 +35,7 @@ class Party {
       this.players[index].online = true;
       this.players[index].ready = false;
       return;
-    }
+    } else this.players.push(new Player(socketID, pseudo, this.team(), userID));
   }
 
   disconnect(socketID) {

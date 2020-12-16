@@ -8,6 +8,7 @@
 
   <link rel="stylesheet" href="/global.css">
   <link rel="stylesheet" href="/css/party.css">
+  <link rel="stylesheet" href="/css/party-game.css">
 
   <script>
     const partyCode = "{{ partyCode }}";
@@ -35,16 +36,19 @@
       </div>
       {{/pseudo}}
 
-      <button hidden class="action" id="newTeam">New Team</button>
+      <button class="action hide" id="newTeam">New Team</button>
       <div id="players-list"></div>
 
-      <button hidden class="admin" id="partySettings">Party Settings</button>
-      <button hidden class="action" id="isReady">Ready!<span></span></button>
-      <button hidden class="admin" id="start">Start</button>
+      <button class="admin hide" id="partySettings">Party Settings</button>
+      <button class="action hide" id="isReady">Ready!<span></span></button>
+      <button class="admin hide" id="start">Start</button>
     </div>
   </main>
 
-  <footer></footer>
+  <footer>
+    <h4 id="gameID"></h4>
+    <h4 id="author"></h4>
+  </footer>
 
   <script src="/socket.io/socket.io.js"></script>
   <script src="/js/party.js"></script>
