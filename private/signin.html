@@ -18,7 +18,7 @@
   <main class="center-content">
     <form action="/signin" method="POST">
       {{#error}}
-      <h3 style="color: crimson;">{{error}}</h3>
+      <h3 class="error">{{error}}</h3>
       {{/error}}
 
       <h1>Sign in</h1>
@@ -30,8 +30,8 @@
       <input type="password" name="pass" id="pass">
 
       <div class="oneline">
-        <input type="checkbox" name="stay-logged-in" id="staylogged">
-        <label for="staylogged">Stay logged in (you accept cookies)</label>
+        <input type="checkbox" name="stayLoggedIn" id="stayLoggedIn">
+        <label for="stayLoggedIn">Stay logged in (you accept cookies)</label>
       </div>
 
       <input type="submit" value="Sign in">

@@ -2,8 +2,8 @@ const { Router } = require("express");
 
 const signupRouter = new Router();
 
-signupRouter.get("/", (req, res, next) => {
-  if (req.session.email) return res.redirect("/");
+signupRouter.get("/", (req, res) => {
+  if (req.session.userID) return res.redirect("/");
   const error = req.session.error;
   delete req.session.error;
   res.render("signup.html", {
@@ -13,22 +13,22 @@ signupRouter.get("/", (req, res, next) => {
   });
 });
 
-signupRouter.post("/", (req, res, next) => {
+signupRouter.post("/", (req, res) => {
   const { usersCollection } = require("../server.js");
-  const { email, pseudo, pass, cpass } = req.body;
+  const { email, pseudo, pass, cpass, stayLoggedIn } = req.body;
 
   verifyEmailNotUsedYet(email, usersCollection)
     .then(() => checkPasswordConfirmation(pass, cpass))
     .then(() => insertUserInDB(email, pseudo, pass, usersCollection))
     .then((insertedId) => {
-      setUserSession(req, pseudo, email, insertedId);
+      setUserSession(req, pseudo, email, stayLoggedIn, insertedId);
       console.log("[SIGNUP] " + email);
       res.redirect("/");
     })
     .catch((error) => {
       req.session.error = error.message;
-      setUserSession(req, pseudo, email);
-      console.log("[LOG] " + error);
+      setUserSession(req, pseudo, email, stayLoggedIn);
+      console.log("[ERROR] " + error);
       res.redirect("/signup");
     });
 });
@@ -36,7 +36,7 @@ signupRouter.post("/", (req, res, next) => {
 function verifyEmailNotUsedYet(email, collection) {
   return collection.findOne({ email }).then((found) => {
     if (found) {
-      throw new Error("This email is already used for an other account !");
+      throw new Error("This email is already used.");
     }
   });
 }
@@ -51,12 +51,12 @@ function insertUserInDB(email, pseudo, password, collection) {
     .insertedId;
 }
 
-function setUserSession(req, pseudo, email, userID) {
+function setUserSession(req, pseudo, email, stayLoggedIn, userID) {
   req.session.pseudo = pseudo;
   req.session.email = email;
   req.session.ppic = "/img/noid.png";
   if (userID) req.session.userID = userID;
-  req.session.cookie.maxAge = 3600000 * 48; // 2 days // TODO stayLogged
+  if (stayLoggedIn) req.session.cookie.maxAge = 3600000 * 48; // 2 days // TODO stayLogged
 }
 
 module.exports = {

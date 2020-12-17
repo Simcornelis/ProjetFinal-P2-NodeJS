@@ -2,8 +2,8 @@ const { Router } = require("express");
 
 const signinRouter = new Router();
 
-signinRouter.get("/", (req, res, next) => {
-  if (req.session.email) return res.redirect("/");
+signinRouter.get("/", (req, res) => {
+  if (req.session.userID) return res.redirect("/");
   const error = req.session.error;
   delete req.session.error;
   res.render("signin.html", {
@@ -12,21 +12,21 @@ signinRouter.get("/", (req, res, next) => {
   });
 });
 
-signinRouter.post("/", (req, res, next) => {
+signinRouter.post("/", (req, res) => {
   const { usersCollection } = require("../server.js");
-  const { email, pass } = req.body;
+  const { email, pass, stayLoggedIn } = req.body;
 
   verifyEmailInDB(email, usersCollection)
     .then((user) => {
       verifyUserPassword(pass, user);
-      setUserSession(req, user);
+      setUserSession(req, user, stayLoggedIn);
       console.log("[SIGNIN] " + user.email);
       res.redirect("/");
     })
     .catch((error) => {
       req.session.email = email;
       req.session.error = error.message;
-      console.error("[LOG] " + error);
+      console.error("[ERROR] " + error);
       res.redirect("/signin");
     });
 });
@@ -45,12 +45,12 @@ function verifyUserPassword(password, user) {
     throw new Error("Email and password don't match.");
 }
 
-function setUserSession(req, user) {
+function setUserSession(req, user, stayLoggedIn) {
   req.session.pseudo = user.pseudo;
   req.session.email = user.email;
   req.session.userID = user._id;
   req.session.ppic = user.ppic ? `./ppic/${user.ppic}` : "/img/noid.png";
-  req.session.cookie.maxAge = 3600000 * 48; // 2 days // TODO stayLogged
+  if (stayLoggedIn) req.session.cookie.maxAge = 3600000 * 48; // 2 days // TODO stayLogged
 }
 
 function verifyIfConnected(req) {
