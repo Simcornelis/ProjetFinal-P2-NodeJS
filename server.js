@@ -1,6 +1,6 @@
 const express = require("express");
 const session = require("express-session");
-const fileUpload = require("express-fileupload")
+const fileUpload = require("express-fileupload");
 const consolidate = require("consolidate");
 const mongodb = require("mongodb");
 const dotenv = require("dotenv");
@@ -68,20 +68,23 @@ app.use(
 
 app.set("views", "private");
 app.use(express.static("static"));
-app.use('/ppic', express.static('./ppic'));
-app.use(fileUpload({
-  createParentPath: true,
-  uriDecodeFileNames: true,
-  safeFileNames: true,
-  preserveExtension: true,
-}));
+app.use("/ppic", express.static("./ppic"));
+app.use(
+  fileUpload({
+    createParentPath: true,
+    uriDecodeFileNames: true,
+    safeFileNames: true,
+    preserveExtension: true,
+  })
+);
 
 app.use(require("./routes/main.js").mainRouter);
 app.use("/signin", require("./routes/signin.js").signinRouter);
 app.use("/signup", require("./routes/signup.js").signupRouter);
+app.use("/profile", require("./routes/profile.js").profileRouter);
+app.use("/admin", require("./routes/admin.js").adminRouter);
 app.use("/games", require("./routes/games.js").gamesRouter);
 app.use("/party", require("./routes/party.js").partyRouter);
-app.use("/profile", require("./routes/profile.js").profileRouter);
 
 // REMOVE renders the html file
 app.get("/test", (req, res, next) => {

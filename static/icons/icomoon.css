@@ -1,0 +1,75 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?o1kcu1');
+  src:  url('fonts/icomoon.eot?o1kcu1#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?o1kcu1') format('truetype'),
+    url('fonts/icomoon.woff?o1kcu1') format('woff'),
+    url('fonts/icomoon.svg?o1kcu1#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+.icon {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.i-alert-triangle:before {
+  content: "\26a0";
+}
+.i-check-circle:before {
+  content: "\2714";
+}
+.i-help-circle:before {
+  content: "\1f198";
+}
+.i-info:before {
+  content: "\2139";
+}
+.i-log-in:before {
+  content: "\1f447";
+}
+.i-log-out:before {
+  content: "\261d";
+}
+.i-menu:before {
+  content: "\1f354";
+}
+.i-minus-circle:before {
+  content: "\2796";
+}
+.i-pause:before {
+  content: "\23f8";
+}
+.i-play:before {
+  content: "\25b6";
+}
+.i-plus-circle:before {
+  content: "\2795";
+}
+.i-rotate-ccw:before {
+  content: "\e90a";
+}
+.i-tool:before {
+  content: "\1f527";
+}
+.i-user:before {
+  content: "\1f9d1";
+}
+.i-x:before {
+  content: "\274c";
+}
+.i-x-circle:before {
+  content: "\2716";
+}

@@ -1,9 +1,7 @@
 .account {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-  display: grid;
+  display: flex;
   gap: 15px;
+  color: var(--c-text-inverted);
 }
 
 .menu {
@@ -25,8 +23,4 @@
     box-shadow: var(--s-short);
     border-radius: 3px;
   }
-}
-
-#profile {
-  color: var(--c-text-inverted);
 }

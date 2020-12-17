@@ -56,7 +56,7 @@ function setUserSession(req, pseudo, email, stayLoggedIn, userID) {
   req.session.email = email;
   req.session.ppic = "/img/noid.png";
   if (userID) req.session.userID = userID;
-  if (stayLoggedIn) req.session.cookie.maxAge = 3600000 * 48; // 2 days // TODO stayLogged
+  if (stayLoggedIn) req.session.cookie.maxAge = 3600000 * 48; // 2 days
 }
 
 module.exports = {

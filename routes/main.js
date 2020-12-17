@@ -2,21 +2,16 @@ const { Router } = require("express");
 
 const mainRouter = new Router();
 
-mainRouter.get("/", renderMain);
-
-/**
- * Renders the main page with the user's session data.
- */
-function renderMain(req, res) {
+mainRouter.get("/", (req, res) => {
   res.status(200).render("main.html", {
-    ppic: req.session.ppic,
     pseudo: req.session.pseudo,
     email: req.session.email,
     userID: req.session.userID,
+    ppic: req.session.ppic || "img/noid.png",
   });
-}
+});
 
-mainRouter.get("/signout", (req, res, next) => {
+mainRouter.get("/signout", (req, res) => {
   const email = req.session.email;
   req.session.destroy((error) => {
     if (error) return console.error("[LOG]", error);

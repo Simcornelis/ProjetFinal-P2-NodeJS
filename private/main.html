@@ -8,29 +8,26 @@
 
   <link rel="stylesheet" href="/global.css">
   <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="/icons/icomoon.css">
 
   <title>Let's Drink</title>
 </head>
 
 <body>
   <header>
+    <img src="{{ ppic }}" alt="Profile picture" id="ppic">
     <div class="account">
       {{^userID}}
-      <button id="signup" onclick="window.location.href = '../signup'">sign up</button>
-      <button id="signin" onclick="window.location.href = '../signin'">sign in</button>
+      <button id="signup" onclick="window.location.href = '../signup'"><i class="icon">✔</i> sign up</button>
+      <button id="signin" onclick="window.location.href = '../signin'"><i class="icon">👇</i> sign in</button>
       {{/userID}}
 
-      <!-- TEMPORAIRE !-->
       {{#userID}}
-      <div id="profile">
-        Pseudo : {{pseudo}} <br>
-        Email : {{email}} <br>
-        <button id="signout" onclick="window.location.href = '../signout'">log out</button>
-        <button id="profile" onclick="window.location.href = '../profile'">profile</button>
-      </div>
+      Pseudo : {{pseudo}} <br>
+      Email : {{email}} <br>
+      <button id="signout" onclick="window.location.href = '../signout'"><i class="icon">☝</i> log out</button>
+      <button id="profile" onclick="window.location.href = '../profile'"><i class="icon">🧑</i> profile</button>
       {{/userID}}
-      <!-- TEMPORAIRE !-->
-
     </div>
   </header>
 
