@@ -1,4 +1,5 @@
 const { Party } = require("../models/Party");
+const { Playlist } = require("../models/Playlist");
 const { server } = require("../server");
 const { Router } = require("express");
 const socketIO = require("socket.io");
@@ -17,7 +18,7 @@ partyRouter.get("/:partyCode?", (req, res, next) => {
 });
 
 io.on("connection", (socket) => {
-  const { partiesCollection } = require("../server.js");
+  const { partiesCollection, minigamesCollection } = require("../server.js");
 
   socket.on("new-user", (partyCode, username, userID, team) => {
     if (!partyCode || !username) return;
@@ -79,6 +80,15 @@ io.on("connection", (socket) => {
       .then((party) => updateSettings(party, settings))
       .then(updatePartyDB)
       .catch((error) => handleError(error, socket));
+  });
+
+  socket.on("get-playlist", (filter, categories) => {
+    minigamesCollection
+      .find()
+      .toArray()
+      .then((ret) => console.log(ret));
+    const pl = new Playlist("Cool", "zebi", "me");
+    socket.emit("playlists", pl);
   });
 
   socket.on("disconnect", () => {

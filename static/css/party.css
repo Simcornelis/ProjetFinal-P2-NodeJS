@@ -138,10 +138,6 @@ div.half > h2 {
   background: #00800077;
 }
 
-.hide {
-  display: none !important;
-}
-
 h4.highlight::before {
   content: "> ";
 }

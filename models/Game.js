@@ -1,5 +1,3 @@
-const { ObjectId } = require("mongodb");
-
 class Game {
   _id;
   creatorPseudo;

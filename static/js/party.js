@@ -126,6 +126,11 @@ window.addEventListener("load", async () => {
     footer.classList.remove("game");
   });
 
+  footer.addEventListener("click", () => socket.emit("get-playlist"));
+  socket.on("playlists", (playlists) => {
+    console.log(playlists);
+  });
+
   function addPlayer(player, _team) {
     const isMe = player.replace(/🟢|👑|✋/g, "").trim() === username;
     players.push(player);

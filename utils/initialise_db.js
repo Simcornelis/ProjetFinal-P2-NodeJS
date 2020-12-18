@@ -1,9 +1,7 @@
 const dotenv = require("dotenv");
 const mongodb = require("mongodb");
-const fs = require("fs");
-const cons = require("consolidate");
 
-if (dotenv.config().error) throw new Error("Error while parsing .env file");
+if (dotenv.config().error) throw new Error("Error while parsing .env file.");
 
 const MongoClient = new mongodb.MongoClient(
   `mongodb://${process.env.DATABASE_HOSTNAME}:${process.env.DATABASE_PORT}`,
@@ -11,7 +9,7 @@ const MongoClient = new mongodb.MongoClient(
 );
 
 let db;
-let usersCollection;
+let usersCollection; // REMOVE excess
 let minigamesCollection;
 let playlistsCollection;
 let partiesCollection;
@@ -27,15 +25,9 @@ MongoClient.connect(async (err, client) => {
   db = client.db(process.env.DATABASE_NAME);
   linkCollectionVariables();
   createMiniGamesCollection()
-    .then(() => {
-      return client.close();
-    })
-    .then(() => {
-      console.log("[LOG] Server Database Closed");
-    })
-    .catch((err) => {
-      console.log("[LOG] ERROR: Server Database not closed properly : " + err);
-    });
+    .then(() => client.close())
+    .then(() => console.log("[LOG] Database server closed."))
+    .catch((err) => console.error(`[ERROR] Database server error: ${err}`));
 });
 
 function linkCollectionVariables() {

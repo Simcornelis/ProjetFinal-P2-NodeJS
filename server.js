@@ -36,10 +36,7 @@ function initServer() {
 
     console.log("[LOG] Connected to database server");
     database = client.db(process.env.DATABASE_NAME);
-    database
-      .collection(process.env.DATABASE_PARTIES)
-      .drop()
-      .catch((error) => {}); // REMOVE when parties are deleted
+
     module.exports = {
       minigamesCollection: database.collection(process.env.DATABASE_MINIGAMES),
       playlistsCollection: database.collection(process.env.DATABASE_PLAYLISTS),
@@ -66,8 +63,6 @@ app.use(
   })
 );
 
-app.set("views", "private");
-app.use(express.static("static"));
 app.use("/ppic", express.static("./ppic"));
 app.use(
   fileUpload({
@@ -78,6 +73,9 @@ app.use(
   })
 );
 
+app.set("views", "private");
+app.use(express.static("static"));
+
 app.use(require("./routes/main.js").mainRouter);
 app.use("/signin", require("./routes/signin.js").signinRouter);
 app.use("/signup", require("./routes/signup.js").signupRouter);
@@ -86,7 +84,7 @@ app.use("/admin", require("./routes/admin.js").adminRouter);
 app.use("/games", require("./routes/games.js").gamesRouter);
 app.use("/party", require("./routes/party.js").partyRouter);
 
-// REMOVE renders the html file
+// REMOVE renders any html file
 app.get("/test", (req, res, next) => {
   res.render("party_creating.html", {
     options: "whatever",
@@ -94,12 +92,12 @@ app.get("/test", (req, res, next) => {
 });
 
 // handle 404 not found error
-app.use(function (req, res) {
+app.use((req, res) => {
   res.status(404).send("404: Page not Found 🤔");
 });
 
 // handle 500 server error
-app.use(function (error, req, res) {
+app.use((error, req, res) => {
   console.error("[ERROR] " + error.message);
   res.status(500).send("500: Internal Server Error 🐛");
 });

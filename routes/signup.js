@@ -19,9 +19,9 @@ signupRouter.post("/", (req, res) => {
 
   verifyEmailNotUsedYet(email, usersCollection)
     .then(() => checkPasswordConfirmation(pass, cpass))
-    .then(() => insertUserInDB(email, pseudo, pass, usersCollection))
-    .then((insertedId) => {
-      setUserSession(req, pseudo, email, stayLoggedIn, insertedId);
+    .then(() => insertUserInDB(email, pseudo, pass, null, usersCollection))
+    .then((ret) => {
+      setUserSession(req, pseudo, email, stayLoggedIn, ret.insertedId);
       console.log("[SIGNUP] " + email);
       res.redirect("/");
     })
@@ -35,9 +35,7 @@ signupRouter.post("/", (req, res) => {
 
 function verifyEmailNotUsedYet(email, collection) {
   return collection.findOne({ email }).then((found) => {
-    if (found) {
-      throw new Error("This email is already used.");
-    }
+    if (found) throw new Error("This email is already used.");
   });
 }
 
@@ -46,19 +44,13 @@ function checkPasswordConfirmation(password, passwordConfirmation) {
     throw new Error("Passwords don't match.");
 }
 
-function insertUserInDB(email, pseudo, password, collection) {
-  return collection.insertOne({ email, pseudo, password, ppic: null })
-    .insertedId;
+function insertUserInDB(email, pseudo, password, ppic, collection) {
+  return collection.insertOne({ email, pseudo, password, ppic });
 }
 
 function setUserSession(req, pseudo, email, stayLoggedIn, userID) {
-  req.session.pseudo = pseudo;
-  req.session.email = email;
-  req.session.ppic = "/img/noid.png";
-  if (userID) req.session.userID = userID;
+  Object.assign(req.session, { pseudo, email, userID, ppic: "/img/noid.png" });
   if (stayLoggedIn) req.session.cookie.maxAge = 3600000 * 48; // 2 days
 }
 
-module.exports = {
-  signupRouter,
-};
+module.exports = { signupRouter };

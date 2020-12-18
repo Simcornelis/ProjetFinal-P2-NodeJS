@@ -1,7 +1,4 @@
 const { Router } = require("express");
-const dotenv = require("dotenv");
-
-if (dotenv.config().error) throw new Error("Error while parsing .env file.");
 
 const adminRouter = new Router();
 

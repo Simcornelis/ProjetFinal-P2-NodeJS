@@ -26,17 +26,15 @@ signinRouter.post("/", (req, res) => {
     .catch((error) => {
       req.session.email = email;
       req.session.error = error.message;
-      console.error("[ERROR] " + error);
+      console.error("[ERROR] " + error.stack);
       res.redirect("/signin");
     });
 });
 
 function verifyEmailInDB(email, collection) {
-  return new Promise((resolve, reject) => {
-    collection.findOne({ email: email }).then((found) => {
-      if (!found) reject(new Error("This email isn't registered yet."));
-      else resolve(found);
-    });
+  return collection.findOne({ email: email }).then((found) => {
+    if (!found) throw new Error("This email isn't registered yet.");
+    else return found;
   });
 }
 
@@ -53,10 +51,4 @@ function setUserSession(req, user, stayLoggedIn) {
   if (stayLoggedIn) req.session.cookie.maxAge = 3600000 * 48; // 2 days
 }
 
-function verifyIfConnected(req) {
-  return Boolean(req.session);
-}
-
-module.exports = {
-  signinRouter,
-};
+module.exports = { signinRouter };

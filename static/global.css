@@ -106,3 +106,7 @@ input:not([type="submit"]):focus {
   display: grid;
   place-items: center;
 }
+
+.hide {
+  display: none !important;
+}
