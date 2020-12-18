@@ -24,18 +24,18 @@
             <h1>Create a new game</h1>
 
             <h3>Instruction</h3>
-            <textarea name="instruction" id="instruction" rows="2"
+            <textarea name="instruction" id="instruction" rows="2" maxlength="150"
                 placeholder="Short instruction to display in a game..."></textarea>
 
             <h3>Description</h3>
-            <textarea name="description" id="description" rows="4"
+            <textarea name="description" id="description" rows="4"  maxlength="512"
                 placeholder="Description to help the player when he's lost..."></textarea>
 
             <h3>Categories (maximum 4)</h3>
             <div class="categories">
                 <div>
                     <input type="checkbox" id="category1" name="categories" onclick="checkBoxLimitation(4, this)"
-                        value="Cutlure" />
+                        value="Culture" />
                     <label for="category1">Culture</label>
                 </div>
                 <div>
