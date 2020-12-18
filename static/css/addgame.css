@@ -34,12 +34,6 @@ input[type="submit"] {
   margin-top: 30px;
 }
 
-#return {
-  position: absolute;
-  top: 15px;
-  left: 15px;
-}
-
 @media screen and (min-width: 600px) {
   form {
     padding: 50px;

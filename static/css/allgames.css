@@ -1,52 +1,58 @@
 .game-list {
   display: grid;
-  max-width: 500px;
-  width: 100%;
   gap: 10px;
-  margin: 50px;
+  width: 90%;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   color: var(--c-text-inverted);
 }
 
 game-box {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-rows: 3fr;
   gap: 5px;
   padding: 5px;
-  background: linear-gradient(120deg, #fff1, #fff3);
+  height: 200px;
+  background: white;
   cursor: pointer;
-}
-
-game-box > .game-id {
-  background: var(--f-transparent);
-  grid-column: 1 / 3;
 }
 
 game-box > .game-creator {
   background: var(--f-transparent);
-  grid-column: 3/5;
+  padding: 0 0.3em;
+  text-align: center;
 }
 
 game-box > .game-instruction {
+  word-break: break-all;
+  overflow: hidden;
   background: var(--f-transparent);
-  grid-column: 1/5;
+  padding: 0 0.3em;
 }
 
 game-box > .game-category {
   background: var(--f-transparent);
+  padding: 0 0.3em;
   text-align: center;
 }
 
-#return {
+h1 {
+  color: var(--c-text-inverted);
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  /* to match the button which has margin */
+  margin: -5px 0px 0px 5px;
+  width: calc(100% - 10px);
+  display: none;
   position: absolute;
-  top: 15px;
-  left: 15px;
+  background-color: #f1f1f1;
+  z-index: 1;
 }
 
 @media screen and (min-width: 600px) {
-  .game-list {
-    padding: 50px;
-    background: var(--f-transparent-inverted);
-    box-shadow: var(--s-short);
-    border-radius: 3px;
-  }
 }
