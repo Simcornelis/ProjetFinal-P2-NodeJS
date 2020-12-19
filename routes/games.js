@@ -36,7 +36,11 @@ gamesRouter.get("/allgames", (req, res, next) => {
 });
 
 gamesRouter.get("/addgame", (req, res, next) => {
-  res.render("addgame.html");
+  if (req.session.userID) {
+    res.render("addgame.html");
+  } else {
+    res.redirect("/signin");
+  }
 });
 
 gamesRouter.post("/addgame", (req, res, next) => {
