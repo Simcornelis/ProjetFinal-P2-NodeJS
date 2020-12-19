@@ -37,6 +37,16 @@ function initServer() {
     console.log("[LOG] Connected to database server");
     database = client.db(process.env.DATABASE_NAME);
 
+    database
+      .collection(process.env.DATABASE_PARTIES)
+      .deleteMany()
+      .catch(console.error); // Clear parties if server restarts
+
+    database
+      .collection(process.env.DATABASE_PLAYLISTS)
+      .deleteMany()
+      .catch(console.error); // Clear parties if server restarts
+
     module.exports = {
       minigamesCollection: database.collection(process.env.DATABASE_MINIGAMES),
       playlistsCollection: database.collection(process.env.DATABASE_PLAYLISTS),
