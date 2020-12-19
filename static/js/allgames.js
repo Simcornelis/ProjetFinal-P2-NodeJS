@@ -18,7 +18,6 @@ window.addEventListener("load", async () => {
   const categoriesFilter = document.querySelectorAll(".filter_category");
 
   async function getGames() {
-    console.log(userID);
     const gameList = document.getElementsByClassName("game-list")[0];
     clear();
     return fetch(
@@ -33,6 +32,7 @@ window.addEventListener("load", async () => {
         return response.json();
       })
       .then((games) => {
+        console.log(games);
         return games.forEach((gameData) => {
           const gameBox = document.createElement("game-box");
           gameBox.initialiseGameBox(gameData);

@@ -1,5 +1,4 @@
 const { Party } = require("../models/Party");
-const { Playlist } = require("../models/Playlist");
 const { server } = require("../server");
 const { Router } = require("express");
 const socketIO = require("socket.io");
@@ -78,7 +77,7 @@ io.on("connection", (socket) => {
     if (!partyCode) return;
 
     getPartyDB(partyCode, socket)
-      .then((party) => updateSettings(party, settings))
+      .then((party) => Object.assign(party, settings))
       .then(updatePartyDB)
       .catch((error) => handleError(error, socket));
   });
@@ -128,7 +127,7 @@ function informPlayers(party) {
   io.to(party.getAdmin().socketID).emit("you-are-admin");
   io.to(party.partyCode).emit("players-update", sortObject(party.getPlayers()));
   io.to(party.partyCode).emit("ready-players", party.getReadyPlayers());
-  console.log(party.getTeams()); // REMOVE
+  // console.log(party); // DEBUG
   return party;
 }
 
@@ -157,12 +156,15 @@ function sendNextGame(party, socket, oldGame) {
   }
 
   party.level++;
+  const endLevel = Math.min(party.maxGames, party.playlistMaxGames);
+  if (party.level > endLevel) return io.to(party.partyCode).emit("end");
+
   console.log(`[PARTY:${party.partyCode}] Level ${party.level}.`);
 
   const data = {
     level: party.level,
-    games: 25,
-    progress: 100 - (party.level / 25) * 100, // TODO change 25 to amount of games
+    games: endLevel,
+    progress: 100 - (party.level / endLevel) * 100,
     instruction:
       "Chacun dans le groupe fait " +
       party.level +
@@ -187,7 +189,7 @@ function sendSettings(party, socket) {
     throw new Error("You are not admin.");
   }
 
-  // TODO add player's playlists, playlistID/name, categories
+  // TODO add player's playlists, playlistID/name
   const settings = {
     partyCode: party.partyCode,
     maxGroups: party.maxGroups,
@@ -199,11 +201,6 @@ function sendSettings(party, socket) {
     .hogan("./private/party_settings.xml", settings)
     .then((html) => io.to(socket.id).emit("settings", html))
     .catch((error) => handleError(error, socket));
-}
-
-function updateSettings(party, settings) {
-  Object.assign(party, settings);
-  return party;
 }
 
 // --- database --- //

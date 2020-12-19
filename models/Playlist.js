@@ -16,8 +16,8 @@ class Playlist {
   }
 
   getGameIDs(playlist) {
-    const { minigamesCollection } = require("../server");
-    return minigamesCollection
+    const { gamesCollection } = require("../server");
+    return gamesCollection
       .find()
       .limit(25)
       .map((game) => game._id)
@@ -35,7 +35,12 @@ class Playlist {
     const { partiesCollection } = require("../server");
     partiesCollection.updateOne(
       { partyCode: playlistInDB.ops[0].partyCode },
-      { $set: { playlistID: playlistInDB.insertedId } }
+      {
+        $set: {
+          playlistID: playlistInDB.insertedId,
+          playlistMaxGames: playlistInDB.ops[0].gameIDs.length,
+        },
+      }
     );
   }
 }

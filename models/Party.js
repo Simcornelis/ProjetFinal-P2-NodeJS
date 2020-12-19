@@ -4,6 +4,7 @@ class Party {
   partyCode;
   level;
   playlistID;
+  playlistMaxGames;
   players;
   maxGroups;
   maxGames;
@@ -134,23 +135,20 @@ class Party {
 class Player {
   socketID;
   pseudo;
-  online;
   team;
   userID;
+  online;
   ready;
 
   /**
    * @param {socketId} socketID socket.io module id of the player
-   * @param {string} pseudo
-   * @param {string} team
+   * @param {String} pseudo
+   * @param {String} team
    * @param {ObjectId} userID mongodb ObjectId if the user is registered
    */
   constructor(socketID, pseudo, team, userID) {
-    this.socketID = socketID;
-    this.pseudo = pseudo;
+    Object.assign(this, { socketID, pseudo, team, userID });
     this.online = true;
-    this.team = team;
-    this.userID = userID;
     this.ready = false;
   }
 }

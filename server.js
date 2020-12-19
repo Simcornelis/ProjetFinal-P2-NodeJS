@@ -48,7 +48,7 @@ function initServer() {
       .catch(console.error); // Clear parties if server restarts
 
     module.exports = {
-      minigamesCollection: database.collection(process.env.DATABASE_MINIGAMES),
+      gamesCollection: database.collection(process.env.DATABASE_GAMES),
       playlistsCollection: database.collection(process.env.DATABASE_PLAYLISTS),
       partiesCollection: database.collection(process.env.DATABASE_PARTIES),
       usersCollection: database.collection(process.env.DATABASE_USERS),

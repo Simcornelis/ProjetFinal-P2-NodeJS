@@ -119,10 +119,11 @@ window.addEventListener("load", async () => {
     location.reload();
   });
 
-  socket.on("back-to-party", (toClose) => {
-    document.getElementById(toClose).remove();
-    main.firstElementChild.style = "";
-    footer.classList.remove("game");
+  socket.on("back-to-party", backToParty);
+
+  socket.on("end", () => {
+    backToParty("gamePage");
+    alert("You reached the end of the game!"); // TODO make a better ending
   });
 
   footer.addEventListener("click", () => socket.emit("get-playlist", userID));
@@ -171,6 +172,12 @@ window.addEventListener("load", async () => {
     document.getElementById("end").onclick = () => {
       socket.emit("back-to-party", partyCode, "gamePage");
     };
+  }
+
+  function backToParty(toClose) {
+    document.getElementById(toClose).remove();
+    main.firstElementChild.style = "";
+    footer.classList.remove("game");
   }
 
   // --- game settings --- //
