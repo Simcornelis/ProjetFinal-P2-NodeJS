@@ -1,0 +1,72 @@
+[
+    {
+        "_id": "5fde1ad85b4af34194771b41",
+        "email": "master@user.env",
+        "pseudo": "MASTER",
+        "password": "masterUSER1",
+        "ppic": "https://i.pinimg.com/736x/8a/87/3d/8a873d04bd783762f36297a92048ea90--funny-dog-costumes-fun-halloween-costumes.jpg"
+    },
+    {
+        "_id": "0123456789abcdef00000001",
+        "email": "marc.dupont05@gmail.com",
+        "pseudo": "Marc",
+        "password": "MARCdupont05",
+        "ppic": "https://images.unsplash.com/photo-1604172928641-a0a9f86e708d?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=256&ixlib=rb-1.2.1&q=80&w=256"
+    },
+    {
+        "_id": "0123456789abcdef00000002",
+        "email": "jasiemallier@hotmail.com",
+        "pseudo": "Jasie",
+        "password": "JAJAmalsie0901",
+        "ppic": "https://images.unsplash.com/photo-1603291999682-8c0522eed67c?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=256&ixlib=rb-1.2.1&q=80&w=256"
+    },
+    {
+        "_id": "0123456789abcdef00000003",
+        "email": "mariegramme.aupoid@bepost.be",
+        "pseudo": "Marie-Edwige",
+        "password": "Kilogramme666",
+        "ppic": "https://images.unsplash.com/photo-1603115728334-9908cb3d6e90?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=256&ixlib=rb-1.2.1&q=80&w=256"
+    },
+    {
+        "_id": "0123456789abcdef00000004",
+        "email": "jeancastex@gmail.com",
+        "pseudo": "Antoine-Daniel",
+        "password": "Samuelle69",
+        "ppic": "https://images.unsplash.com/photo-1603561939221-23dce831ccd0?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=256&ixlib=rb-1.2.1&q=80&w=256"
+    },
+    {
+        "_id": "0123456789abcdef00000005",
+        "email": "pierrecurie@hotmail.com",
+        "pseudo": "Marie",
+        "password": "ViveLaChimie0",
+        "ppic":"https://images.unsplash.com/photo-1603947856288-272b08a5feab?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=256&ixlib=rb-1.2.1&q=80&w=256"
+    },
+    {
+        "_id": "0123456789abcdef00000006",
+        "email": "spiker.mike@gmail.com",
+        "pseudo": "Mike",
+        "password": "SpikySpike68",
+        "ppic": "https://images.unsplash.com/photo-1603039998320-20c0b2d14ea8?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=256&ixlib=rb-1.2.1&q=80&w=256"
+    },
+    {
+        "_id": "0123456789abcdef00000007",
+        "email": "maryline.monroe@skynet.be",
+        "pseudo": "Maryline",
+        "password": "LaBIGStar89",
+        "ppic": "https://images.unsplash.com/photo-1602933542414-63ef186251c6?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=256&ixlib=rb-1.2.1&q=80&w=256"
+    },
+    {
+        "_id": "0123456789abcdef00000008",
+        "email": "mileneau.george@gmail.com",
+        "pseudo": "George",
+        "password": "milleMille1000",
+        "ppic":"https://images.unsplash.com/photo-1603240528723-aca9a92a58e4?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=256&ixlib=rb-1.2.1&q=80&w=256"
+    },
+    {
+        "_id": "0123456789abcdef00000009",
+        "email": "bob@quinch.fr",
+        "pseudo": "Bob",
+        "password": "BibbidiB0bbibiB00",
+        "ppic":"https://images.unsplash.com/photo-1603250256594-48dbcf784af8?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=256&ixlib=rb-1.2.1&q=80&w=256"
+    }
+    ]
