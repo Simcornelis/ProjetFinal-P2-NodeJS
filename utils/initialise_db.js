@@ -25,6 +25,11 @@ MongoClient.connect(async (err, client) => {
   db = client.db(process.env.DATABASE_NAME);
   linkCollectionVariables();
   createMiniGamesCollection()
+    .then(() => createUsersCollection())
+    .then(() => usersCollection.insertMany(require("./users.json")))
+    .then(() => console.log("[LOG] Inserted users"))
+    .then(() => minigamesCollection.insertMany(require("./games.json")))
+    .then(() => console.log("[LOG] Inserted minigames"))
     .then(() => client.close())
     .then(() => console.log("[LOG] Database server closed."))
     .catch((err) => console.error(`[ERROR] Database server error: ${err}`));
@@ -48,5 +53,17 @@ function createMiniGamesCollection() {
       categories: "text",
     },
     { default_language: "english" }
+  );
+}
+
+function createUsersCollection() {
+  return usersCollection.createIndex(
+    {
+      _id: "text",
+      email: "text",
+      pseudo: "text",
+      password: "text",
+      ppic: "text",
+    }
   );
 }

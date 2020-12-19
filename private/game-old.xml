@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<div>
-  <h1 style="color:white">This is a game</h1>
-  <h3 style="color:white">Eat {{ level }} tomatoes!</h3>
-  <button hidden="" class="admin" id="next">Next game</button>
-  <button hidden="" class="admin" id="end">End game</button>
-</div>

@@ -36,8 +36,7 @@ window.addEventListener("load", async () => {
 
   function submitNewUser() {
     if (!username && !usernameInput.value) return alert("Enter an username.");
-    if (!username)
-      username = usernameInput.value.replace(/🟢|👑|✋/g, "").trim();
+    if (!username) username = usernameInput.value.replace(/🟢|👑/g, "").trim();
     socket.emit("new-user", partyCode, username, userID);
     if (pseudo) pseudo.remove();
     actions.forEach((elem) => elem.classList.remove("hide"));
@@ -126,13 +125,13 @@ window.addEventListener("load", async () => {
     footer.classList.remove("game");
   });
 
-  footer.addEventListener("click", () => socket.emit("get-playlist"));
+  footer.addEventListener("click", () => socket.emit("get-playlist", userID));
   socket.on("playlists", (playlists) => {
     console.log(playlists);
   });
 
   function addPlayer(player, _team) {
-    const isMe = player.replace(/🟢|👑|✋/g, "").trim() === username;
+    const isMe = player.replace(/🟢|👑/g, "").trim() === username;
     players.push(player);
     let _player = document.createElement("h4");
     _player.innerText = player;
@@ -182,6 +181,8 @@ window.addEventListener("load", async () => {
     const gamesSlider = document.getElementById("maxGames");
     const gamesSpan = document.getElementById("nGames");
 
+    const categorySelect = document.querySelector("#new-playlist > select");
+
     const myButton = document.getElementById("myPlaylists");
     const myPlaylists = document.getElementById("my-playlists");
     const newButton = document.getElementById("newPlaylist");
@@ -189,8 +190,19 @@ window.addEventListener("load", async () => {
 
     const saveButton = document.getElementById("save-settings");
 
+    // init
+
     updateGroups();
     updateGames();
+
+    const cat = Array.from(categorySelect.options).map((html) => html.value);
+    const optionIndex = cat.findIndex(
+      (option) => option === categorySelect.dataset.selected
+    );
+    if (optionIndex >= 0) categorySelect.selectedIndex = optionIndex;
+    if (categorySelect.dataset.selected) showNewPlaylists();
+
+    // actions
 
     groupsSlider.addEventListener("change", updateGroups);
     function updateGroups() {
@@ -204,23 +216,26 @@ window.addEventListener("load", async () => {
       else gamesSpan.innerText = gamesSlider.value;
     }
 
-    myButton.onclick = () => {
+    myButton.onclick = showMyPlaylists;
+    function showMyPlaylists() {
       myButton.classList.add("green");
       myPlaylists.classList.remove("hide");
       newButton.classList.remove("green");
       newPlaylist.classList.add("hide");
-    };
+    }
 
-    newButton.onclick = () => {
+    newButton.onclick = showNewPlaylists;
+    function showNewPlaylists() {
       myButton.classList.remove("green");
       myPlaylists.classList.add("hide");
       newButton.classList.add("green");
       newPlaylist.classList.remove("hide");
-    };
+    }
 
     saveButton.onclick = () => {
       const settings = {
         // TODO add playlistID
+        category: categorySelect[categorySelect.selectedIndex].text,
         maxGroups: groupsSlider.value,
         maxGames: gamesSlider.value,
       };

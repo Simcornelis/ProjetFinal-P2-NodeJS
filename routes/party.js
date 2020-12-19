@@ -4,6 +4,7 @@ const { server } = require("../server");
 const { Router } = require("express");
 const socketIO = require("socket.io");
 const consolidate = require("consolidate");
+const { ObjectId } = require("mongodb");
 
 const partyRouter = new Router();
 const io = socketIO(server);
@@ -18,7 +19,7 @@ partyRouter.get("/:partyCode?", (req, res, next) => {
 });
 
 io.on("connection", (socket) => {
-  const { partiesCollection, minigamesCollection } = require("../server.js");
+  const { partiesCollection, playlistsCollection } = require("../server.js");
 
   socket.on("new-user", (partyCode, username, userID, team) => {
     if (!partyCode || !username) return;
@@ -82,13 +83,12 @@ io.on("connection", (socket) => {
       .catch((error) => handleError(error, socket));
   });
 
-  socket.on("get-playlist", (filter, categories) => {
-    minigamesCollection
-      .find()
+  socket.on("get-playlist", (userID) => {
+    playlistsCollection
+      .find({ creatorID: userID })
+      .map((playlist) => playlist.title)
       .toArray()
-      .then((ret) => console.log(ret));
-    const pl = new Playlist("Cool", "zebi", "me");
-    socket.emit("playlists", pl);
+      .then((playlists) => socket.emit("playlists", playlists));
   });
 
   socket.on("disconnect", () => {
@@ -191,6 +191,7 @@ function sendSettings(party, socket) {
   const settings = {
     partyCode: party.partyCode,
     maxGroups: party.maxGroups,
+    category: party.category,
     maxGames: party.maxGames,
   };
 
@@ -201,8 +202,7 @@ function sendSettings(party, socket) {
 }
 
 function updateSettings(party, settings) {
-  party.maxGroups = settings.maxGroups;
-  party.maxGames = settings.maxGames;
+  Object.assign(party, settings);
   return party;
 }
 
@@ -233,17 +233,25 @@ function getPartyDB(partyCode, socket) {
 }
 
 function getUserPartiesDB(socket) {
-  const { partiesCollection } = require("../server.js");
+  const { partiesCollection } = require("../server");
   return partiesCollection.find({
     players: { $elemMatch: { socketID: socket } },
   });
 }
 
 function removePartyDB(party) {
-  const { partiesCollection } = require("../server.js");
+  const { partiesCollection } = require("../server");
+  removePlaylistDB(party);
   partiesCollection
     .deleteOne({ partyCode: party.partyCode })
-    .catch((error) => handleError(error, socket));
+    .catch(handleError);
+}
+
+function removePlaylistDB(party) {
+  const { playlistsCollection } = require("../server");
+  playlistsCollection
+    .deleteOne({ _id: ObjectId(party.playlistID) })
+    .catch(handleError);
 }
 
 // --- utilities --- //
