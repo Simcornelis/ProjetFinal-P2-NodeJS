@@ -1,18 +1,15 @@
 const dotenv = require("dotenv");
-const mongodb = require("mongodb");
+const { ObjectId, MongoClient } = require("mongodb");
 
 if (dotenv.config().error) throw new Error("Error while parsing .env file.");
 
-const MongoClient = new mongodb.MongoClient(
+const MongoClient = new MongoClient(
   `mongodb://${process.env.DATABASE_HOSTNAME}:${process.env.DATABASE_PORT}`,
   { useUnifiedTopology: true }
 );
 
-let db;
-let usersCollection; // REMOVE excess
-let minigamesCollection;
-let playlistsCollection;
-let partiesCollection;
+const db = client.db(process.env.DATABASE_NAME);
+const minigamesCollection = db.collection(process.env.DATABASE_MINIGAMES);
 
 MongoClient.connect(async (err, client) => {
   if (err) {
@@ -21,26 +18,20 @@ MongoClient.connect(async (err, client) => {
   }
 
   console.log("[LOG] Connected to database server");
-  client.db(process.env.DATABASE_NAME).dropDatabase(); //reset
-  db = client.db(process.env.DATABASE_NAME);
-  linkCollectionVariables();
-  createMiniGamesCollection()
-    .then(() => createUsersCollection())
-    .then(() => usersCollection.insertMany(require("./users.json")))
+  db.dropDatabase() // reset database
+    .then(createMiniGamesCollection)
+    .then(() =>
+      minigamesCollection.insertMany(assignObjectId(require("./users.json")))
+    )
     .then(() => console.log("[LOG] Inserted users"))
-    .then(() => minigamesCollection.insertMany(require("./games.json")))
+    .then(() =>
+      minigamesCollection.insertMany(assignObjectId(require("./games.json")))
+    )
     .then(() => console.log("[LOG] Inserted minigames"))
     .then(() => client.close())
     .then(() => console.log("[LOG] Database server closed."))
     .catch((err) => console.error(`[ERROR] Database server error: ${err}`));
 });
-
-function linkCollectionVariables() {
-  usersCollection = db.collection(process.env.DATABASE_USERS);
-  minigamesCollection = db.collection(process.env.DATABASE_MINIGAMES);
-  playlistsCollection = db.collection(process.env.DATABASE_PLAYLISTS);
-  partiesCollection = db.collection(process.env.DATABASE_PARTIES);
-}
 
 function createMiniGamesCollection() {
   return minigamesCollection.createIndex(
@@ -56,14 +47,8 @@ function createMiniGamesCollection() {
   );
 }
 
-function createUsersCollection() {
-  return usersCollection.createIndex(
-    {
-      _id: "text",
-      email: "text",
-      pseudo: "text",
-      password: "text",
-      ppic: "text",
-    }
+function assignObjectId(collection) {
+  return collection.map(
+    (game) => Object.assign(game, { _id: ObjectId(game._id) }) // String to mongo's ObjectId
   );
 }
