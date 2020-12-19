@@ -34,7 +34,7 @@
 
             <h5>Change profile picture</h5>
             <label for="browse">Choose picture</label>
-            <input hidden type="file" name="file" id="browse" accept="image/*" onchange="previewFile()">
+            <input type="file" name="file" id="browse" accept="image/*" onchange="previewFile()">
             <button onclick="sendFile()">Save</button>
             <button onclick="deleteFile()">Delete</button>
             <img src="{{userppic}}" id="ppic" alt="Profile picture">
