@@ -1,3 +1,5 @@
+const { Playlist } = require("./Playlist");
+
 class Party {
   partyCode;
   level;
@@ -7,20 +9,20 @@ class Party {
   maxGames;
 
   /**
-   * @param {string} partyCode the sharable code to join the party
+   * @param {String} partyCode the sharable code to join the party
    * @param {Array} players array containing all the players
    */
-  constructor(partyCode, players) {
+  constructor(partyCode) {
     this.partyCode = partyCode; // TODO "|| randomCode()"
     this.level = 0;
-    this.playlistID = ""; // TODO link playlists
-    this.players = players || [];
+    this.players = [];
     this.maxGroups = 10;
     this.maxGames = 15;
+    if (partyCode) new Playlist(`${partyCode}'s games`, partyCode);
   }
 
   connect(socketID, pseudo, userID) {
-    pseudo = pseudo.replace(/🟢|👑|✋/g, "").trim(); // match all info emojis
+    pseudo = pseudo.replace(/🟢|👑/g, "").trim(); // match all info emojis
     if (!userID)
       return this.players.push(
         new Player(socketID, pseudo, this.team(), userID)

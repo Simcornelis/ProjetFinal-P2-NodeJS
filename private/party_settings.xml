@@ -38,11 +38,14 @@
 
 	<div class="playlist hide" id="new-playlist">
 		<h2>Create new playlist</h2>
-		<input type="text" placeholder="Search..." />
-		<select>
-			<option>Dynamique</option>
-			<option>Questions existentielles</option>
-			<option>Pour les jeunes</option>
+		<select data-selected="{{ category }}">
+			<option>Culture</option>
+			<option>Action</option>
+			<option>Reflexion</option>
+			<option>Sport</option>
+			<option>Truth</option>
+			<option>Game</option>
+			<option>Constraint</option>
 		</select>
 	</div>
 
