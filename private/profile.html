@@ -17,16 +17,16 @@
 <body class="center">
     <main class="center-content">
         <div>
-            <h1>Profile of {{session.pseudo}}</h1>
+            <h1>Profile of {{userPseudo}}</h1>
 
             <h5>Pseudo</h5>
-            <h3 id="pseudo">{{session.pseudo}}</h3>
+            <h3 id="pseudo">{{userPseudo}}</h3>
 
             <h5>Email address</h5>
-            <h3 id="email">{{session.email}}</h3>
+            <h3 id="email">{{userEmail}}</h3>
 
-            <h5>My games</h5>
-            <h3></h3>
+            <button id="mygames" onclick="window.location.href = '../games/allgames?userID_query={{userID}}'">My Games</button>
+            <button id="myplaylists">My PLayLists</button>
 
             <h5>Change pseudo</h5>
             <input type="text" id="sendPseudo"></input>
@@ -37,7 +37,7 @@
             <input hidden type="file" name="file" id="browse" accept="image/*" onchange="previewFile()">
             <button onclick="sendFile()">Save</button>
             <button onclick="deleteFile()">Delete</button>
-            <img src="{{session.ppic}}" id="ppic" alt="Profile picture">
+            <img src="{{userppic}}" id="ppic" alt="Profile picture">
         </div>
 
     </main>

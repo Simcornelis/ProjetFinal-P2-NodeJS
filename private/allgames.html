@@ -15,6 +15,11 @@
     <script defer src="/js/allgames.js"></script>
 
     <title>All games</title>
+
+    <script>
+        let userID = "{{ userID }}"
+        let userName = "{{ userName }}"
+    </script>
 </head>
 
 <body>
@@ -26,37 +31,37 @@
                 <div>
                     <input class="filter_category" type="checkbox" id="category1" name="categories" 
                         value="Culture" />
-                    <label for="category1">Culture</label>
+                    <label for="category1">📚 Culture</label>
                 </div>
                 <div>
                     <input class="filter_category" type="checkbox" id="category2" name="categories" 
                         value="Action" />
-                    <label for="category2">Action</label>
+                    <label for="category2">🐱‍🏍 Action</label>
                 </div>
                 <div>
                     <input class="filter_category" type="checkbox" id="category3" name="categories" 
                         value="Reflexion" />
-                    <label for="category3">Reflexion</label>
+                    <label for="category3">🧩 Reflexion</label>
                 </div>
                 <div>
                     <input class="filter_category" type="checkbox" id="category4" name="categories"
                         value="Sport" />
-                    <label for="category4">Sport</label>
+                    <label for="category4">🏀 Sport</label>
                 </div>
                 <div>
                     <input class="filter_category" type="checkbox" id="category5" name="categories" 
                         value="Truth" />
-                    <label for="category5">Truth</label>
+                    <label for="category5">🙊 Truth</label>
                 </div>
                 <div>
                     <input class="filter_category" type="checkbox" id="category6" name="categories" 
                         value="Game" />
-                    <label for="category6">Game</label>
+                    <label for="category6">🎲 Game</label>
                 </div>
                 <div>
                     <input class="filter_category" type="checkbox" id="category7" name="categories" 
                         value="Constraint" />
-                    <label for="category7">Constraint</label>
+                    <label for="category7">👿 Constraint</label>
                 </div>
             </div>
         </div>
@@ -70,7 +75,12 @@
     </header>
 
     <main class="center-content">
-        <h1>All games</h1>
+        {{#userID}}
+        <h1>Games of {{userName}}</h1>
+        {{/userID}}
+        {{^userID}}
+        <h1>All Games</h1>
+        {{/userID}}
         <div class="game-list">
             <!-- game-box create through javascript-->
         </div>

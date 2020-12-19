@@ -29,7 +29,10 @@ gamesRouter.get("/gamedata/:id?", (req, res, next) => {
 });
 
 gamesRouter.get("/allgames", (req, res, next) => {
-  res.render("allgames.html");
+  res.render("allgames.html", {
+    userID: req.query.userID_query,
+    userName: req.session.pseudo,
+  });
 });
 
 gamesRouter.get("/addgame", (req, res, next) => {
@@ -41,7 +44,7 @@ gamesRouter.post("/addgame", (req, res, next) => {
   minigamesCollection.insertOne(
     new game.Game(
       req.session.pseudo,
-      req.session._id,
+      req.session.userID,
       req.body.instruction,
       req.body.description,
       req.body.categories
@@ -52,57 +55,101 @@ gamesRouter.post("/addgame", (req, res, next) => {
 });
 
 gamesRouter.get("/findgames", async (req, res, next) => {
-  const minigamesCollection = require("../server.js").minigamesCollection;
   let searchQuery = req.query.search_query;
   let filterQuery = req.query.filter_query;
+  let userIDQuery = req.query.userID_query;
   if (!filterQuery && !searchQuery) {
-    return res.json(await minigamesCollection.find({}).toArray());
+    return getAllGames(userIDQuery)
+      .then((found) => res.json(found))
+      .catch((err) => res.status(400).json({ Error: err.toString() }));
   } else {
     if (filterQuery && !searchQuery) {
-      return getFilteredGames(filterQuery)
+      return getFilteredGames(filterQuery, userIDQuery)
         .then((found) => res.json(found))
         .catch((err) => res.status(400).json({ Error: err.toString() }));
     } else if (searchQuery && !filterQuery) {
-      return getSearchedGames(searchQuery)
+      return getSearchedGames(searchQuery, userIDQuery)
         .then((found) => res.json(found))
         .catch((err) => res.status(400).json({ Error: err.toString() }));
     } else {
-      return getFilteredSearchedGames(filterQuery, searchQuery)
+      return getFilteredSearchedGames(filterQuery, searchQuery, userIDQuery)
         .then((found) => res.json(found))
         .catch((err) => res.status(400).json({ Error: err.toString() }));
     }
   }
 });
 
-function getSearchedGames(searchQuery) {
+function getAllGames(userIDQuery) {
   const minigamesCollection = require("../server.js").minigamesCollection;
-  return minigamesCollection
-    .find(
-      { $text: { $search: searchQuery, $language: "en" } },
-      { score: { $meta: "textScore" } }
-    )
-    .sort({ score: { $meta: "textScore" } })
-    .toArray();
+  if (userIDQuery) {
+    return minigamesCollection.find({ creatorID: userIDQuery }).toArray();
+  } else {
+    return minigamesCollection.find().toArray();
+  }
 }
 
-function getFilteredGames(filterQuery) {
+function getSearchedGames(searchQuery, userIDQuery) {
   const minigamesCollection = require("../server.js").minigamesCollection;
-  let selectedCategories = filterQuery.split(",");
-  return minigamesCollection
-    .find({ categories: { $all: selectedCategories } })
-    .toArray();
+  if (userIDQuery) {
+    return minigamesCollection
+      .find(
+        {
+          creatorID: userIDQuery,
+          $text: { $search: searchQuery, $language: "en" },
+        },
+        { score: { $meta: "textScore" } }
+      )
+      .sort({ score: { $meta: "textScore" } })
+      .toArray();
+  } else {
+    return minigamesCollection
+      .find(
+        { $text: { $search: searchQuery, $language: "en" } },
+        { score: { $meta: "textScore" } }
+      )
+      .sort({ score: { $meta: "textScore" } })
+      .toArray();
+  }
 }
 
-function getFilteredSearchedGames(filterQuery, searchQuery) {
+function getFilteredGames(filterQuery, userIDQuery) {
   const minigamesCollection = require("../server.js").minigamesCollection;
   let selectedCategories = filterQuery.split(",");
-  return minigamesCollection
-    .find({
-      categories: { $all: selectedCategories },
-      $text: { $search: searchQuery, $language: "en" },
-    })
-    .sort({ score: { $meta: "textScore" } })
-    .toArray();
+  if (userIDQuery) {
+    return minigamesCollection
+      .find({
+        creatorID: userIDQuery,
+        categories: { $all: selectedCategories },
+      })
+      .toArray();
+  } else {
+    return minigamesCollection
+      .find({ categories: { $all: selectedCategories } })
+      .toArray();
+  }
+}
+
+function getFilteredSearchedGames(filterQuery, searchQuery, userIDQuery) {
+  const minigamesCollection = require("../server.js").minigamesCollection;
+  let selectedCategories = filterQuery.split(",");
+  if (userIDQuery) {
+    return minigamesCollection
+      .find({
+        creatorID: userIDQuery,
+        categories: { $all: selectedCategories },
+        $text: { $search: searchQuery, $language: "en" },
+      })
+      .sort({ score: { $meta: "textScore" } })
+      .toArray();
+  } else {
+    return minigamesCollection
+      .find({
+        categories: { $all: selectedCategories },
+        $text: { $search: searchQuery, $language: "en" },
+      })
+      .sort({ score: { $meta: "textScore" } })
+      .toArray();
+  }
 }
 
 module.exports = {
