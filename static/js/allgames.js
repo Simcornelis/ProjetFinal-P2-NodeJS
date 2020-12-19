@@ -18,13 +18,16 @@ window.addEventListener("load", async () => {
   const categoriesFilter = document.querySelectorAll(".filter_category");
 
   async function getGames() {
+    console.log(userID);
     const gameList = document.getElementsByClassName("game-list")[0];
     clear();
     return fetch(
       "/games/findgames?search_query=" +
         searchQuery +
         "&filter_query=" +
-        selectedCategories
+        selectedCategories +
+        "&userID_query=" +
+        userID
     )
       .then((response) => {
         return response.json();
@@ -78,6 +81,7 @@ window.addEventListener("load", async () => {
     } else {
       searchQuery = "";
       searchButton.innerText = "search";
+      searchBar.firstElementChild.value = "";
       getGames();
     }
   });

@@ -10,11 +10,37 @@ profileRouter.use(express.json());
 profileRouter.get("/", (req, res) => {
   if (req.session.userID) {
     return res.render("profile.html", {
-      session: req.session,
+      userPseudo: req.session.pseudo,
+      userEmail: req.session.email,
+      userID: req.session.userID,
+      userppic: req.session.ppic,
     });
   }
   return res.redirect("/signin");
 });
+
+profileRouter.get("/:id?", (req, res, next) => {
+  userID = ObjectId(req.params.id);
+  console.log(userID);
+  if (userID === req.session.userID) {
+    res.redirect("/profile");
+  } else {
+    return getUserData(userID).then((userData) => {
+      console.log(userData);
+      res.render("profile.html", {
+        userPseudo: userData.pseudo,
+        userEmail: userData.email,
+        userID: userID,
+        userppic: userData.ppic,
+      });
+    });
+  }
+});
+
+async function getUserData(userID) {
+  const usersCollection = require("../server.js").usersCollection;
+  return usersCollection.findOne({ _id: userID });
+}
 
 profileRouter.put("/pseudo", (req, res, next) => {
   const usersCollection = require("../server.js").usersCollection;
