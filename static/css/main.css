@@ -1,7 +1,7 @@
 .account {
   display: flex;
   gap: 15px;
-  color: var(--c-text-inverted);
+  color: var(--c-text);
 }
 
 .menu {
@@ -14,13 +14,4 @@
 
 .menu > h1 {
   text-align: center;
-}
-
-@media screen and (min-width: 600px) {
-  .menu {
-    padding: 50px;
-    background: var(--f-transparent-inverted);
-    box-shadow: var(--s-short);
-    border-radius: 3px;
-  }
 }

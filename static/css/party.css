@@ -60,13 +60,6 @@ div.team > div > h4 + h4 {
 }
 
 @media screen and (min-width: 600px) {
-  main > div {
-    padding: 50px;
-    background: var(--f-transparent-inverted);
-    box-shadow: var(--s-short);
-    border-radius: 3px;
-  }
-
   #players-list {
     /* Tries to maximise the cols with 40% being the min width (auto-fit to let it grow) */
     grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));

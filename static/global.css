@@ -1,18 +1,18 @@
 :root {
   --c-accent: rgb(51, 135, 214);
 
-  --c-text: #333;
-  --c-text-inverted: #fff;
+  --c-text: #fff;
+  --c-text-inverted: #213853;
 
   --s-short: 1px 1px 3px #0005;
   --s-normal: 3px 3px 7px #0005;
   --s-long: 5px 5px 7px #0005;
 
-  --f-gradient: linear-gradient(120deg, #537895 0%, #09203f 100%);
+  --f-gradient: linear-gradient(120deg, #3e5a79, #203853, #5c326b);
   --f-gradient2: linear-gradient(120deg, #96deda 0%, #50c9c3 100%);
 
-  --f-transparent: #0005;
-  --f-transparent-inverted: #fff1;
+  --f-transparent: #283b4dcc;
+  --f-transparent-inverted: #fffa;
 
   font-family: Poppins, Roboto, sans-serif;
   color: var(--c-text);
@@ -22,6 +22,8 @@ html {
   height: 100%;
   background: var(--f-gradient);
   background-attachment: fixed;
+  background-size: 400% 400%;
+  animation: animGradient 120s ease-in-out infinite alternate;
 }
 
 body {
@@ -42,6 +44,16 @@ footer {
 
 main {
   width: 100%;
+}
+
+canvas {
+  opacity: 0.3;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
 }
 
 /* Global elements */
@@ -82,13 +94,16 @@ input[type="submit"]:active {
   box-shadow: var(--s-normal);
 }
 
+textarea,
 input:not([type="submit"]) {
   padding: 1em;
   margin: 5px;
   background: var(--f-transparent);
   border: none;
   border-radius: 3px;
-  color: var(--c-text-inverted);
+  color: var(--c-text);
+  font-family: inherit;
+  resize: vertical; /* for textarea */
 }
 
 button:focus,
@@ -100,6 +115,20 @@ input:not([type="submit"]):focus {
   box-shadow: inset 0 0 1px var(--c-text-inverted);
 }
 
+main > div,
+main > form {
+  background: var(--f-transparent-inverted);
+  border-radius: 3px;
+}
+
+@media screen and (min-width: 600px) {
+  main > div,
+  main > form {
+    padding: 50px;
+    box-shadow: var(--s-short);
+  }
+}
+
 /* Properties */
 
 .center-content {
@@ -109,4 +138,15 @@ input:not([type="submit"]):focus {
 
 .hide {
   display: none !important;
+}
+
+/* Animations */
+
+@keyframes animGradient {
+  from {
+    background-position: 0%;
+  }
+  to {
+    background-position: 100%;
+  }
 }
