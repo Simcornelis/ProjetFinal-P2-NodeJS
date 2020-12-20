@@ -32,19 +32,10 @@ div.oneline {
 }
 
 main > p {
-  color: var(--c-text-inverted);
+  color: var(--c-text);
   opacity: 0.4;
 }
 
 main > p > a {
   color: inherit;
-}
-
-@media screen and (min-width: 600px) {
-  form {
-    padding: 50px;
-    background: var(--f-transparent-inverted);
-    box-shadow: var(--s-short);
-    border-radius: 3px;
-  }
 }

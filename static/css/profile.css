@@ -30,12 +30,3 @@ img {
   max-width: 200px;
   margin-left: 150px;
 }
-
-@media screen and (min-width: 600px) {
-  .title {
-    padding: 50px;
-    background: var(--f-transparent-inverted);
-    box-shadow: var(--s-short);
-    border-radius: 3px;
-  }
-}

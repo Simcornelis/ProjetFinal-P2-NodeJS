@@ -2,16 +2,16 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
-  <link rel="stylesheet" href="/global.css">
-  <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/css/profile.css">
 
-  <script src="/js/profile.js"></script>
+    <script src="/js/profile.js"></script>
 
-  <title>Profile</title>
+    <title>Profile</title>
 </head>
 
 <body class="center">
@@ -25,7 +25,8 @@
             <h5>Email address</h5>
             <h3 id="email">{{userEmail}}</h3>
 
-            <button id="mygames" onclick="window.location.href = '../games/allgames?userID_query={{userID}}'">My Games</button>
+            <button id="mygames" onclick="window.location.href = '../games/allgames?userID_query={{userID}}'">My
+                Games</button>
             <button id="myplaylists">My PLayLists</button>
 
             <h5>Change pseudo</h5>
@@ -41,6 +42,9 @@
         </div>
 
     </main>
+
+    <canvas class="animate"></canvas>
+    <script defer src="/js/particles.js"></script>
 </body>
 
 </html>

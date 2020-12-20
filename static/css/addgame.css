@@ -9,16 +9,6 @@ form > h1 {
   margin-top: 0;
 }
 
-textarea {
-  padding: 5px;
-  margin: 0px 5px;
-  resize: vertical;
-  background: var(--f-transparent);
-  color: var(--c-text-inverted);
-  font-family: inherit;
-  border: none;
-}
-
 h1,
 h3 {
   padding: 0;
@@ -32,13 +22,4 @@ div.categories {
 
 input[type="submit"] {
   margin-top: 30px;
-}
-
-@media screen and (min-width: 600px) {
-  form {
-    padding: 50px;
-    background: var(--f-transparent-inverted);
-    box-shadow: var(--s-short);
-    border-radius: 3px;
-  }
 }
