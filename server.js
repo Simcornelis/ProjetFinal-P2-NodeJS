@@ -44,8 +44,8 @@ function initServer() {
 
     database
       .collection(process.env.DATABASE_PLAYLISTS)
-      .deleteMany()
-      .catch(console.error); // Clear parties if server restarts
+      .deleteMany({ creatorID: null })
+      .catch(console.error); // Clear unsaved playlists if server restarts
 
     module.exports = {
       gamesCollection: database.collection(process.env.DATABASE_GAMES),

@@ -19,6 +19,7 @@ class Party {
     this.players = [];
     this.maxGroups = 10;
     this.maxGames = 15;
+    this.playlistMaxGames = 200;
     if (partyCode) new Playlist(`${partyCode}'s games`, partyCode);
   }
 

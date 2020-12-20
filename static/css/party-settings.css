@@ -1,0 +1,37 @@
+#settingsPage > div {
+  display: grid;
+  gap: 15px;
+}
+
+div.playlist {
+  margin: 5px;
+  display: grid;
+  background: var(--f-transparent-inverted);
+  box-shadow: var(--s-short);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+div.playlist > h2 {
+  background: var(--f-transparent-inverted);
+  margin: 0;
+}
+
+div.playlist > select {
+  padding: 1em;
+  margin: 5px;
+  color: var(--c-text-inverted);
+  background: var(--f-transparent-inverted);
+  border: none;
+  border-radius: 3px;
+}
+
+div.playlist > select > option {
+  color: var(--c-text-inverted);
+  background: var(--f-transparent-inverted);
+  border-bottom: 1px solid red;
+}
+
+input[type="range"] {
+  padding: 1em 0;
+}

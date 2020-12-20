@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
+    "start": "start https://localhost:8080 & nodemon server.js",
     "mongod": "mongod --dbpath ./data --bind_ip 127.0.0.1 --quiet",
     "initdb": "node ./utils/initialise_db.js",
     "env": "copy .\\utils\\.env.example .env & cp ./utils/.env.example .env & exit 0",

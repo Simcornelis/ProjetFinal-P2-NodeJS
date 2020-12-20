@@ -175,8 +175,9 @@ window.addEventListener("load", async () => {
   }
 
   function backToParty(toClose) {
-    document.getElementById(toClose).remove();
-    main.firstElementChild.style = "";
+    const elem = document.getElementById(toClose);
+    if (elem) elem.remove();
+    main.firstElementChild.style = ""; // TODO class hide
     footer.classList.remove("game");
   }
 
@@ -242,7 +243,7 @@ window.addEventListener("load", async () => {
     saveButton.onclick = () => {
       const settings = {
         // TODO add playlistID
-        category: categorySelect[categorySelect.selectedIndex].text,
+        categories: [categorySelect[categorySelect.selectedIndex].text], // TODO maybe multiple categories
         maxGroups: groupsSlider.value,
         maxGames: gamesSlider.value,
       };

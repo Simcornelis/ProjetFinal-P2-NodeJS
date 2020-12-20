@@ -23,7 +23,7 @@ html {
   background: var(--f-gradient);
   background-attachment: fixed;
   background-size: 400% 400%;
-  animation: animGradient 120s ease-in-out infinite alternate;
+  animation: animGradient 60s ease-in-out infinite alternate;
 }
 
 body {
@@ -43,11 +43,14 @@ footer {
 }
 
 main {
-  width: 100%;
+  width: 1fr;
+  padding: 5px;
 }
 
+/* Global elements */
+
 canvas {
-  opacity: 0.3;
+  opacity: 0.5;
   position: absolute;
   top: 0;
   left: 0;
@@ -55,8 +58,6 @@ canvas {
   height: 100%;
   z-index: -10;
 }
-
-/* Global elements */
 
 #ppic {
   height: 100%;

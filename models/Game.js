@@ -1,5 +1,4 @@
 class Game {
-  _id;
   creatorPseudo;
   creatorID;
   instruction;
@@ -7,9 +6,8 @@ class Game {
   categories;
 
   /**
-   * @param {ObjectId} _id
    * @param {String} creatorPseudo
-   * @param {number} creatorID
+   * @param {Number} creatorID
    * @param {String} instruction
    * @param {String} description
    * @param {Array} categories

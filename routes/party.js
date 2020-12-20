@@ -4,6 +4,7 @@ const { Router } = require("express");
 const socketIO = require("socket.io");
 const consolidate = require("consolidate");
 const { ObjectId } = require("mongodb");
+const { updateGameIDs } = require("../models/Playlist");
 
 const partyRouter = new Router();
 const io = socketIO(server);
@@ -77,7 +78,7 @@ io.on("connection", (socket) => {
     if (!partyCode) return;
 
     getPartyDB(partyCode, socket)
-      .then((party) => Object.assign(party, settings))
+      .then((party) => updateSettings(party, settings))
       .then(updatePartyDB)
       .catch((error) => handleError(error, socket));
   });
@@ -123,6 +124,17 @@ function changePlayerTeam(party, socket, newTeam) {
   updatePartyDB(party);
 }
 
+function updateSettings(party, settings) {
+  Object.assign(party, {
+    maxGames: settings.maxGames,
+    maxGroups: settings.maxGroups,
+  });
+  getPlaylistDB(party.playlistID).then((playlist) =>
+    updateGameIDs(playlist, settings.categories, settings.maxGames)
+  );
+  return party;
+}
+
 function informPlayers(party) {
   io.to(party.getAdmin().socketID).emit("you-are-admin");
   io.to(party.partyCode).emit("players-update", sortObject(party.getPlayers()));
@@ -157,29 +169,36 @@ function sendNextGame(party, socket, oldGame) {
 
   party.level++;
   const endLevel = Math.min(party.maxGames, party.playlistMaxGames);
-  if (party.level > endLevel) return io.to(party.partyCode).emit("end");
+  if (party.level > endLevel) {
+    io.to(party.partyCode).emit("end");
+    party.level = 0;
+    console.log(`[PARTY:${party.partyCode}] Game ended.`);
+    return updatePartyDB(party);
+  }
 
-  console.log(`[PARTY:${party.partyCode}] Level ${party.level}.`);
+  getPlaylistDB(party.playlistID)
+    .then((playlist) => getGameDB(playlist.gameIDs[party.level - 1]))
+    .then((game) => {
+      const data = {
+        level: party.level,
+        games: endLevel,
+        progress: 100 - (party.level / endLevel) * 100,
+        instruction: game.instruction,
+        description: game.description, // TODO description in html and categories
+        categories: game.categories,
+      };
 
-  const data = {
-    level: party.level,
-    games: endLevel,
-    progress: 100 - (party.level / endLevel) * 100,
-    instruction:
-      "Chacun dans le groupe fait " +
-      party.level +
-      " pompes à son tour, au premier groupe à finir",
-  };
-
-  consolidate
-    .hogan("./private/game.xml", data) // TODO load game data
-    .then((html) =>
-      io
-        .to(party.partyCode)
-        .emit("game", html, oldGame, "5fbec2e12ebb45418446d8d9", "Mohanahhh3")
-    )
-    .then(() => informPlayers(party))
-    .then(updatePartyDB)
+      consolidate
+        .hogan("./private/game.xml", data)
+        .then((html) =>
+          io
+            .to(party.partyCode)
+            .emit("game", html, oldGame, game._id, game.creatorPseudo)
+        )
+        .then(() => informPlayers(party))
+        .then(updatePartyDB)
+        .catch(console.log);
+    })
     .catch((error) => handleError(error, socket));
 }
 
@@ -227,6 +246,24 @@ function getPartyDB(partyCode, socket) {
       socket.emit("party-not-found");
       throw error;
     });
+}
+
+function getPlaylistDB(playlistID) {
+  const { playlistsCollection } = require("../server.js");
+  return playlistsCollection
+    .findOne({ _id: ObjectId(playlistID) })
+    .then((playlist) => {
+      if (!playlist) throw new Error("Playlist not found.");
+      return playlist;
+    });
+}
+
+function getGameDB(gameID) {
+  const { gamesCollection } = require("../server.js");
+  return gamesCollection.findOne({ _id: ObjectId(gameID) }).then((game) => {
+    if (!game) throw new Error("Game not found.");
+    return game;
+  });
 }
 
 function getUserPartiesDB(socket) {
