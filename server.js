@@ -73,23 +73,15 @@ app.use(
   })
 );
 
-app.use("/ppic", express.static("./ppic"));
-app.use(
-  fileUpload({
-    createParentPath: true,
-    uriDecodeFileNames: true,
-    safeFileNames: true,
-    preserveExtension: true,
-  })
-);
-
 app.set("views", "private");
 app.use(express.static("static"));
+app.use("/ppic", express.static("./ppic"));
 
 app.use(require("./routes/main.js").mainRouter);
 app.use("/signin", require("./routes/signin.js").signinRouter);
 app.use("/signup", require("./routes/signup.js").signupRouter);
 app.use("/profile", require("./routes/profile.js").profileRouter);
+app.use("/file", require("./routes/file.js").fileRouter);
 app.use("/admin", require("./routes/admin.js").adminRouter);
 app.use("/games", require("./routes/games.js").gamesRouter);
 app.use("/party", require("./routes/party.js").partyRouter);
