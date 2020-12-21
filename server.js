@@ -1,6 +1,5 @@
 const express = require("express");
 const session = require("express-session");
-const fileUpload = require("express-fileupload");
 const consolidate = require("consolidate");
 const mongodb = require("mongodb");
 const dotenv = require("dotenv");
@@ -14,28 +13,27 @@ const MongoClient = new mongodb.MongoClient(MONGO_URL, {
   useUnifiedTopology: true,
 });
 
-let database;
 const app = express();
-const cred = {
+const credentials = {
   key: fs.readFileSync("./utils/cert.key"),
   cert: fs.readFileSync("./utils/csr.key"),
   passphrase: process.env.CERT_PASS,
 };
 
 module.exports.server = https
-  .createServer(cred, app)
+  .createServer(credentials, app)
   .listen(process.env.PORT, process.env.HOST, initServer);
 
 function initServer() {
-  console.log("[LOG] Web server running!");
+  console.log("[SERVER] Web server is running.");
   MongoClient.connect(async (err, client) => {
     if (err) {
-      console.error(`[ERROR] Couldn't connect to database server\n${err}`);
+      console.error(`[ERROR] Can't connect to database.\n${err}`);
       return process.exit(-1);
     }
 
-    console.log("[LOG] Connected to database server");
-    database = client.db(process.env.DATABASE_NAME);
+    console.log("[SERVER] Database is running.");
+    const database = client.db(process.env.DATABASE_NAME);
 
     database
       .collection(process.env.DATABASE_PARTIES)

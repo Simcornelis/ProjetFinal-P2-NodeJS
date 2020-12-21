@@ -8,7 +8,7 @@
   --s-normal: 3px 3px 7px #0005;
   --s-long: 5px 5px 7px #0005;
 
-  --f-gradient: linear-gradient(120deg, #3e5a79, #203853, #5c326b);
+  --f-gradient: linear-gradient(120deg, #416186, #203853, #6b377e);
   --f-gradient2: linear-gradient(120deg, #96deda 0%, #50c9c3 100%);
 
   --f-transparent: #283b4dcc;
@@ -36,10 +36,11 @@ body {
 
 header,
 footer {
-  min-height: calc(3.5em + 1vw);
   width: 100%;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center;
 }
 
 main {
@@ -50,7 +51,7 @@ main {
 
 canvas {
   opacity: 0.5;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -117,6 +118,7 @@ input:not([type="submit"]):focus {
 
 main > div,
 main > form {
+  padding: 30px 0;
   background: var(--f-transparent-inverted);
   border-radius: 3px;
 }
@@ -138,6 +140,18 @@ main > form {
 
 .hide {
   display: none !important;
+}
+
+div.oneline {
+  margin: 5px;
+  display: grid;
+  align-items: center;
+  gap: 15px;
+  grid-template-columns: auto 1fr;
+}
+
+div.oneline > * {
+  margin: 0;
 }
 
 /* Animations */

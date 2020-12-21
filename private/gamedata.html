@@ -2,37 +2,42 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
 
-    <link rel="stylesheet" href="/global.css">
-    <link rel="stylesheet" href="/css/gamedata.css">
+    <link rel="stylesheet" href="/global.css" />
+    <link rel="stylesheet" href="/css/gamedata.css" />
+    <link rel="stylesheet" href="/icons/icomoon.css" />
 
-    <title>Game Data</title>
+    <title>Game data</title>
 </head>
 
 <body>
-    <header>
-        <button id="return" onclick="window.location.href = '/games/allgames'">return</button>
-    </header>
+    <header></header>
 
     <main class="center-content">
-        <div class="game-window">
-            <div id="game-instruction">
-                <p>{{gameInstruction}}</p>
+        <div>
+            <h2>Instruction</h2>
+            <p id="instruction">{{ instruction }}</p>
+
+            <h2>Description</h2>
+            <p id="description">{{ description }}</p>
+
+            <div id="categories">
+                {{#categories}}
+                <h2><i class="icon">{{ e }}</i> {{ c }}</h2>
+                {{/categories}}
             </div>
-            <div id="game-id">Game ID: {{gameID}}</div>
-            <div id="game-creator" onclick="window.location.href = '/profile/{{creatorID}}'">{{creatorPseudo}}</div>
-            <div id="game-description">{{gameDescription}}</div>
-            <div class="game-category" id="bottom-left">{{category1}}</div>
-            <div class="game-category">{{category2}}</div>
-            <div class="game-category">{{category3}}</div>
-            <div class="game-category" id="bottom-right">{{category4}}</div>
         </div>
     </main>
 
-    <footer></footer>
+    <footer>
+        <h4 id="gameID">{{ gameID }}</h4>
+        <h4 id="author" onclick="window.location.href = '/profile/{{creatorID}}'">
+            {{ creatorPseudo }}
+        </h4>
+    </footer>
 
     <canvas class="animate"></canvas>
     <script defer src="/js/particles.js"></script>

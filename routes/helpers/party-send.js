@@ -30,8 +30,8 @@ function nextGame(party, socket, oldGame) {
         games: endLevel,
         progress: 100 - (party.level / endLevel) * 100,
         instruction: game.instruction,
-        description: game.description, // TODO description in html
-        categories: game.categories.map((c) => ({ cat: emoji(c) })),
+        description: game.description,
+        categories: game.categories.map((cat) => ({ c: emoji(cat) })),
       };
 
       consolidate

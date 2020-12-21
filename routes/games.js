@@ -1,5 +1,5 @@
 const { ObjectId } = require("mongodb");
-const { Game } = require("../models/Game");
+const { Game, emoji } = require("../models/Game");
 const { Router } = require("express");
 
 const gamesRouter = new Router();
@@ -13,15 +13,12 @@ gamesRouter.get("/gamedata/:id?", (req, res, next) => {
       : [game.categories];
     //Always be an array (to not split the word)
     res.render("gamedata.html", {
+      instruction: game.instruction,
+      description: game.description,
+      categories: game.categories.map((cat) => ({ e: emoji(cat), c: cat })),
       gameID: game._id,
-      creatorPseudo: game.creatorPseudo || "Unknown creator",
-      creatorID: game.creatorID,
-      gameInstruction: game.instruction,
-      gameDescription: game.description,
-      category1: categories[0],
-      category2: categories[1],
-      category3: categories[2],
-      category4: categories[3],
+      creatorPseudo: game.creatorPseudo || "",
+      creatorID: game.creatorID || "",
     });
   });
 });
