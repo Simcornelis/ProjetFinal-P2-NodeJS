@@ -13,6 +13,7 @@
 
     <script defer src="/models/Game.js"></script>
     <script defer src="/js/allgames.js"></script>
+    <script defer src="/js/createPlaylist.js"></script>
 
     <title>All games</title>
 
@@ -58,7 +59,10 @@
                     <label for="category7">👿 Constraint</label>
                 </div>
             </div>
-        </div>
+		</div>
+		{{#userName}}
+			<button id="createPlaylistToggle">Create Playlist</button>
+		{{/userName}}
         <form id="search" hidden action="/games/findgamesbysearch" method="GET" onsubmit="return false;"></form>
         <div id="searchBar">
             <input form="search" name="search_query" type="text" autocomplete="off"
@@ -69,12 +73,39 @@
     </header>
 
     <main class="center-content">
-        {{#userID}}
-        <h1>Games of {{userName}}</h1>
-        {{/userID}}
         {{^userID}}
-        <h1>All Games</h1>
-        {{/userID}}
+			<h1>Games of {{userName}}</h1>
+			<div hidden class="create-playlist">
+				<span>Create a playlist</span>
+				<input placeholder="Playlist name" id="playlistName">
+				<table>
+					<tr>
+						<th>Available</th><th></th><th>Selected</th><th></th>
+					</tr>
+					<tr>
+						<td>
+							<ul class="gameList" id="listAvailable"></ul>
+						</td>
+						<td>
+							<button id="addGamePlaylist">→</button><br>
+							<button id="removeGamePlaylist">←</button><br>
+							<button id="removeAllGamePlaylist">⇐</button>
+						</td>
+						<td>
+							<ul class="gameList" id="listSelected"></ul>
+						</td>
+						<td>
+							<button id="moveGameUpPlaylist">↑</button><br>
+							<button id="moveGameDownPlaylist">↓</button><br>
+						</td>
+					</tr>
+				</table>
+				<button id="createPlaylist">Create</button>
+			</div>
+		{{/userID}}
+		{{#userID}}
+        	<h1>All Games</h1>
+		{{/userID}}
         <div class="game-list">
             <!-- game-box create through javascript-->
         </div>

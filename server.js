@@ -93,6 +93,7 @@ app.use("/profile", require("./routes/profile.js").profileRouter);
 app.use("/admin", require("./routes/admin.js").adminRouter);
 app.use("/games", require("./routes/games.js").gamesRouter);
 app.use("/party", require("./routes/party.js").partyRouter);
+app.use("/playlists", require("./routes/playlist.js").playlistRouter);
 
 // REMOVE renders any html file
 app.get("/test", (req, res, next) => {
