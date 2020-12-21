@@ -55,3 +55,7 @@ footer > h4 {
   margin-right: 5px;
   background: var(--f-transparent-inverted);
 }
+
+#author {
+  cursor: pointer;
+}

@@ -1,12 +1,30 @@
+#ppic {
+  cursor: pointer;
+}
+
 .account {
-  display: flex;
-  gap: 15px;
+  position: absolute;
+  top: calc(4em + 10px);
+  left: 5px;
+  max-width: 100%;
+  display: grid;
+  justify-content: left;
+  border-radius: 3px;
   color: var(--c-text);
+  background: var(--f-transparent-inverted);
+  box-shadow: var(--s-short);
+  transform: scale(0.35, 0);
+  transform-origin: top left;
+  transition: transform 0.2s;
+}
+
+.account.open {
+  transform: scale(1);
 }
 
 .menu {
   display: grid;
-  gap: 15px;
+  gap: 5px;
   max-width: 500px;
   width: 100%;
   color: var(--c-text-inverted);

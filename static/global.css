@@ -36,6 +36,7 @@ body {
 
 header,
 footer {
+  position: relative;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -152,6 +153,25 @@ div.oneline {
 
 div.oneline > * {
   margin: 0;
+}
+
+div.half {
+  grid-template-columns: 1fr 1fr;
+}
+
+div.half > h2 {
+  text-align: left;
+}
+
+@media screen and (max-width: 500px) {
+  div.oneline {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  div.oneline > * {
+    flex: 1;
+  }
 }
 
 /* Animations */

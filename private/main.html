@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/icons/icomoon.css">
 
+  <script defer src="/js/main.js"></script>
+
   <title>Let's Drink</title>
 </head>
 
@@ -32,11 +34,19 @@
   <main class="center-content">
     <div class="menu">
       <h1>Let's drink</h1>
-      <button onclick="location.href='/party/hey'">Continue party</button>
-      <button>Host a party</button>
-      <button>Join a party</button>
-      <button id="creategame" onclick="window.location.href = '/games/addgame'">Create a game</button>
-      <button id="allgames" onclick="window.location.href = '/games/allgames'">See all games</button>
+      <div id="code" class="oneline">
+        <h2>Party code</h2>
+        <input type="text" placeholder="Any code...">
+      </div>
+
+      <button id="toparty">Join or create party</button>
+
+      <div class="oneline half">
+        <button onclick="window.location.href = '/games/addgame'">New game</button>
+        <button onclick="window.location.href = '/games/allgames'">All games</button>
+      </div>
+
+      <button onclick="window.location.href = '/playlists'">New playlist</button>
     </div>
   </main>
 
