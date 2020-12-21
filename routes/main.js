@@ -4,8 +4,6 @@ const mainRouter = new Router();
 
 mainRouter.get("/", (req, res) => {
   res.status(200).render("main.html", {
-    pseudo: req.session.pseudo,
-    email: req.session.email,
     userID: req.session.userID,
     ppic: req.session.ppic || "img/noid.png",
   });

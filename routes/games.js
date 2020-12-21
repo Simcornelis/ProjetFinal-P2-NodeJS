@@ -29,7 +29,7 @@ gamesRouter.get("/gamedata/:id?", (req, res, next) => {
 gamesRouter.get("/allgames", (req, res, next) => {
   res.render("allgames.html", {
     userID: req.query.userID_query,
-    userName: req.session.pseudo,
+    userName: req.query.userPseudo_query,
   });
 });
 
