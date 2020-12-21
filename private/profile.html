@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="/img/logo.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
@@ -31,11 +32,12 @@
             <h5>Email address</h5>
             <h3 id="email">{{userEmail}}</h3>
 
-            <button id="mygames" onclick="window.location.href = '../games/allgames?userID_query={{userID}}&userPseudo_query={{userPseudo}}'">My
+            <button id="mygames"
+                onclick="window.location.href = '../games/allgames?userID_query={{userID}}&userPseudo_query={{userPseudo}}'">My
                 Games</button>
             <button id="myplaylists">My PLayLists</button>
 
-             {{#canChange}}
+            {{#canChange}}
 
             <h6>Change profile picture</h6>
             <label for="browse">Choose picture</label>

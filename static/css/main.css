@@ -33,3 +33,11 @@
 .menu > h1 {
   text-align: center;
 }
+
+#logo {
+  height: 150px;
+  widows: 150px;
+  margin: 0 auto 40px;
+  border-radius: 3px;
+  opacity: 0.9;
+}
