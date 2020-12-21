@@ -53,7 +53,7 @@ class Game extends HTMLElement {
         case "Action":
           categoryEmoji = categoryEmoji.concat("🐱‍🏍 ");
           break;
-        case "Reflexion":
+        case "Thinking":
           categoryEmoji = categoryEmoji.concat("🧩 ");
           break;
         case "Sport":
@@ -65,7 +65,7 @@ class Game extends HTMLElement {
         case "Game":
           categoryEmoji = categoryEmoji.concat("🎲 ");
           break;
-        case "Constraint":
+        case "Restrictive":
           categoryEmoji = categoryEmoji.concat("👿 ");
           break;
         default:

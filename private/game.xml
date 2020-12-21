@@ -3,17 +3,22 @@
   <div>
     <div id="progress">
       <h2>{{ level }}/{{ games }}</h2>
+      <button id="help" title="Need a more precise description?"><i
+          class="icon"
+        >🆘</i></button>
       <span id="fill" style="right: {{ progress }}%" />
     </div>
 
     <p id="instruction">{{ instruction }}</p>
-
+    
     <div id="categories">
-      <h2>🏓</h2>
-      <h2>🔊</h2>
-      <h2>👪</h2>
+      {{#categories}}
+      <h2>{{cat}}</h2>
+      {{/categories}}
     </div>
 
+    <p class="hide" id="description">{{ description }}</p>
+    
     <div class="admin hide oneline half">
       <button id="next">Next game</button>
       <button id="end">End game</button>

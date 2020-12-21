@@ -21,4 +21,18 @@ class Game {
   }
 }
 
-module.exports = { Game };
+const categories = {
+  Culture: "📚",
+  Action: "🐱‍🏍",
+  Thinking: "🧩",
+  Sport: "🏀",
+  Truth: "🙊",
+  Game: "🎲",
+  Restrictive: "👿",
+};
+
+function emoji(category) {
+  return categories[category];
+}
+
+module.exports = { Game, categories, emoji };

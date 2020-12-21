@@ -5,9 +5,10 @@ class Playlist {
   partyCode;
   creatorID;
   gameIDs;
+  categories;
 
-  constructor(title, partyCode, creatorID, gameIDs = []) {
-    Object.assign(this, { title, partyCode, creatorID, gameIDs });
+  constructor(title, partyCode, creatorID, gameIDs = [], categories = []) {
+    Object.assign(this, { title, partyCode, creatorID, gameIDs, categories });
     if (gameIDs.length < 1)
       getGameIDs(this)
         .then(playlistInDB)
@@ -17,11 +18,14 @@ class Playlist {
   }
 }
 
-function getGameIDs(playlist, selectedCat = [], limit = 25) {
+function getGameIDs(playlist, categories = [], limit = 25) {
   const { gamesCollection } = require("../server");
+  playlist.categories = categories.filter((cat) => cat !== "All");
   return gamesCollection
-    .find(selectedCat.length > 0 ? { categories: { $in: selectedCat } } : {}) // selectedCat or all games
-    .limit(Math.min(limit, 200)) // extreme max is 200 games
+    .find(
+      categories.length > 0 ? { categories: { $in: playlist.categories } } : {}
+    ) // categories or all games
+    .limit(limit)
     .map((game) => game._id)
     .toArray()
     .then((gamesIDs) => (playlist.gameIDs = gamesIDs))
@@ -54,9 +58,9 @@ function setMaxGamesInPartyDB(playlist) {
   );
 }
 
-function updateGameIDs(playlist, selectedCategories, limit) {
+function updateGameIDs(playlist, categories, limit) {
   const { playlistsCollection } = require("../server");
-  return getGameIDs(playlist, selectedCategories, limit)
+  return getGameIDs(playlist, categories, limit)
     .then((playlist) => {
       playlistsCollection.updateOne(
         { _id: ObjectId(playlist._id) },

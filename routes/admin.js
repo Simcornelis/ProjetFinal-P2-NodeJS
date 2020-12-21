@@ -9,7 +9,6 @@ const adminRouter = new Router();
  * be accessible by the end user when the app is deployed.
  */
 
-// TODO init db with Master User
 if (process.env.ENV === "development") {
   /**
    * Master user check

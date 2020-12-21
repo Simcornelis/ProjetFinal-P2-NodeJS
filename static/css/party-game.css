@@ -19,6 +19,16 @@
   margin: 0;
 }
 
+#progress > button#help {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 5px;
+  background: transparent;
+  box-shadow: none;
+}
+
 #instruction {
   padding: 15px;
   margin: 5px;
@@ -33,6 +43,11 @@
 }
 
 #categories > h2 {
+  margin: 5px;
+}
+
+#description {
+  text-align: center;
   margin: 5px;
 }
 

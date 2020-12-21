@@ -38,14 +38,15 @@
 
 	<div class="playlist hide" id="new-playlist">
 		<h2>Create new playlist</h2>
-		<select data-selected="{{ category }}">
+		<select data-selected="{{ categories }}">
+			<option>All</option>
 			<option>Culture</option>
 			<option>Action</option>
-			<option>Reflexion</option>
+			<option>Thinking</option>
 			<option>Sport</option>
 			<option>Truth</option>
 			<option>Game</option>
-			<option>Constraint</option>
+			<option>Restrictive</option>
 		</select>
 	</div>
 

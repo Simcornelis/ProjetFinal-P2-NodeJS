@@ -13,7 +13,7 @@
         "creatorID":"5fde1d03e071fa266889d8b9",
         "instruction":"find my imaginary number",
         "description":"one player of the group need to imagine a random number and all others group must find it",
-        "categories":[ "Reflexion", "Game" ]
+        "categories":[ "Thinking", "Game" ]
     },
     {
         "_id":"5fde20984fa4a741b0969f84",
@@ -29,7 +29,7 @@
         "creatorID":"5fde21b74fa4a741b0969f85",
         "instruction":"the most car you know",
         "description":"every group need to cite a car brand if your group don't know anymore ,you lose. The last one win",
-        "categories":[ "Culture", "Reflexion", "Constraint" ]
+        "categories":[ "Culture", "Thinking", "Restrictive" ]
     },
     {
         "_id":"5fde2616a6d17927306acfb9",
@@ -37,7 +37,7 @@
         "creatorID":"5fde21b74fa4a741b0969f85",
         "instruction":"you need to tell something about you, others groups need to find if it's true or not",
         "description":"tell a fun fact about you and others groups need to find if you are a liar or not",
-        "categories":[ "Culture", "Reflexion", "Truth" ]
+        "categories":[ "Culture", "Thinking", "Truth" ]
     },
     {
         "_id":"5fde264aa6d17927306acfba",
@@ -53,7 +53,7 @@
         "creatorID":"5fde21b74fa4a741b0969f85",
         "instruction":"the group with the tallest lost",
         "description":"sorry but we decide that you lost",
-        "categories":[ "Truth", "Constraint" ]
+        "categories":[ "Truth", "Restrictive" ]
     },
     {
         "_id":"5fde2871a6d17927306acfbc",
@@ -69,7 +69,7 @@
         "creatorID":"5fde21cc4fa4a741b0969f86",
         "instruction":"find the laziest person",
         "description":"everyone vote on who is the laziest person",
-        "categories":[ "Reflexion", "Truth" ]
+        "categories":[ "Thinking", "Truth" ]
     },
     {
         "_id":"5fde296ca6d17927306acfbe",
@@ -85,7 +85,7 @@
         "creatorID":"5fde21cc4fa4a741b0969f86",
         "instruction":"find two white objects",
         "description":"your group need to find 2 white objects",
-        "categories":[ "Action", "Reflexion", "Sport", "Game" ]
+        "categories":[ "Action", "Thinking", "Sport", "Game" ]
     },
     {
         "_id":"5fde2a6da6d17927306acfc0",
@@ -93,7 +93,7 @@
         "creatorID":"5fde21e14fa4a741b0969f87",
         "instruction":"everyone choose between green and purple, if you are less you lost",
         "description":"do we need to add a more precise description ?",
-        "categories":[ "Action", "Reflexion", "Game" ]
+        "categories":[ "Action", "Thinking", "Game" ]
     },
     {
         "_id":"5fde2ab5a6d17927306acfc1",
@@ -101,7 +101,7 @@
         "creatorID":"5fde21e14fa4a741b0969f87",
         "instruction":"if you have a PS5 you won !",
         "description":"yes you win the round",
-        "categories":[ "Game", "Constraint" ]
+        "categories":[ "Game", "Restrictive" ]
     },
     {
         "_id":"5fde2b02a6d17927306acfc2",
@@ -109,7 +109,7 @@
         "creatorID":"5fde21e14fa4a741b0969f87",
         "instruction":"everyone whispers from now",
         "description":"if a player of your group speak too loud you lose",
-        "categories":[ "Action", "Reflexion", "Game", "Constraint" ]
+        "categories":[ "Action", "Thinking", "Game", "Restrictive" ]
     },
     {
         "_id":"5fde2baba6d17927306acfc3",
@@ -117,7 +117,7 @@
         "creatorID":"5fde21f74fa4a741b0969f88",
         "instruction":"the group with the fewest players won",
         "description":"if there is equality no one win",
-        "categories":[ "Action", "Constraint" ]
+        "categories":[ "Action", "Restrictive" ]
     },
     {
         "_id":"5fde2c6da6d17927306acfc4",
@@ -125,7 +125,7 @@
         "creatorID":"5fde21f74fa4a741b0969f88",
         "instruction":"the group with the most university years won the round",
         "description":"add up the number of years of study for each member of the group. The group with the biggest number won !",
-        "categories":[ "Culture", "Reflexion", "Constraint" ]
+        "categories":[ "Culture", "Thinking", "Restrictive" ]
     },
     {
         "_id":"5fde2d23a6d17927306acfc5",
@@ -133,7 +133,7 @@
         "creatorID":"5fde21f74fa4a741b0969f88",
         "instruction":"if you can touch your elbow with your tongue you won",
         "description":"you are at least good for that",
-        "categories":[ "Action", "Truth", "Game", "Constraint" ]
+        "categories":[ "Action", "Truth", "Game", "Restrictive" ]
     },
     {
         "_id":"5fde2e18a6d17927306acfc6",
@@ -141,7 +141,7 @@
         "creatorID":"5fde22094fa4a741b0969f89",
         "instruction":"better to lose an arm and a foot or a leg and a hand",
         "description":"let's vote and let's see",
-        "categories":[ "Action", "Reflexion", "Game" ]
+        "categories":[ "Action", "Thinking", "Game" ]
     },
     {
         "_id":"5fde2ef0a6d17927306acfc7",
@@ -149,7 +149,7 @@
         "creatorID":"5fde22094fa4a741b0969f89",
         "instruction":"if you have already falsified a signature it's minus 1 point",
         "description":"yes it's bad to do this",
-        "categories":[ "Reflexion", "Truth", "Constraint" ]
+        "categories":[ "Thinking", "Truth", "Restrictive" ]
     },
     {
         "_id":"5fde2f83a6d17927306acfc8",
@@ -173,7 +173,7 @@
         "creatorID":"5fde22094fa4a741b0969f89",
         "instruction":"find some name",
         "description":"each player say a name untill someone has no more idea",
-        "categories":[ "Culture", "Reflexion" ]
+        "categories":[ "Culture", "Thinking" ]
     },
     {
         "_id":"5fde3290a6d17927306acfcb",
@@ -181,7 +181,7 @@
         "creatorID":"5fde22094fa4a741b0969f89",
         "instruction":"find the color of the master's underwear",
         "description":"the group who found it wins it, or maybe not",
-        "categories":[ "Action", "Reflexion", "Game" ]
+        "categories":[ "Action", "Thinking", "Game" ]
     },
     {
         "_id":"5fde3a4d7ec7b534e4a52e79",
@@ -197,7 +197,7 @@
         "creatorID":"5fde221e4fa4a741b0969f8a",
         "instruction":"tell a funny story about spaghetti",
         "description":"the funniest story won",
-        "categories":[ "Culture", "Reflexion", "Game" ]
+        "categories":[ "Culture", "Thinking", "Game" ]
     },
     {
         "_id":"5fde3ca57ec7b534e4a52e7b",
@@ -213,7 +213,7 @@
         "creatorID":"5fde221e4fa4a741b0969f8a",
         "instruction":"have you ever had an surgery",
         "description":"if yes 1 point, the group with the most points won",
-        "categories":[ "Reflexion", "Truth" ]
+        "categories":[ "Thinking", "Truth" ]
     },
     {
         "_id":"5fde3d597ec7b534e4a52e7d",
@@ -221,7 +221,7 @@
         "creatorID":"5fde22334fa4a741b0969f8b",
         "instruction":"tell us a joke",
         "description":"the best joke won",
-        "categories":[ "Culture", "Reflexion", "Game" ]
+        "categories":[ "Culture", "Thinking", "Game" ]
     },
     {
         "_id":"5fde3df97ec7b534e4a52e7e",
@@ -229,7 +229,7 @@
         "creatorID":"5fde22334fa4a741b0969f8b",
         "instruction":"let's do a rock-paper-scissors",
         "description":"everyone is playing, when you lose you stop, the last one won",
-        "categories":[ "Reflexion", "Game" ]
+        "categories":[ "Thinking", "Game" ]
     },
     {
         "_id":"5fde3f247ec7b534e4a52e7f",
@@ -237,7 +237,7 @@
         "creatorID":"5fde22334fa4a741b0969f8b",
         "instruction":"who knows the most capital",
         "description":"everyone makes a list then we check",
-        "categories":[ "Culture", "Reflexion" ]
+        "categories":[ "Culture", "Thinking" ]
     },
     {
         "_id":"5fde3fea7ec7b534e4a52e80",
@@ -245,7 +245,7 @@
         "creatorID":"5fde22454fa4a741b0969f8c",
         "instruction":"the first who says a proverb win",
         "description":"",
-        "categories":[ "Culture", "Reflexion" ]
+        "categories":[ "Culture", "Thinking" ]
     },
     {
         "_id":"5fde40397ec7b534e4a52e81",
@@ -253,7 +253,7 @@
         "creatorID":"5fde22454fa4a741b0969f8c",
         "instruction":"each person says a quote, the more interesting won",
         "description":"",
-        "categories":[ "Culture", "Reflexion" ]
+        "categories":[ "Culture", "Thinking" ]
     },
     {
         "_id":"5fde40a47ec7b534e4a52e82",
@@ -261,7 +261,7 @@
         "creatorID":"5fde22454fa4a741b0969f8c",
         "instruction":"who is your favorite historical figure",
         "description":"try to defend it, then everyone votes the coolest",
-        "categories":[ "Culture", "Reflexion", "Truth", "Game" ]
+        "categories":[ "Culture", "Thinking", "Truth", "Game" ]
     },
     {
         "_id":"5fde41617ec7b534e4a52e83",
@@ -269,7 +269,7 @@
         "creatorID":"5fde22584fa4a741b0969f8d",
         "instruction":"for the next 5 rounds put the verb at the end of your sentences",
         "description":"if you forget, it's -1",
-        "categories":[ "Reflexion" ]
+        "categories":[ "Thinking" ]
     },
     {
         "_id":"5fde42507ec7b534e4a52e84",
@@ -277,7 +277,7 @@
         "creatorID":"5fde22584fa4a741b0969f8d",
         "instruction":"imitates a monkey",
         "description":"one member from each group imitates a monkey, the funniest won",
-        "categories":[ "Action", "Reflexion", "Game" ]
+        "categories":[ "Action", "Thinking", "Game" ]
     },
     {
         "_id":"5fde42a97ec7b534e4a52e85",

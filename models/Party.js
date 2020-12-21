@@ -8,6 +8,7 @@ class Party {
   players;
   maxGroups;
   maxGames;
+  inGame;
 
   /**
    * @param {String} partyCode the sharable code to join the party
@@ -20,6 +21,7 @@ class Party {
     this.maxGroups = 10;
     this.maxGames = 15;
     this.playlistMaxGames = 200;
+    this.inGame = false;
     if (partyCode) new Playlist(`${partyCode}'s games`, partyCode);
   }
 

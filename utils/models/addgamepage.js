@@ -29,7 +29,7 @@ class AddGamePage {
         case "Action":
           this.driver.findElement(this.gameCategory2By).click();
           break;
-        case "Reflexion":
+        case "Thinking":
           this.driver.findElement(this.gameCategory3By).click();
           break;
         case "Sport":
@@ -41,7 +41,7 @@ class AddGamePage {
         case "Game":
           this.driver.findElement(this.gameCategory6By).click();
           break;
-        case "Constraint":
+        case "Restrictive":
           this.driver.findElement(this.gameCategory7By).click();
           break;
       }

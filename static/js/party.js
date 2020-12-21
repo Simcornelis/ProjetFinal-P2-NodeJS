@@ -147,7 +147,7 @@ window.addEventListener("load", async () => {
   }
 
   function loadPage(html, id, oldPage) {
-    main.firstElementChild.style = "display:none";
+    main.firstElementChild.classList.add("hide");
     if (oldPage) document.getElementById(oldPage).remove();
     const _page = document.createElement("div");
     _page.id = id;
@@ -166,6 +166,9 @@ window.addEventListener("load", async () => {
     gameIDH4.textContent = gameID;
     authorH4.textContent = author;
 
+    document.getElementById("help").onclick = () => {
+      document.getElementById("description").classList.toggle("hide");
+    };
     document.getElementById("next").onclick = () => {
       socket.emit("next-game", partyCode, "gamePage");
     };
@@ -177,7 +180,7 @@ window.addEventListener("load", async () => {
   function backToParty(toClose) {
     const elem = document.getElementById(toClose);
     if (elem) elem.remove();
-    main.firstElementChild.style = ""; // TODO class hide
+    main.firstElementChild.classList.remove("hide");
     footer.classList.remove("game");
   }
 
@@ -203,24 +206,25 @@ window.addEventListener("load", async () => {
     updateGroups();
     updateGames();
 
-    const cat = Array.from(categorySelect.options).map((html) => html.value);
-    const optionIndex = cat.findIndex(
-      (option) => option === categorySelect.dataset.selected
-    );
-    if (optionIndex >= 0) categorySelect.selectedIndex = optionIndex;
-    if (categorySelect.dataset.selected) showNewPlaylists();
+    const selected = categorySelect.dataset.selected.split(",");
+    if (selected.length) {
+      const cat = Array.from(categorySelect.options).map((html) => html.value);
+      const optionIndex = cat.findIndex((option) => selected.includes(option));
+      if (optionIndex >= 0) categorySelect.selectedIndex = optionIndex;
+      showNewPlaylists();
+    }
 
     // actions
 
     groupsSlider.addEventListener("change", updateGroups);
     function updateGroups() {
-      if (groupsSlider.value == 11) groupsSpan.innerText = "♾";
+      if (groupsSlider.value == 11) groupsSpan.innerText = "25";
       else groupsSpan.innerText = groupsSlider.value;
     }
 
     gamesSlider.addEventListener("change", updateGames);
     function updateGames() {
-      if (gamesSlider.value == 26) gamesSpan.innerText = "♾";
+      if (gamesSlider.value == 26) gamesSpan.innerText = "200";
       else gamesSpan.innerText = gamesSlider.value;
     }
 
@@ -241,15 +245,16 @@ window.addEventListener("load", async () => {
     }
 
     saveButton.onclick = () => {
+      const selected = categorySelect[categorySelect.selectedIndex].text;
       const settings = {
         // TODO add playlistID
-        categories: [categorySelect[categorySelect.selectedIndex].text], // TODO maybe multiple categories
+        categories: selected !== "All" ? [selected] : [], // TODO maybe multiple categories
         maxGroups: groupsSlider.value,
         maxGames: gamesSlider.value,
       };
       socket.emit("update-settings", partyCode, settings);
       document.getElementById("settingsPage").remove();
-      main.firstElementChild.style = "";
+      main.firstElementChild.classList.remove("hide");
     };
   }
 });
