@@ -60,9 +60,11 @@
                 </div>
             </div>
 		</div>
-		{{#userName}}
-			<button id="createPlaylistToggle">Create Playlist</button>
-		{{/userName}}
+        {{#userID}}
+        {{^userID_query}}
+            <button id="createPlaylistToggle">Create Playlist</button>
+        {{/userID_query}}
+		{{/userID}}
         <form id="search" hidden action="/games/findgamesbysearch" method="GET" onsubmit="return false;"></form>
         <div id="searchBar">
             <input form="search" name="search_query" type="text" autocomplete="off"
@@ -73,8 +75,11 @@
     </header>
 
     <main class="center-content">
-        {{^userID}}
-			<h1>Games of {{userName}}</h1>
+        {{#userID_query}}
+            <h1>Games of {{userName}}</h1>
+		{{/userID_query}}
+        {{^userID_query}}
+        {{#userID}}
 			<div hidden class="create-playlist">
 				<span>Create a playlist</span>
 				<input placeholder="Playlist name" id="playlistName">
@@ -101,11 +106,10 @@
 					</tr>
 				</table>
 				<button id="createPlaylist">Create</button>
-			</div>
-		{{/userID}}
-		{{#userID}}
-        	<h1>All Games</h1>
-		{{/userID}}
+            </div>
+            {{/userID}}
+            <h1>All Games</h1>
+		{{/userID_query}}
         <div class="game-list">
             <!-- game-box create through javascript-->
         </div>
