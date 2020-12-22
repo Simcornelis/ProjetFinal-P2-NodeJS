@@ -68,25 +68,6 @@ div.team > div > h4 + h4 {
 
 /* properties */
 
-div.oneline {
-  margin: 5px;
-  display: grid;
-  gap: 15px;
-  grid-template-columns: auto 1fr;
-}
-
-div.oneline > * {
-  margin: 0;
-}
-
-div.half {
-  grid-template-columns: 1fr 1fr;
-}
-
-div.half > h2 {
-  text-align: left;
-}
-
 .green {
   background: #00800077;
 }

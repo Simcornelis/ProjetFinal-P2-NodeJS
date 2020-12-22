@@ -11,14 +11,14 @@
 
     <p id="instruction">{{ instruction }}</p>
     
+    <p class="hide" id="description">{{ description }}</p>
+
     <div id="categories">
       {{#categories}}
-      <h2>{{cat}}</h2>
+      <h2><i class="icon">{{ c }}</i></h2>
       {{/categories}}
     </div>
 
-    <p class="hide" id="description">{{ description }}</p>
-    
     <div class="admin hide oneline half">
       <button id="next">Next game</button>
       <button id="end">End game</button>

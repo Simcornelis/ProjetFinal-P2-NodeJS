@@ -4,11 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="/img/logo.png">
   <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 
   <link rel="stylesheet" href="/global.css">
   <link rel="stylesheet" href="/css/main.css">
   <link rel="stylesheet" href="/icons/icomoon.css">
+
+  <script defer src="/js/main.js"></script>
 
   <title>Let's Drink</title>
 </head>
@@ -31,16 +34,22 @@
 
   <main class="center-content">
     <div class="menu">
-      <h1>Let's drink</h1>
-      <button onclick="location.href='/party/hey'">Continue party</button>
-      <button>Host a party</button>
-      <button>Join a party</button>
-      <button id="creategame" onclick="window.location.href = '/games/addgame'">Create a game</button>
-      <button id="allgames" onclick="window.location.href = '/games/allgames'">See all games</button>
+      <img id="logo" src="/img/logo.png" alt="Let's Drink">
+      <div id="code" class="oneline">
+        <h2>Party code</h2>
+        <input type="text" placeholder="Any code...">
+      </div>
+
+      <button id="toparty">Join or create party</button>
+
+      <div class="oneline half">
+        <button onclick="window.location.href = '/games/new'">New game</button>
+        <button onclick="window.location.href = '/games'">All games</button>
+      </div>
+
+      <button onclick="window.location.href = '/playlists'">New playlist</button>
     </div>
   </main>
-
-  <footer></footer>
 
   <canvas class="animate"></canvas>
   <script defer src="/js/particles.js"></script>

@@ -1,12 +1,4 @@
 class Game extends HTMLElement {
-  /**
-   * @param {number} _id
-   * @param {String} creatorPseudo
-   * @param {number} creatorID
-   * @param {String} instruction
-   * @param {String} description
-   * @param {Array} categories
-   */
   constructor() {
     super();
   }
