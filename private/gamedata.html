@@ -20,10 +20,10 @@
     <main class="center-content">
         <div>
             <h2>Instruction</h2>
-            <p id="instruction">{{ instruction }}</p>
+            <p id="instruction" class="overflow">{{ instruction }}</p>
 
             <h2>Description</h2>
-            <p id="description">{{ description }}</p>
+            <p id="description" class="overflow">{{ description }}</p>
 
             <div id="categories">
                 {{#categories}}
@@ -34,8 +34,8 @@
     </main>
 
     <footer>
-        <h4 id="gameID">{{ gameID }}</h4>
-        <h4 id="author" onclick="window.location.href = '/profile/{{creatorID}}'">
+        <h4 id="gameID" class="overflow">{{ gameID }}</h4>
+        <h4 id="author" class="overflow" onclick="window.location.href = '/profile/{{creatorID}}'">
             {{ creatorPseudo }}
         </h4>
     </footer>

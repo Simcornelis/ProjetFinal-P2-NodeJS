@@ -32,7 +32,7 @@ class Game extends HTMLElement {
     // this.appendChild(gameID);
 
     const gameInstruction = document.createElement("div");
-    gameInstruction.className = "game-instruction";
+    gameInstruction.className = "instruction overflow";
     gameInstruction.innerText = this.instruction;
     this.appendChild(gameInstruction);
 
@@ -65,14 +65,14 @@ class Game extends HTMLElement {
       }
     }
     const gameCategories = document.createElement("div");
-    gameCategories.className = "game-category";
+    gameCategories.className = "category";
     gameCategories.innerText = categoryEmoji;
     if (categoryEmoji !== "") {
       this.appendChild(gameCategories);
     }
 
     const gameCreator = document.createElement("div");
-    gameCreator.className = "game-creator";
+    gameCreator.className = "creator overflow";
     gameCreator.innerText = this.creatorPseudo || "Unknown Creator";
     gameCreator.addEventListener("click", () => {
       window.location.href = "/profil/" + creatorID;
@@ -81,41 +81,8 @@ class Game extends HTMLElement {
     }
     this.appendChild(gameCreator);
 
-    // let randomColorNumber = (Math.random() * 5) | 0;
-    // switch (randomColorNumber) {
-    //   case 0:
-    //     this.style.backgroundColor = "red";
-    //     break;
-    //   case 1:
-    //     this.style.backgroundColor = "green";
-    //     break;
-    //   case 2:
-    //     this.style.backgroundColor = "blue";
-    //     break;
-    //   case 3:
-    //     this.style.backgroundColor = "yellow";
-    //     break;
-    //   case 4:
-    //     this.style.backgroundColor = "white";
-    //     break;
-    // }
-
     this.addEventListener("click", () => {
       window.location.href = "/games/gamedata/" + this._id;
     });
-
-    /**
-     * Render of the HTML
-     * 
-     * <game-box class="box" tabindex="0">
-            <div class="game-id">The id</div>
-            <div class="game-creator">The creator</div>
-            <div class="game-instruction">The instruction</div>
-            <div class="game-category">A category</div>
-            <div class="game-category">A category</div>
-            <div class="game-category">A category</div>
-            <div class="game-category">A category</div>
-        </game-box>
-     */
   }
 }

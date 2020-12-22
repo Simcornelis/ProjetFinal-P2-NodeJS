@@ -9,9 +9,9 @@
       <span id="fill" style="right: {{ progress }}%" />
     </div>
 
-    <p id="instruction">{{ instruction }}</p>
+    <p id="instruction" class="overflow">{{ instruction }}</p>
     
-    <p class="hide" id="description">{{ description }}</p>
+    <p class="hide overflow" id="description">{{ description }}</p>
 
     <div id="categories">
       {{#categories}}
