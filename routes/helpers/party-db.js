@@ -33,7 +33,8 @@ function getPlaylistDB(playlistID) {
     .then((playlist) => {
       if (!playlist) throw new Error("Playlist not found.");
       return playlist;
-    });
+    })
+    .catch(handleError);
 }
 
 function getGameDB(gameID) {

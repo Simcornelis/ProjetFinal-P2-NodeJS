@@ -87,14 +87,14 @@ game-box:hover {
   transform: scale(1.02);
 }
 
-.game-instruction {
+.instruction {
   display: grid;
   padding: 15px;
   text-align: center;
   place-items: center;
 }
 
-.game-category {
+.category {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
@@ -102,7 +102,7 @@ game-box:hover {
   padding: 0.2em 0.5em;
 }
 
-.game-creator {
+.creator {
   padding: 0.2em 0.5em;
   background: var(--f-transparent-inverted);
   white-space: nowrap;

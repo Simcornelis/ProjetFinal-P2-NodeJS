@@ -49,7 +49,7 @@ function insertUserInDB(email, pseudo, password, ppic, collection) {
 }
 
 function setUserSession(req, pseudo, email, stayLoggedIn, userID) {
-  Object.assign(req.session, { pseudo, email, userID, ppic: "/img/noid.png" });
+  Object.assign(req.session, { pseudo, email, userID, ppic: null });
   if (stayLoggedIn) req.session.cookie.maxAge = 3600000 * 48; // 2 days
 }
 

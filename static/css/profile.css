@@ -1,4 +1,30 @@
-div {
+main > div {
+  display: grid;
+  max-width: 500px;
+  width: 100%;
+  color: var(--c-text-inverted);
+}
+
+main > div > h1 {
+  margin-top: 0;
+}
+
+h1,
+h3 {
+  padding: 0;
+  margin: 1em 5px 0.5em;
+}
+
+main > p {
+  color: var(--c-text);
+  opacity: 0.4;
+}
+
+main > p > a {
+  color: inherit;
+}
+
+/* div {
   max-width: 500px;
   width: 100%;
   padding: 10px;
@@ -24,4 +50,4 @@ input {
   width: 100%;
   margin: 0;
   max-height: 40px;
-}
+} */

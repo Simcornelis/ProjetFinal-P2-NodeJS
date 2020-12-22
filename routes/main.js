@@ -5,7 +5,9 @@ const mainRouter = new Router();
 mainRouter.get("/", (req, res) => {
   res.status(200).render("main.html", {
     userID: req.session.userID,
-    ppic: req.session.ppic || "img/noid.png",
+    ppic:
+      req.session.ppic ||
+      (req.session.userID ? "/img/nopic.png" : "/img/noid.png"),
   });
 });
 

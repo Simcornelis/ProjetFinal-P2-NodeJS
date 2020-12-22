@@ -143,6 +143,11 @@ main > form {
   display: none !important;
 }
 
+.overflow {
+  word-break: normal;
+  hyphens: auto;
+}
+
 div.oneline {
   margin: 5px;
   display: grid;

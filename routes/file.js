@@ -45,7 +45,7 @@ fileRouter.post("/", function (req, res, next) {
       } catch (err) {
         console.error(err);
       }
-      req.session.ppic = "./ppic/" + output;
+      req.session.ppic = "/ppic/" + output;
       updatePictureInDBAndFile(output, req.session.userID);
     })
     .then(() => res.status(200).json({ filename: output }))
