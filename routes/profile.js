@@ -15,7 +15,7 @@ profileRouter.get("/:id?", (req, res, next) => {
   if (!(req.params.id || req.session.userID)) {
     req.session.nextPage = "/profile";
     req.session.Error = "You have to log in first";
-    return res.redirect(`/login`);
+    return res.redirect(`/signin`);
   }
 
   const url = req.params.id || req.session.userID;
@@ -27,15 +27,16 @@ profileRouter.get("/:id?", (req, res, next) => {
     .catch((err) => console.error("[ERROR] " + err));
 
   function loadProfile(user) {
-    if (!user) return;
+    if (!user) throw new Error("User not found.");
+    if (user.ppic && !user.ppic.includes("http"))
+      user.ppic = "/ppic/" + user.ppic;
     res.render("profile.html", {
       userPseudo: user.pseudo,
       userEmail: user.email,
       userppic:
-        req.session.ppic ||
-        (req.session.userID ? "/img/nopic.png" : "/img/noid.png"),
+        user.ppic || (req.session.userID ? "/img/nopic.png" : "/img/noid.png"),
       userID: user._id,
-      canChange: req.session.userID == user._id,
+      canChange: req.session.userID === user._id.toString(),
     });
   }
 });
@@ -46,7 +47,7 @@ profileRouter.put("/changepseudo", async (req, res, next) => {
   if (!userID) {
     req.session.nextPage = "/profile";
     req.session.Error = "You have to log in first";
-    return res.redirect(`/login`);
+    return res.redirect(`/signin`);
   }
 
   let newPseudo = req.query.query_pseudo;

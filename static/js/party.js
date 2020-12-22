@@ -218,12 +218,14 @@ window.addEventListener("load", async () => {
     groupsSlider.addEventListener("change", updateGroups);
     function updateGroups() {
       if (groupsSlider.value == 11) groupsSpan.innerText = "25";
+      // String == Number
       else groupsSpan.innerText = groupsSlider.value;
     }
 
     gamesSlider.addEventListener("change", updateGames);
     function updateGames() {
       if (gamesSlider.value == 26) gamesSpan.innerText = "200";
+      // String == Number
       else gamesSpan.innerText = gamesSlider.value;
     }
 
