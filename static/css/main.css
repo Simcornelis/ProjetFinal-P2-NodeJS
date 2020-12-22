@@ -16,6 +16,7 @@
   transform: scale(0.35, 0);
   transform-origin: top left;
   transition: transform 0.2s;
+  z-index: 1;
 }
 
 .account.open {
@@ -39,5 +40,5 @@
   widows: 150px;
   margin: 0 auto 40px;
   border-radius: 3px;
-  opacity: 0.9;
+  opacity: 0.85;
 }

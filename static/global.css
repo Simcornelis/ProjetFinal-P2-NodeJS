@@ -11,7 +11,7 @@
   --f-gradient: linear-gradient(120deg, #416186, #203853, #6b377e);
   --f-gradient2: linear-gradient(120deg, #96deda 0%, #50c9c3 100%);
 
-  --f-transparent: #283b4dcc;
+  --f-transparent: #213853cc;
   --f-transparent-inverted: #fffa;
 
   font-family: Poppins, Roboto, sans-serif;
@@ -153,6 +153,7 @@ div.oneline {
 
 div.oneline > * {
   margin: 0;
+  white-space: nowrap;
 }
 
 div.half {
@@ -171,6 +172,10 @@ div.half > h2 {
 
   div.oneline > * {
     flex: 1;
+  }
+
+  div.oneline > button {
+    flex: 1 1 250px;
   }
 }
 

@@ -26,8 +26,7 @@ window.addEventListener("load", async () => {
   else if (pseudo) {
     usernameButton.onclick = submitNewUser;
     usernameInput.addEventListener("keyup", (event) => {
-      // on ENTER key pressed
-      if (event.keyCode === 13) {
+      if (event.key === "Enter") {
         event.preventDefault();
         submitNewUser();
       }
