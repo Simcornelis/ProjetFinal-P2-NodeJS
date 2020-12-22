@@ -32,10 +32,9 @@
             <h5>Email address</h5>
             <h3 id="email">{{userEmail}}</h3>
 
-            <button id="mygames"
-                onclick="window.location.href = '../games/allgames?userID_query={{userID}}&userPseudo_query={{userPseudo}}'">My
+            <button id="mygames" onclick="window.location.href = '/games/allgames?userID_query={{userID}}&userPseudo_query={{userPseudo}}'">My
                 Games</button>
-            <button id="myplaylists">My PLayLists</button>
+            <button id="myplaylists" onclick="window.location.href = '/playlists/allplaylists?userID_query={{userID}}&userPseudo_query={{userPseudo}}'">My PlayLists</button>
 
             {{#canChange}}
 

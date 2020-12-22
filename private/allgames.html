@@ -15,13 +15,11 @@
 
     <script defer src="/models/Game.js"></script>
     <script defer src="/js/allgames.js"></script>
-    <script defer src="/js/createPlaylist.js"></script>
-
     <title>All games</title>
 
     <script>
-        const userID = "{{ userID }}"
-        const userName = "{{ userName }}"
+        const userID = "{{ userID_query }}";
+        const userName = "{{ userName }}";
     </script>
 </head>
 
@@ -45,12 +43,9 @@
 
     <main>
         <div>
-            {{#userID_query}}
-            <h1>Games of {{userName}}</h1>
-            {{/userID_query}}
-            {{^userID_query}}
-            <h1>All Games</h1>
-            {{/userID_query}}
+            {{#userID_query}} <h1>Games of {{userName}}</h1> {{/userID_query}}
+            {{^userID_query}} <h1>All Games</h1> {{/userID_query}}
+            
             <div id="game-list">
                 <!-- game-box inserted with allgames.js -->
             </div>
