@@ -44,10 +44,12 @@ function verifyUserPassword(password, user) {
 }
 
 function setUserSession(req, user, stayLoggedIn) {
+  if (user.ppic && !user.ppic.includes("http"))
+    user.ppic = "/ppic/" + user.ppic;
   req.session.pseudo = user.pseudo;
   req.session.email = user.email;
   req.session.userID = user._id;
-  req.session.ppic = user.ppic ? `./ppic/${user.ppic}` : "/img/nopic.png";
+  req.session.ppic = user.ppic;
   if (stayLoggedIn) req.session.cookie.maxAge = 3600000 * 48; // 2 days
 }
 
