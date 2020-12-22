@@ -21,16 +21,7 @@
 </head>
 
 <body>
-    <header>
-        <button id="return" onclick="window.location.href = '/'">return</button>
-        <form id="search" hidden action="/playlists/findplaylistsbysearch" method="GET" onsubmit="return false;"></form>
-        <div id="searchBar">
-            <input form="search" name="search_query" type="text" autocomplete="off"
-                placeholder="Search and press Enter">
-            <button class="material-icons" id="searchButton">search</button>
-        </div>
-
-    </header>
+    <header></header>
 
     <main class="center-content">
         {{#userID_query}}

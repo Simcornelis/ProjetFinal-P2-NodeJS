@@ -13,32 +13,38 @@
     <title>Create a playlist</title>
 </head>
 <body>
-    <header>
-        <button id="return" onclick="window.location.href = '/'">return</button>
-    </header>
+    <header></header>
+	
     <main class="center-content">
         <div class="create-playlist">
-			<span>Create a playlist</span>
+			<h1>Create a playlist</h1>
 			<input placeholder="Playlist name" id="playlistName">
 			<table>
 				<tr>
-					<th>Available</th><th></th><th>Selected</th><th></th>
+					<th>Available</th>
 				</tr>
 				<tr>
 					<td>
 						<ul class="gameList" id="listAvailable"></ul>
 					</td>
+				</tr>
+				<tr>
 					<td>
-						<button id="addGamePlaylist">→</button><br>
-						<button id="removeGamePlaylist">←</button><br>
-						<button id="removeAllGamePlaylist">⇐</button>
+						<button id="addGamePlaylist">↓</button>
+						<button id="removeGamePlaylist">↑</button>
+						<button id="removeAllGamePlaylist">⇑</button>
 					</td>
+				</tr>
+				<tr>
+					<th>Selected</th>
+				</tr>
+				<tr>
 					<td>
 						<ul class="gameList" id="listSelected"></ul>
 					</td>
 					<td>
 						<button id="moveGameUpPlaylist">↑</button><br>
-						<button id="moveGameDownPlaylist">↓</button><br>
+						<button id="moveGameDownPlaylist">↓</button>
 					</td>
 				</tr>
 			</table>

@@ -4,10 +4,8 @@
 
 .gameList {
 	list-style: none;
-	height: 400px;
 	background-color: #e2e2e2;
 	overflow-y: scroll;
-	width: 400px;
 	padding: 0;
 }
 
