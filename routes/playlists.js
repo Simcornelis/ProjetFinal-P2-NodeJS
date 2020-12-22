@@ -6,14 +6,6 @@ const { ObjectId } = require("mongodb");
 const playlistRouter = new Router();
 playlistRouter.use(express.json());
 
-playlistRouter.get("/", (req, res, next) => {
-	res.render("allplaylists.html", {
-		userID: req.session.userID,
-		userID_query: req.query.userID_query,
-		userName: req.query.userPseudo_query,
-	});
-});
-
 playlistRouter.get("/allPlaylists", (req, res, next) => {
 	res.render("allplaylists.html", {
 		userID: req.session.userID,
@@ -22,7 +14,7 @@ playlistRouter.get("/allPlaylists", (req, res, next) => {
 	});
 });
 
-playlistRouter.get("/createplaylist", (req, res, next) => {
+playlistRouter.get("/", (req, res, next) => {
 	if (req.session.userID) {
 		res.render("createplaylist.html");
 	} else {
