@@ -85,7 +85,7 @@ app.use("/file", require("./routes/file.js").fileRouter);
 app.use("/admin", require("./routes/admin.js").adminRouter);
 app.use("/games", require("./routes/games.js").gamesRouter);
 app.use("/party", require("./routes/party.js").partyRouter);
-app.use("/playlists", require("./routes/playlist.js").playlistRouter);
+app.use("/playlists", require("./routes/playlists.js").playlistRouter);
 
 // REMOVE renders any html file
 app.get("/test", (req, res, next) => {

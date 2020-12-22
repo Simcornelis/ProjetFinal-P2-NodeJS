@@ -21,13 +21,9 @@ client.connect(async (err, client) => {
   console.log("[LOG] Connected to database server");
   db.dropDatabase() // reset database
     .then(() => createGamesCollection(gamesCollection))
-    .then(() =>
-      usersCollection.insertMany(assignObjectId(require("./users.json")))
-    )
+    .then(() => usersCollection.insertMany(assignObjectId(require("./users.json"))))
     .then(() => console.log("[LOG] Inserted users"))
-    .then(() =>
-      gamesCollection.insertMany(assignObjectId(require("./games.json")))
-    )
+    .then(() => gamesCollection.insertMany(assignObjectId(require("./games.json"))))
     .then(() => console.log("[LOG] Inserted games"))
     .then(() => client.close())
     .then(() => console.log("[LOG] Database server closed."))
@@ -47,8 +43,19 @@ function createGamesCollection(gamesCollection) {
   );
 }
 
+function createPlaylistsCollection(playlistsCollection) {
+  return playlistsCollection.createIndex(
+    {
+      _id: "text",
+      title: "text",
+      creatorID: "text",
+    },
+    { default_language: "english" }
+  );
+}
+
 function assignObjectId(collection) {
   return collection.map(
-    (game) => Object.assign(game, { _id: ObjectId(game._id) }) // String to mongo's ObjectId
+    (game) => Object.assign(game, { _id: ObjectId() }) // String to mongo's ObjectId
   );
 }

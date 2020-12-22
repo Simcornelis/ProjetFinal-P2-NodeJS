@@ -1,0 +1,31 @@
+.playlist-list {
+	display: grid;
+	gap: 10px;
+	width: 90%;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	color: var(--c-text-inverted);
+  }
+  
+  playlist-box {
+	display: grid;
+	grid-template-rows: 3fr;
+	gap: 5px;
+	padding: 5px;
+	height: 200px;
+	background: white;
+	cursor: pointer;
+  }
+  
+  playlist-box > .playlist-creator {
+	background: var(--f-transparent);
+	padding: 0 0.3em;
+	text-align: center;
+  }
+
+  playlist-box > .playlist-games {
+	overflow-y: scroll;
+  }
+  
+  h1 {
+	color: var(--c-text-inverted);
+  }
