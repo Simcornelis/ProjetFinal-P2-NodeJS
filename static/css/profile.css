@@ -1,27 +1,33 @@
-div {
+main > div {
+  display: grid;
   max-width: 500px;
   width: 100%;
-  padding: 10px;
-  background: var(--f-transparent-inverted);
   color: var(--c-text-inverted);
-  margin-top: 50px;
 }
 
-h1 {
-  text-align: center;
+main > div > h1 {
+  margin-top: 0;
+}
+
+h1,
+h2 {
+  padding: 0;
+  margin: 1em 5px 0.5em;
+}
+
+#ppic {
+  height: 8em;
+  width: 8em;
   margin: 0;
 }
 
-h3 {
-  padding: 5px 15px;
-  border-radius: 7px;
-  background-color: #0001;
-  margin: 0;
+#actions > button {
+  padding: 0.2em 0.5em;
 }
 
-input {
-  max-width: 300px;
-  width: 100%;
-  margin: 0;
-  max-height: 40px;
+#changeButton {
+  flex: none;
+  padding: 5px;
+  background: none;
+  box-shadow: none;
 }

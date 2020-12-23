@@ -14,6 +14,7 @@ window.addEventListener("load", async () => {
   const playerListDiv = document.getElementById("players-list");
   const partySettingsButton = document.getElementById("partySettings");
   const readyButton = document.getElementById("isReady");
+  const readyCount = readyButton.childNodes.item(2);
   const startButton = document.getElementById("start");
   const gameIDH4 = document.getElementById("gameID");
   const authorH4 = document.getElementById("author");
@@ -26,8 +27,7 @@ window.addEventListener("load", async () => {
   else if (pseudo) {
     usernameButton.onclick = submitNewUser;
     usernameInput.addEventListener("keyup", (event) => {
-      // on ENTER key pressed
-      if (event.keyCode === 13) {
+      if (event.key === "Enter") {
         event.preventDefault();
         submitNewUser();
       }
@@ -126,11 +126,6 @@ window.addEventListener("load", async () => {
     alert("You reached the end of the game!"); // TODO make a better ending
   });
 
-  footer.addEventListener("click", () => socket.emit("get-playlist", userID));
-  socket.on("playlists", (playlists) => {
-    console.log(playlists);
-  });
-
   function addPlayer(player, _team) {
     const isMe = player.replace(/🟢|👑/g, "").trim() === username;
     players.push(player);
@@ -143,7 +138,7 @@ window.addEventListener("load", async () => {
   function updateReadyPlayers(readyPlayers) {
     ready.splice(0); // empty players array
     readyPlayers.forEach((player) => ready.push(player));
-    readyButton.firstElementChild.textContent = ` (${ready.length}/${players.length})`;
+    readyCount.textContent = ` (${ready.length}/${players.length})`;
   }
 
   function loadPage(html, id, oldPage) {
@@ -192,6 +187,7 @@ window.addEventListener("load", async () => {
     const gamesSlider = document.getElementById("maxGames");
     const gamesSpan = document.getElementById("nGames");
 
+    const playlistSelect = document.querySelector("#my-playlists > select");
     const categorySelect = document.querySelector("#new-playlist > select");
 
     const myButton = document.getElementById("myPlaylists");
@@ -211,20 +207,29 @@ window.addEventListener("load", async () => {
       const cat = Array.from(categorySelect.options).map((html) => html.value);
       const optionIndex = cat.findIndex((option) => selected.includes(option));
       if (optionIndex >= 0) categorySelect.selectedIndex = optionIndex;
-      showNewPlaylists();
+    }
+
+    if (playlistSelect) {
+      myPlaylists.selectedIndex = playlistSelect.dataset.selected;
     }
 
     // actions
 
+    playlistSelect.addEventListener("change", () => {
+      categorySelect.selectedIndex = 0;
+    });
+
     groupsSlider.addEventListener("change", updateGroups);
     function updateGroups() {
       if (groupsSlider.value == 11) groupsSpan.innerText = "25";
+      // String == Number
       else groupsSpan.innerText = groupsSlider.value;
     }
 
     gamesSlider.addEventListener("change", updateGames);
     function updateGames() {
       if (gamesSlider.value == 26) gamesSpan.innerText = "200";
+      // String == Number
       else gamesSpan.innerText = gamesSlider.value;
     }
 
@@ -247,8 +252,8 @@ window.addEventListener("load", async () => {
     saveButton.onclick = () => {
       const selected = categorySelect[categorySelect.selectedIndex].text;
       const settings = {
-        // TODO add playlistID
-        categories: selected !== "All" ? [selected] : [], // TODO maybe multiple categories
+        playlist: playlistSelect.value,
+        categories: selected !== "All" ? [selected] : [],
         maxGroups: groupsSlider.value,
         maxGames: gamesSlider.value,
       };

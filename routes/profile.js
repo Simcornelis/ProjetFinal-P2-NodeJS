@@ -1,57 +1,48 @@
-const { Router, json } = require("express");
-const express = require("express");
-const session = require("express-session");
+const { Router } = require("express");
 const { ObjectId } = require("mongodb");
-const fs = require("fs");
-const { profile } = require("console");
 
 const profileRouter = new Router();
-profileRouter.use(express.json());
 
 /**
  * Render the profile page of a user. If there is no params in the request and no user loged, redirect to the login page.
  */
-profileRouter.get("/:id?", (req, res, next) => {
+profileRouter.get("/:id?", (req, res) => {
   if (!(req.params.id || req.session.userID)) {
     req.session.nextPage = "/profile";
     req.session.Error = "You have to log in first";
-    return res.redirect(`/login`);
+    return res.redirect(`/signin`);
   }
 
   const url = req.params.id || req.session.userID;
   const usersCollection = require("../server.js").usersCollection;
 
   usersCollection
-    .findOne({
-      _id: ObjectId(url),
-    })
+    .findOne({ _id: ObjectId(url) })
     .then(loadProfile)
-    .catch((err) => console.error("[info] " + err));
+    .catch((err) => console.error("[ERROR] " + err));
 
   function loadProfile(user) {
-    if (!user) return;
-    // if the user has no ppic, set src to //:0 to prevent loading an image
-    let ppic = user.ppic || "//:0"; // https://stackoverflow.com/a/5775621
-    console.log("picture : " + ppic);
-    if (ppic !== "//:0" && !ppic.includes("http"))
-      ppic = req.protocol + "://" + req.get("host") + "/ppic/" + ppic;
+    if (!user) throw new Error("User not found.");
+    if (user.ppic && !user.ppic.includes("http"))
+      user.ppic = "/ppic/" + user.ppic;
     res.render("profile.html", {
       userPseudo: user.pseudo,
       userEmail: user.email,
-      userppic: ppic,
+      userppic:
+        user.ppic || (req.session.userID ? "/img/nopic.png" : "/img/noid.png"),
       userID: user._id,
-      canChange: req.session.userID == user._id,
+      canChange: req.session.userID === user._id.toString(),
     });
   }
 });
 
-profileRouter.put("/changepseudo", async (req, res, next) => {
+profileRouter.put("/changepseudo", async (req, res) => {
   let userID = req.session.userID;
 
   if (!userID) {
     req.session.nextPage = "/profile";
     req.session.Error = "You have to log in first";
-    return res.redirect(`/login`);
+    return res.redirect(`/signin`);
   }
 
   let newPseudo = req.query.query_pseudo;
@@ -66,7 +57,6 @@ profileRouter.put("/changepseudo", async (req, res, next) => {
     )
     .then(() => {
       req.session.userPseudo = newPseudo;
-      console.log("Pseudo Changed");
       res.sendStatus(200);
     })
     .catch((err) => {

@@ -28,12 +28,10 @@ function getPartyDB(partyCode, socket) {
 
 function getPlaylistDB(playlistID) {
   const { playlistsCollection } = require("../../server");
-  return playlistsCollection
-    .findOne({ _id: ObjectId(playlistID) })
-    .then((playlist) => {
-      if (!playlist) throw new Error("Playlist not found.");
-      return playlist;
-    });
+  return playlistsCollection.findOne({ _id: playlistID }).then((playlist) => {
+    if (!playlist) throw new Error("Playlist not found.");
+    return playlist;
+  });
 }
 
 function getGameDB(gameID) {
@@ -51,19 +49,29 @@ function getUserPartiesDB(socket) {
   });
 }
 
+function getUserPlaylistsDB(userID) {
+  const { playlistsCollection } = require("../../server");
+  if (!userID) return Promise.resolve([]);
+  return playlistsCollection
+    .find({ creatorID: userID })
+    .map((playlist) => ({
+      id: playlist._id,
+      title: playlist.title,
+    }))
+    .toArray();
+}
+
 function removePartyDB(party) {
   const { partiesCollection } = require("../../server");
-  removePlaylistDB(party);
+  removePlaylistDB(party.playlistID);
   partiesCollection
     .deleteOne({ partyCode: party.partyCode })
     .catch(handleError);
 }
 
-function removePlaylistDB(party) {
+function removePlaylistDB(playlistID) {
   const { playlistsCollection } = require("../../server");
-  playlistsCollection
-    .deleteOne({ _id: ObjectId(party.playlistID) })
-    .catch(handleError);
+  playlistsCollection.deleteOne({ _id: playlistID }).catch(handleError);
 }
 
 module.exports = {
@@ -72,6 +80,7 @@ module.exports = {
   getPlaylistDB,
   getGameDB,
   getUserPartiesDB,
+  getUserPlaylistsDB,
   removePartyDB,
   removePlaylistDB,
 };

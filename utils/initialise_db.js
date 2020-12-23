@@ -17,10 +17,12 @@ client.connect(async (err, client) => {
   const db = client.db(process.env.DATABASE_NAME);
   const gamesCollection = db.collection(process.env.DATABASE_GAMES);
   const usersCollection = db.collection(process.env.DATABASE_USERS);
+  const playlistsCollection = db.collection(process.env.DATABASE_PLAYLISTS);
 
   console.log("[LOG] Connected to database server");
   db.dropDatabase() // reset database
     .then(() => createGamesCollection(gamesCollection))
+    .then(() => createPlaylistsCollection(playlistsCollection))
     .then(() =>
       usersCollection.insertMany(assignObjectId(require("./users.json")))
     )
@@ -47,8 +49,19 @@ function createGamesCollection(gamesCollection) {
   );
 }
 
+function createPlaylistsCollection(playlistsCollection) {
+  return playlistsCollection.createIndex(
+    {
+      _id: "text",
+      title: "text",
+      creatorID: "text",
+    },
+    { default_language: "english" }
+  );
+}
+
 function assignObjectId(collection) {
   return collection.map(
-    (game) => Object.assign(game, { _id: ObjectId(game._id) }) // String to mongo's ObjectId
+    (game) => Object.assign(game, { _id: ObjectId(game._id) }) // string to Mongo's ObjectId
   );
 }

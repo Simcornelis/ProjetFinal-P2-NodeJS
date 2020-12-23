@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet" />
+
+	<link rel="stylesheet" href="/global.css" />
+	<link rel="stylesheet" href="/css/createPlaylist.css" />
+	<link rel="stylesheet" href="/icons/icomoon.css">
+
+	<script defer src="/js/createPlaylist.js"></script>
+
+	<title>Create a playlist</title>
+</head>
+
+<body>
+	<header></header>
+
+	<main class="center-content">
+		<div class="create-playlist">
+			<h1>Create a playlist</h1>
+			<input placeholder="Playlist name" id="playlistName">
+			<table>
+				<tr>
+					<th>Available</th>
+				</tr>
+				<tr>
+					<td>
+						<ul class="gameList" id="listAvailable"></ul>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button id="addGamePlaylist" class="icon">d</button>
+						<button id="removeGamePlaylist" class="icon">t</button>
+						<button id="removeAllGamePlaylist" class="icon">U</button>
+					</td>
+				</tr>
+				<tr>
+					<th>Selected</th>
+				</tr>
+				<tr>
+					<td>
+						<ul class="gameList" id="listSelected"></ul>
+					</td>
+					<td>
+						<button id="moveGameUpPlaylist" class="icon">p</button><br>
+						<button id="moveGameDownPlaylist" class="icon">o</button>
+					</td>
+				</tr>
+			</table>
+			<button id="createPlaylist"><i class="icon"></i> Create new playlist</button>
+		</div>
+	</main>
+	<footer></footer>
+	<canvas class="animate"></canvas>
+	<script defer src="/js/particles.js"></script>
+</body>
+
+</html>

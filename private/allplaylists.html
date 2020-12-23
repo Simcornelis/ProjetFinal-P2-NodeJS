@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/css/allplaylists.css">
+
+    <title>All playlists</title>
+</head>
+
+<body>
+    <header></header>
+
+    <main>
+        <div>
+            {{#userID_query}}<h1>Playlists of {{userName}}</h1>{{/userID_query}}
+            {{^userID_query}}<h1>All Playlists</h1>{{/userID_query}}
+
+            <div id="playlist-list">
+                {{#playlists}}
+                <div class="playlist">
+                    <h2 class="title overflow">{{ title }}</h2>
+                    <div class="games">
+                        {{#games}}
+                        <a href="/games/gamedata/{{ gameID }}">{{ instruction }}</a>
+                        {{/games}}
+                    </div>
+                    <div class="playlistID overflow">{{ id }}</div>
+                </div>
+                {{/playlists}}
+            </div>
+        </div>
+    </main>
+
+    <canvas class="animate"></canvas>
+    <script defer src="/js/particles.js"></script>
+</body>
+
+</html>

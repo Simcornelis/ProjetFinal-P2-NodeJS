@@ -1,17 +1,14 @@
 const { ObjectId } = require("mongodb");
-const { Game, emoji } = require("../models/Game");
+const { Game, categories, emoji } = require("../models/Game");
 const { Router } = require("express");
 
 const gamesRouter = new Router();
 
-gamesRouter.get("/gamedata/:id?", (req, res, next) => {
+gamesRouter.get("/gamedata/:id", (req, res, next) => {
   const { gamesCollection } = require("../server.js");
   const gameID = req.params.id;
   gamesCollection.findOne({ _id: ObjectId(gameID) }).then((game) => {
-    let categories = Array.isArray(game.categories)
-      ? game.categories
-      : [game.categories];
-    //Always be an array (to not split the word)
+    if (!game.categories) game.categories = [];
     res.render("gamedata.html", {
       instruction: game.instruction,
       description: game.description,
@@ -23,15 +20,19 @@ gamesRouter.get("/gamedata/:id?", (req, res, next) => {
   });
 });
 
-gamesRouter.get("/allgames", (req, res, next) => {
+gamesRouter.get("/", (req, res, next) => {
   res.render("allgames.html", {
     userID: req.session.userID,
     userID_query: req.query.userID_query,
     userName: req.query.userPseudo_query,
+    categories: Object.entries(categories).map((list) => ({
+      e: list[1],
+      c: list[0],
+    })),
   });
 });
 
-gamesRouter.get("/addgame", (req, res, next) => {
+gamesRouter.get("/new", (req, res, next) => {
   if (req.session.userID) {
     res.render("addgame.html");
   } else {
@@ -39,7 +40,7 @@ gamesRouter.get("/addgame", (req, res, next) => {
   }
 });
 
-gamesRouter.post("/addgame", (req, res, next) => {
+gamesRouter.post("/new", (req, res, next) => {
   const { gamesCollection } = require("../server.js");
   gamesCollection.insertOne(
     new Game(
@@ -51,7 +52,7 @@ gamesRouter.post("/addgame", (req, res, next) => {
     )
   );
 
-  res.redirect("/");
+  res.redirect("/games");
 });
 
 gamesRouter.get("/findgames", async (req, res, next) => {

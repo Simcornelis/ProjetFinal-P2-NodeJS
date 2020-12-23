@@ -9,9 +9,9 @@
       <span id="fill" style="right: {{ progress }}%" />
     </div>
 
-    <p id="instruction">{{ instruction }}</p>
+    <p id="instruction" class="overflow">{{ instruction }}</p>
     
-    <p class="hide" id="description">{{ description }}</p>
+    <p class="hide overflow" id="description">{{ description }}</p>
 
     <div id="categories">
       {{#categories}}
@@ -20,8 +20,8 @@
     </div>
 
     <div class="admin hide oneline half">
-      <button id="next">Next game</button>
-      <button id="end">End game</button>
+      <button id="next"><i class="icon">▶</i> Next</button>
+      <button id="end"><i class="icon">⚠</i> End</button>
     </div>
   </div>
 </div>

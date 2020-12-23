@@ -43,7 +43,7 @@ function nextGame(party, socket, oldGame) {
         )
         .then(() => action.informPlayers(party))
         .then(db.updatePartyDB)
-        .catch(console.log);
+        .catch(action.handleError);
     })
     .catch((error) => action.handleError(error, socket));
 }
@@ -54,19 +54,25 @@ function settings(party, socket) {
     throw new Error("You are not admin.");
   }
 
-  // TODO add player's playlists, playlistID/name
   db.getPlaylistDB(party.playlistID).then((playlist) => {
     const settings = {
       partyCode: party.partyCode,
       maxGroups: party.maxGroups,
+      selected: playlist._id,
+      playlists: [{ id: playlist._id, title: playlist.title }],
       categories: playlist.categories,
       maxGames: party.maxGames,
     };
 
-    consolidate
-      .hogan("./private/party_settings.xml", settings)
-      .then((html) => io.to(socket.id).emit("settings", html))
-      .catch((error) => action.handleError(error, socket));
+    db.getUserPlaylistsDB(party.getAdmin().userID).then((playlists) => {
+      if (playlist.creatorID) settings.playlists = playlists;
+      else settings.playlists = settings.playlists.concat(playlists);
+
+      consolidate
+        .hogan("./private/party_settings.xml", settings)
+        .then((html) => io.to(socket.id).emit("settings", html))
+        .catch((error) => action.handleError(error, socket));
+    });
   });
 }
 

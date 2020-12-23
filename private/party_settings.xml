@@ -28,11 +28,10 @@
 
 	<div class="playlist" id="my-playlists">
 		<h2>Play my playlists</h2>
-		<input type="text" placeholder="Search..." />
-		<select>
-			<option>Soirée Halloween entre potes</option>
-			<option>Kot à projet jeudi soir</option>
-			<option>Scouts 13/10/2020 activité</option>
+		<select data-selected="{{ selected }}">
+			{{#playlists}}
+			<option value="{{ id }}">{{ title }}</option>
+			{{/playlists}}
 		</select>
 	</div>
 
@@ -65,5 +64,5 @@
     />
 	</div>
 
-	<button id="save-settings">Save</button>
+	<button id="save-settings"><i class="icon">👌</i> Save</button>
 </div>

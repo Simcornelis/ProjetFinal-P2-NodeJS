@@ -1,10 +1,10 @@
 @font-face {
-  font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?o1kcu1');
-  src:  url('fonts/icomoon.eot?o1kcu1#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?o1kcu1') format('truetype'),
-    url('fonts/icomoon.woff?o1kcu1') format('woff'),
-    url('fonts/icomoon.svg?o1kcu1#icomoon') format('svg');
+  font-family: "icomoon";
+  src: url("fonts/icomoon.eot?erwnzg");
+  src: url("fonts/icomoon.eot?erwnzg#iefix") format("embedded-opentype"),
+    url("fonts/icomoon.ttf?erwnzg") format("truetype"),
+    url("fonts/icomoon.woff?erwnzg") format("woff"),
+    url("fonts/icomoon.svg?erwnzg#icomoon") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -12,7 +12,7 @@
 
 .icon {
   /* use !important to prevent issues with browser extensions that change fonts */
-  font-family: 'icomoon' !important;
+  font-family: "icomoon" !important;
   speak: never;
   font-style: normal;
   font-weight: normal;
@@ -28,8 +28,35 @@
 .i-alert-triangle:before {
   content: "\26a0";
 }
+.i-arrow-down:before {
+  content: "\6f";
+}
+.i-arrow-up:before {
+  content: "\70";
+}
+.i-check:before {
+  content: "\1f44c";
+}
 .i-check-circle:before {
   content: "\2714";
+}
+.i-chevron-down:before {
+  content: "\64";
+}
+.i-chevron-up:before {
+  content: "\74";
+}
+.i-chevrons-up:before {
+  content: "\55";
+}
+.i-edit:before {
+  content: "\1f58a";
+}
+.i-file:before {
+  content: "\e908";
+}
+.i-filter:before {
+  content: "\e909";
 }
 .i-help-circle:before {
   content: "\1f198";
@@ -37,17 +64,23 @@
 .i-info:before {
   content: "\2139";
 }
+.i-layers:before {
+  content: "\1f4c1";
+}
 .i-log-in:before {
   content: "\1f447";
 }
 .i-log-out:before {
-  content: "\261d";
-}
-.i-menu:before {
-  content: "\1f354";
+  content: "\1f446";
 }
 .i-minus-circle:before {
   content: "\2796";
+}
+.i-package:before {
+  content: "\1f4e6";
+}
+.i-paperclip:before {
+  content: "\1f4ce";
 }
 .i-pause:before {
   content: "\23f8";
@@ -55,14 +88,38 @@
 .i-play:before {
   content: "\25b6";
 }
-.i-plus-circle:before {
+.i-plus:before {
   content: "\2795";
 }
+.i-plus-circle:before {
+  content: "\1f17f";
+}
 .i-rotate-ccw:before {
-  content: "\e90a";
+  content: "\1f504";
+}
+.i-search:before {
+  content: "\1f50d";
+}
+.i-slash:before {
+  content: "\1f512";
+}
+.i-sliders:before {
+  content: "\1f4d0";
+}
+.i-toggle-left:before {
+  content: "\1f312";
+}
+.i-toggle-right:before {
+  content: "\1f318";
 }
 .i-tool:before {
   content: "\1f527";
+}
+.i-remove:before {
+  content: "\1f6ae";
+}
+.i-upload:before {
+  content: "\1f40c";
 }
 .i-user:before {
   content: "\1f9d1";
