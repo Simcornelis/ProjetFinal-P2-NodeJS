@@ -1,31 +1,71 @@
-.playlist-list {
-	display: grid;
-	gap: 10px;
-	width: 90%;
-	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-	color: var(--c-text-inverted);
-  }
-  
-  playlist-box {
-	display: grid;
-	grid-template-rows: 3fr;
-	gap: 5px;
-	padding: 5px;
-	height: 200px;
-	background: white;
-	cursor: pointer;
-  }
-  
-  playlist-box > .playlist-creator {
-	background: var(--f-transparent);
-	padding: 0 0.3em;
-	text-align: center;
-  }
+main > div {
+  padding-top: 0;
+  margin: 0 auto;
+  width: 90%;
+  background: transparent;
+  box-shadow: none;
+}
 
-  playlist-box > .playlist-games {
-	overflow-y: scroll;
-  }
-  
-  h1 {
-	color: var(--c-text-inverted);
-  }
+main > div > h1 {
+  padding: 0.2em 0.5em;
+  border-radius: 3px;
+  background: var(--f-transparent-inverted);
+  color: var(--c-text-inverted);
+}
+
+#playlist-list {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-auto-rows: 1fr;
+  color: var(--c-text-inverted);
+}
+
+.playlist {
+  width: 100%;
+  max-width: 600px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--f-transparent-inverted);
+}
+
+.title {
+  display: grid;
+  padding: 15px;
+  text-align: center;
+  place-items: center;
+}
+
+.games {
+  padding: 15px;
+  display: grid;
+  grid-auto-rows: max-content;
+  gap: 5px;
+  overflow: hidden;
+}
+
+.games > a {
+  max-width: 100%;
+  color: inherit;
+  text-decoration: none;
+  hyphens: auto;
+}
+
+.games > a + a {
+  padding-top: 5px;
+  border-top: 1px solid var(--f-transparent-inverted);
+}
+
+.games > a:hover {
+  transform: translateX(2px);
+}
+
+.playlistID {
+  padding: 0.2em 0.5em;
+  background: var(--f-transparent-inverted);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

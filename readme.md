@@ -94,3 +94,33 @@ Soit _CTRL+C_ deux fois, soit _CTRL+C_ suivi de _Y_ (yes en Anglais) et _ENTER_.
 ## 🔧 Publier des changements
 
 Avec _source control_ (3e onglet sur la gauche dans VSC, ou avec _CTRL+SHIFT+G_) on appuie sur les + pour ajouter des fichiers au commit. Ensuite on donne un message dans le cadre au dessus des fichiers et on commit avec _CTRL+ENTER_. Maintenant il ne reste plus qu'à push les commits avec le menu (•••) puis "push". C'est là que se situent les autres options intéressantes comme "pull" si jamais des changements ont étés faits depuis le dernier pull.
+
+## 😎 Guide de style
+
+Pour une lisibilité optimale du code, ainsi qu'une cohérence entre les versions de codes, on utilise un guide de style. On a choisi le guide de [Felix Geisendörfer](https://github.com/felixge) qui est le [Node style guide](https://github.com/felixge/node-style-guide). Il y propose un fichier `.editorconfig` qui fonctionne par défaut avec _Prettier_. Nous avons cependant décidé de l'ajuster à nos propres préférences qui suivent.
+
+- Commentaires et code en anglais.
+- Toujours utiliser les doubles guillemets.
+- Les objets (et classes) qui ne doivent pas être remplacées par d'autres types de variables doivent être des constantes.
+- Utiliser `const` autant que possible. Seules les constantes globales sont en majuscules.
+- Ajouter un espace entre des accolades d'un objet.
+
+```js
+const playlist = { game: "I like that cut g.", info: "Slap." };
+```
+
+- Utiliser la fonction lambda lorsqu'on veut utiliser une fonction anonyme.
+- Absolument tout le temps utiliser la triple égalité, sinon, l'expliquer à l'aide d'un commentaire.
+- If/else en une ligne si possible, sinon, ajouter des accolades lorsqu'il n'y a pas de else.
+
+```js
+partyRouter.get("/game", (req, res, next) => {
+  if ("Steak" === 🥩) console.log("Hmmm");
+});
+```
+
+- L'opérateur ternaire doit être simple à lire, il peut être écrit sur une ligne si il est court. Sinon, le remplacer par un if.
+- Éviter les commentaires de description du fonctionnement du code.
+- Ajouter des commentaires là où une option d'implémentation à été choisie en faveur d'une autre pour une raison particulière.
+- Extraire un maximum de fonctions compliquées en de plus petites, plus rapides à comprendre.
+- En bonus, ajouter des emojis aux commits 🤗.
