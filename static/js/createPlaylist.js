@@ -88,9 +88,7 @@ window.addEventListener("load", () => {
   });
 
   createPlaylist.addEventListener("click", () => {
-    return new Promise((resolve, reject) => {
-      resolve();
-    })
+    return Promise.resolve()
       .then(() => {
         if (
           !document.getElementById("playlistName").value ||

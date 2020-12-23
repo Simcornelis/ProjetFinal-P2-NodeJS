@@ -21,40 +21,30 @@
 	<main class="center-content">
 		<div class="create-playlist">
 			<h1>Create a playlist</h1>
+
+			<h2>Choose a name</h2>
 			<input placeholder="Playlist name" id="playlistName">
-			<table>
-				<tr>
-					<th>Available</th>
-				</tr>
-				<tr>
-					<td>
-						<ul class="gameList" id="listAvailable"></ul>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<button id="addGamePlaylist" class="icon">d</button>
-						<button id="removeGamePlaylist" class="icon">t</button>
-						<button id="removeAllGamePlaylist" class="icon">U</button>
-					</td>
-				</tr>
-				<tr>
-					<th>Selected</th>
-				</tr>
-				<tr>
-					<td>
-						<ul class="gameList" id="listSelected"></ul>
-					</td>
-					<td>
-						<button id="moveGameUpPlaylist" class="icon">p</button><br>
-						<button id="moveGameDownPlaylist" class="icon">o</button>
-					</td>
-				</tr>
-			</table>
+
+			<h2>Available</h2>
+			<ul class="gameList" id="listAvailable"></ul>
+
+			<div class="actions">
+				<button id="removeGamePlaylist" class="icon">t</button>
+				<button id="removeAllGamePlaylist" class="icon">U</button>
+				<button id="addGamePlaylist" class="icon">d</button>
+			</div>
+
+			<h2>Selected</h2>
+			<ul class="gameList" id="listSelected"></ul>
+			<div class="oneline half">
+				<button id="moveGameUpPlaylist" class="icon">p</button>
+				<button id="moveGameDownPlaylist" class="icon">o</button>
+			</div>
+
 			<button id="createPlaylist"><i class="icon"></i> Create new playlist</button>
 		</div>
 	</main>
-	<footer></footer>
+
 	<canvas class="animate"></canvas>
 	<script defer src="/js/particles.js"></script>
 </body>
