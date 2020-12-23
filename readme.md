@@ -2,6 +2,8 @@
 
 Deuxième partie du projet sur la création d'un site web. A l'aide de HTML, CSS, JavaScript, NodeJS, MongoDB et WebSocket, nous créons un jeu multijoueur sur naviteur et mobile.
 
+Notre application est un jeu multijoueur pour occuper ses soirées en groupe (une fois le confinement terminé). Il propose des parties pour se regrouper, jouer aux jeux créés sur le site et regroupés dans les playlists des utilisateurs.
+
 ## 🚗 Routes disponibles
 
 ### 👪 Pour tout utilisateur
@@ -26,12 +28,16 @@ Deuxième partie du projet sur la création d'un site web. A l'aide de HTML, CSS
 - [/createplaylist](https://localhost:8080/createplaylist) (POST) pour la création de playlists
 - [/signout](https://localhost:8080/signout) (GET) pour se déconnecter
 
-### 👨‍💻 Réservés au Master User (voir _.env_ pour les identifiants)
+### 👨‍💻 Réservés au MASTER USER (voir le fichier _.env_ pour les identifiants)
 
-- [/admin](https://localhost:8080/admin) (GET) pour une liste de tous les utilisateurs au format JSON
-- [/admin](https://localhost:8080/admin) (DELETE) pour supprimer tous les utilisateurs de la base de données
-- [/admin/:id](https://localhost:8080/admin/:id) (GET) pour voir un utilisateur en particulier au format JSON
-- [/admin/email](https://localhost:8080/admin/email) (DELETE) pour supprimer un utilisateur en particulier, à partir de son email, de la base de données
+- [/admin/users](https://localhost:8080/admin/users) (GET) pour une liste de tous les utilisateurs au format JSON
+- [/admin/users](https://localhost:8080/admin/users) (DELETE) pour supprimer tous les utilisateurs de la base de données
+- [/admin/games](https://localhost:8080/admin/games) (GET) pour une liste de tous les jeux au format JSON
+- [/admin/games](https://localhost:8080/admin/games) (DELETE) pour supprimer tous les jeux de la base de données
+- [/admin/playlists](https://localhost:8080/admin/playlists) (GET) pour une liste de toutes les playlists au format JSON
+- [/admin/playlists](https://localhost:8080/admin/playlists) (DELETE) pour supprimer toutes les playlists de la base de données
+- [/admin/parties](https://localhost:8080/admin/parties) (GET) pour une liste de toutes les parties au format JSON
+- [/admin/parties](https://localhost:8080/admin/parties) (DELETE) pour supprimer toutes les parties de la base de données
 
 ---
 
