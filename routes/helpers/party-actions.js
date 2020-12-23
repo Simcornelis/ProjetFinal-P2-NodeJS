@@ -1,4 +1,5 @@
 const io = require("./party-socket").io;
+const { ObjectId } = require("mongodb");
 const { Party } = require("../../models/Party");
 const { updateGameIDs } = require("../../models/Playlist");
 
@@ -28,15 +29,25 @@ function changePlayerTeam(party, socket, newTeam) {
   db.updatePartyDB(party);
 }
 
-function updateSettings(party, settings) {
+async function updateSettings(party, settings) {
+  console.log(settings); // REMOVE
   Object.assign(party, {
     maxGames: settings.maxGames < 26 ? settings.maxGames * 1 : 200, // extreme max is 200 games
     maxGroups: settings.maxGroups < 11 ? settings.maxGroups * 1 : 25, // extreme max is 25 groups
     level: 0,
   });
-  db.getPlaylistDB(party.playlistID).then((playlist) =>
-    updateGameIDs(playlist, settings.categories, party.maxGames)
-  );
+
+  if (settings.categories.length > 0)
+    await db.getPlaylistDB(party.playlistID).then((playlist) => {
+      updateGameIDs(playlist, settings.categories, party.maxGames);
+    });
+  else {
+    await db.getPlaylistDB(ObjectId(settings.playlist)).then((playlist) => {
+      // if (!playlist.creatorID) db.removePlaylistDB(party.playlistID);
+      party.playlistMaxGames = playlist.gameIDs.length;
+      party.playlistID = ObjectId(settings.playlist);
+    });
+  }
   return party;
 }
 

@@ -52,7 +52,7 @@ function setPlaylistIDInPartyDB(playlistInDB) {
 
 function setMaxGamesInPartyDB(playlist) {
   const { partiesCollection } = require("../server");
-  partiesCollection.updateOne(
+  return partiesCollection.updateOne(
     { partyCode: playlist.partyCode },
     { $set: { playlistMaxGames: playlist.gameIDs.length } }
   );

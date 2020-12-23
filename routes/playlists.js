@@ -1,9 +1,7 @@
 const { Router } = require("express");
-const express = require("express");
 const { getGameDB } = require("./helpers/party-db");
 
 const playlistRouter = new Router();
-playlistRouter.use(express.json());
 
 playlistRouter.get("/allPlaylists", (req, res, next) => {
   const { playlistsCollection } = require("../server");
@@ -16,7 +14,6 @@ playlistRouter.get("/allPlaylists", (req, res, next) => {
 
   playlistsCollection
     .find({ creatorID: req.query.userID_query })
-    // .map((p) => ({ id: p._id, title: p.title, games: p.gameIDs }))
     .toArray()
     .then(getAllGamesDB)
     .then((playlists) => {
@@ -70,35 +67,6 @@ playlistRouter.post("/createplaylist", (req, res, next) => {
     .catch((error) => res.status(405).send(error.message));
 });
 
-/*
-playlistRouter.get("/findplaylists", async (req, res, next) => {
-	let searchQuery = req.query.search_query;
-	let userIDQuery = req.query.userID_query;
-	return new Promise((resolve, reject) => {
-		resolve();
-	})
-	.then(() => {
-		const { playlistsCollection } = require("../server.js");
-		return playlistsCollection.aggregate({
-			$lookup: {
-				from: "games",
-				localField: "game_id",
-				foreignField: "_id",
-				as: "game_info",
-			},
-			$project: {
-				_id: 1,
-				title: 1,
-				creator_id: 1,
-				game_info: 1,
-			}
-		}).find()
-	})
-	.then((result) => result.toArray())
-	.then((results) => res.status(200).json(results))
-	.catch((error) => res.status(400).json({ Error: error.toString() }));
-});
-*/
 playlistRouter.get("/findplaylists", async (req, res, next) => {
   let userIDQuery = req.query.userID_query;
   let creator_idQuery = req.query.creatorID;
@@ -115,11 +83,9 @@ playlistRouter.get("/findplaylists", async (req, res, next) => {
 
 function getAllPlaylists(userIDQuery) {
   const { playlistsCollection } = require("../server.js");
-  if (userIDQuery) {
+  if (userIDQuery)
     return playlistsCollection.find({ creatorID: userIDQuery }).toArray();
-  } else {
-    return playlistsCollection.find().toArray();
-  }
+  else return playlistsCollection.find().toArray();
 }
 
 function getMyPlaylists(creator_idQuery, userIDQuery) {

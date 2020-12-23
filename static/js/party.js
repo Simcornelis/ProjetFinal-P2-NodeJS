@@ -186,6 +186,7 @@ window.addEventListener("load", async () => {
     const gamesSlider = document.getElementById("maxGames");
     const gamesSpan = document.getElementById("nGames");
 
+    const playlistSelect = document.querySelector("#my-playlists > select");
     const categorySelect = document.querySelector("#new-playlist > select");
 
     const myButton = document.getElementById("myPlaylists");
@@ -205,10 +206,17 @@ window.addEventListener("load", async () => {
       const cat = Array.from(categorySelect.options).map((html) => html.value);
       const optionIndex = cat.findIndex((option) => selected.includes(option));
       if (optionIndex >= 0) categorySelect.selectedIndex = optionIndex;
-      showNewPlaylists();
+    }
+
+    if (playlistSelect) {
+      myPlaylists.selectedIndex = playlistSelect.dataset.selected;
     }
 
     // actions
+
+    playlistSelect.addEventListener("change", () => {
+      categorySelect.selectedIndex = 0;
+    });
 
     groupsSlider.addEventListener("change", updateGroups);
     function updateGroups() {
@@ -243,8 +251,8 @@ window.addEventListener("load", async () => {
     saveButton.onclick = () => {
       const selected = categorySelect[categorySelect.selectedIndex].text;
       const settings = {
-        // TODO add playlistID
-        categories: selected !== "All" ? [selected] : [], // TODO maybe multiple categories
+        playlist: playlistSelect.value,
+        categories: selected !== "All" ? [selected] : [],
         maxGroups: groupsSlider.value,
         maxGames: gamesSlider.value,
       };
