@@ -125,11 +125,6 @@ window.addEventListener("load", async () => {
     alert("You reached the end of the game!"); // TODO make a better ending
   });
 
-  footer.addEventListener("click", () => socket.emit("get-playlist", userID));
-  socket.on("playlists", (playlists) => {
-    console.log(playlists);
-  });
-
   function addPlayer(player, _team) {
     const isMe = player.replace(/🟢|👑/g, "").trim() === username;
     players.push(player);

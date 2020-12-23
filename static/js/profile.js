@@ -1,32 +1,52 @@
+const img = document.querySelector("img");
+const file = document.querySelector("input[type=file]");
+
+const ppicInput = document.querySelector("#actions > input");
+const loadButton = document.getElementById("load");
+const clearButton = document.getElementById("clear");
+const saveButton = document.getElementById("save");
+const changeButton = document.getElementById("changeButton");
+
 window.addEventListener("load", async () => {
-  // show ppic only if it's content is a valid URL
-  const pv = document.querySelector("img");
-  console.log(pv);
-  if (pv.src != "//:0") pv.hidden = false;
-  previewFile();
+  ppicInput.onchange = previewFile;
+
+  loadButton.onclick = () => {
+    clearButton.classList.remove("clear");
+    saveButton.classList.add("hide");
+    ppicInput.click();
+  };
+
+  clearButton.onclick = () => {
+    img.src = "/img/nopic.png";
+    file.value = "";
+    clearButton.classList.add("clear");
+    saveButton.classList.remove("hide");
+  };
+
+  saveButton.onclick = () => {
+    saveButton.classList.add("hide");
+    if (clearButton.classList.contains("clear")) deleteFile();
+    else sendFile();
+  };
+
+  changeButton.onclick = changePseudo;
 });
 
-/**
- * Display a preview of the selected picture.
- */
+previewFile(); // first preview on page load
+
 function previewFile() {
-  const preview = document.querySelector("img");
-  console.log(preview);
-  const file = document.querySelector("input[type=file]");
   const reader = new FileReader();
 
   if (!file) return;
-  // reader.result is a base64 string
-  reader.onloadend = (err) => {
-    preview.src = reader.result;
-    // preview.hidden = false;
+  reader.onloadend = (info) => {
+    // reader.result is a base64 string
+    img.src = reader.result;
+    saveButton.classList.remove("hide");
   };
 
   if (file.files[0]) reader.readAsDataURL(file.files[0]);
 }
-/**
- * Send a picture file to the server.
- */
+
 function sendFile() {
   const file = document.querySelector("input[type=file]").files[0];
   if (!file) return alert("No file loaded!");
@@ -40,26 +60,17 @@ function sendFile() {
   const form = new FormData();
   form.append("file", file);
 
-  const url = window.location.origin + "/file";
-  const params = { method: "POST", body: form };
-  fetch(url, params)
-    .then(alert("Profile picture updated!"))
-    .then((window.location.href = "/"))
-    .then((document.getElementById("browse").value = null))
+  fetch("/file", { method: "POST", body: form })
+    .then((cursor) => cursor.text())
+    .then((res) => (window.location.href = "/"))
     .catch((err) => console.error(err));
 }
 
 function deleteFile() {
-  fetch("/file", {
-    method: "DELETE",
-  })
-    .then(async (res) => {
-      if (!res.ok) throw new Error(await res.text());
-    })
-    .then(() => document.location.reload())
-    .catch((err) => {
-      alert(`Error: ${err.message}\nPlease reload the page`);
-    });
+  fetch("/file", { method: "DELETE" })
+    .then((cursor) => cursor.text())
+    .then(() => (window.location.href = "/"))
+    .catch((err) => console.error(err));
 }
 
 function changePseudo() {

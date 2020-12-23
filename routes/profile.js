@@ -1,17 +1,12 @@
-const { Router, json } = require("express");
-const express = require("express");
-const session = require("express-session");
+const { Router } = require("express");
 const { ObjectId } = require("mongodb");
-const fs = require("fs");
-const { profile } = require("console");
 
 const profileRouter = new Router();
-profileRouter.use(express.json());
 
 /**
  * Render the profile page of a user. If there is no params in the request and no user loged, redirect to the login page.
  */
-profileRouter.get("/:id?", (req, res, next) => {
+profileRouter.get("/:id?", (req, res) => {
   if (!(req.params.id || req.session.userID)) {
     req.session.nextPage = "/profile";
     req.session.Error = "You have to log in first";
@@ -41,7 +36,7 @@ profileRouter.get("/:id?", (req, res, next) => {
   }
 });
 
-profileRouter.put("/changepseudo", async (req, res, next) => {
+profileRouter.put("/changepseudo", async (req, res) => {
   let userID = req.session.userID;
 
   if (!userID) {
@@ -62,7 +57,6 @@ profileRouter.put("/changepseudo", async (req, res, next) => {
     )
     .then(() => {
       req.session.userPseudo = newPseudo;
-      console.log("Pseudo Changed");
       res.sendStatus(200);
     })
     .catch((err) => {

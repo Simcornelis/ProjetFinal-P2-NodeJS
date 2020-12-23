@@ -10,6 +10,7 @@
 
     <link rel="stylesheet" href="/global.css">
     <link rel="stylesheet" href="/css/profile.css">
+    <link rel="stylesheet" href="/icons/icomoon.css" />
 
     <script defer src="/js/profile.js"></script>
 
@@ -17,41 +18,47 @@
 </head>
 
 <body>
-    <main class="center-content">
-        <header></header>
+    <header></header>
 
+    <main class="center-content">
         <div>
-            <h1>Profile of {{userPseudo}}</h1>
+            {{#canChange}}<h1 class="overflow">Your profile</h1>{{/canChange}}
+            {{^canChange}}<h1 class="overflow">Profile of {{userPseudo}}</h1>{{/canChange}}
+
+            <div class="oneline">
+                <img src="{{userppic}}" id="ppic" alt="Profile picture">
+
+                {{#canChange}}
+                <div id="actions">
+                    <input hidden type="file" name="file" accept="image/*">
+                    <button id="load" title="Load new picture."><i class="icon">👇</i></button>
+                    <button id="clear" title="Clear picture."><i class="icon">❌</i></button>
+                    <button id="save" title="Save picture." class="hide"><i class="icon">✔</i></button>
+                </div>
+                {{/canChange}}
+            </div>
 
             <div class="oneline">
                 {{#canChange}}
-                <button class="material-icons" id="changeButton" onclick="changePseudo()">create</button>
+                <button class="material-icons" id="changeButton">create</button>
                 {{/canChange}}
-                <h3>Pseudo</h3>
+                <h2>Pseudo</h2>
             </div>
             <input type="text" id="changePseudo" value="{{userPseudo}}" readonly></input>
 
-            <h3>Email address</h3>
-            <input type="text" id="changePseudo" value="{{userEmail}}" readonly></input>
+            <h2>Email address</h2>
+            <input type="text" value="{{userEmail}}" readonly></input>
 
-            <button id="mygames"
-                onclick="window.location.href = '/games?userID_query={{userID}}&userPseudo_query={{userPseudo}}'">My
-                Games</button>
-            <button id="myplaylists"
-                onclick="window.location.href = '/playlists/allplaylists?userID_query={{userID}}&userPseudo_query={{userPseudo}}'">My
-                PlayLists</button>
-
-            {{#canChange}}
-
-            <h6>Change profile picture</h6>
-            <label for="browse">Choose picture</label>
-            <input type="file" name="file" id="browse" accept="image/*" onchange="previewFile()">
-            <button onclick="sendFile()">Save</button>
-            <button onclick="deleteFile()">Delete</button>
-            {{/canChange}}
-            <img src="{{userppic}}" id="ppic" alt="Profile picture">
+            <h2>Creations</h2>
+            <div class="oneline half">
+                <button id="mygames"
+                    onclick="window.location.href = '/games?userID_query={{userID}}&userPseudo_query={{userPseudo}}'">
+                    Games</button>
+                <button id="myplaylists"
+                    onclick="window.location.href = '/playlists/allplaylists?userID_query={{userID}}&userPseudo_query={{userPseudo}}'">
+                    PlayLists</button>
+            </div>
         </div>
-
     </main>
 
     <canvas class="animate"></canvas>

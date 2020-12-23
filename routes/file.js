@@ -1,10 +1,10 @@
-const express = require("express");
+const { Router } = require("express");
 const mongodb = require("mongodb");
 const multer = require("multer");
 const sharp = require("sharp");
 const fs = require("fs");
 
-const fileRouter = new express.Router();
+const fileRouter = new Router();
 
 /**
  * Multer is a middleware to handle files.
@@ -15,7 +15,6 @@ var storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "./ppic/"),
   filename: (req, file, cb) => {
     const rand = Math.ceil(Math.random() * 1000);
-    console.log(file);
     const ext = file.originalname.split(".").reverse()[0];
     cb(null, `${Date.now()}_${rand}.${ext}`);
   },
@@ -39,7 +38,7 @@ fileRouter.post("/", function (req, res, next) {
     .jpeg({ quality: 80 }) // jpeg compression ratio 80%
     .toFile("./ppic/" + output)
     .then(() => {
-      console.log("[pic] " + output + " has been saved."); // TODO : replace Try catch by verify if exist
+      console.log("[FILE] " + output + " has been saved.");
       try {
         fs.unlinkSync(req.file.path); // delete uncompressed version
       } catch (err) {
@@ -55,11 +54,11 @@ fileRouter.post("/", function (req, res, next) {
     });
 });
 
-fileRouter.delete("/", function (req, res, next) {
+fileRouter.delete("/", function (req, res) {
   updatePictureInDBAndFile(null, req.session.userID)
     .then(() => {
       req.session.ppic = null;
-      console.log("Picture deleted");
+      console.log("[FILE] " + req.session.pseudo + "'s ppic deleted.");
       res.sendStatus(200);
     })
     .catch((err) => {
@@ -73,10 +72,9 @@ function updatePictureInDBAndFile(output, userID) {
   usersCollection.findOne({ _id: mongodb.ObjectId(userID) }).then((user) => {
     if (user && user.ppic && !user.ppic.includes("http")) {
       try {
-        // TODO : replace Try catch by verify if exist
         fs.unlinkSync("ppic/" + user.ppic); // delete old ppic
       } catch (err) {
-        console.error(err);
+        console.error(err.message);
       }
     }
   });

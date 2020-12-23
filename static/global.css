@@ -61,14 +61,14 @@ canvas {
 }
 
 #ppic {
-  height: 100%;
-  max-height: 4em;
-  width: auto;
+  height: 4em;
+  width: 4em;
   margin: 5px;
   border-radius: 3px;
   overflow: hidden;
   background: var(--f-transparent-inverted);
   box-shadow: var(--s-short);
+  object-fit: cover;
 }
 
 /* Components */
