@@ -64,5 +64,5 @@
     />
 	</div>
 
-	<button id="save-settings">Save</button>
+	<button id="save-settings"><i class="icon">👌</i> Save</button>
 </div>

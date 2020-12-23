@@ -80,7 +80,7 @@ function changePseudo() {
     changePseudo.placeholder = changePseudo.value;
     changePseudo.value = "";
     changePseudo.readOnly = false;
-    changeButton.innerText = "done";
+    changeButton.innerText = "👌";
   } else {
     let newPseudo = changePseudo.value;
     if (newPseudo !== "") {
@@ -99,6 +99,6 @@ function changePseudo() {
     }
     changePseudo.placeholder = null;
     changePseudo.readOnly = true;
-    changeButton.innerText = "create";
+    changeButton.innerText = "🖊";
   }
 }

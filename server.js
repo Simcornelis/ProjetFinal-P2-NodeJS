@@ -85,13 +85,6 @@ app.use("/games", require("./routes/games.js").gamesRouter);
 app.use("/party", require("./routes/party.js").partyRouter);
 app.use("/playlists", require("./routes/playlists.js").playlistRouter);
 
-// REMOVE renders any html file
-app.get("/test", (req, res, next) => {
-  res.render("party_creating.html", {
-    options: "whatever",
-  });
-});
-
 // handle 404 not found error
 app.use((req, res) => {
   res.status(404).send("404: Page not Found 🤔");

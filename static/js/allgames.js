@@ -33,7 +33,7 @@ function search() {
   else if (searchIcon.innerText === "❌") {
     searchInput.value = "";
     getGames();
-    searchIcon.innerText = "▶";
+    searchIcon.innerText = "🔍";
   } else {
     getGames();
     searchIcon.innerText = "❌";
@@ -66,6 +66,7 @@ window.addEventListener("load", async () => {
   window.onclick = (event) => {
     if (
       !event.target.matches("#filter") &&
+      !event.target.matches("#filter > i") &&
       !event.target.matches(".categories *")
     )
       categoriesMenu.classList.remove("open");
@@ -77,7 +78,7 @@ window.addEventListener("load", async () => {
     if (event.key === "Enter") {
       event.preventDefault();
       search();
-    } else searchIcon.innerText = "▶";
+    } else searchIcon.innerText = "🔍";
   });
 
   searchButton.addEventListener("click", search);

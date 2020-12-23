@@ -30,7 +30,6 @@ function changePlayerTeam(party, socket, newTeam) {
 }
 
 async function updateSettings(party, settings) {
-  console.log(settings); // REMOVE
   Object.assign(party, {
     maxGames: settings.maxGames < 26 ? settings.maxGames * 1 : 200, // extreme max is 200 games
     maxGroups: settings.maxGroups < 11 ? settings.maxGroups * 1 : 25, // extreme max is 25 groups
@@ -43,7 +42,6 @@ async function updateSettings(party, settings) {
     });
   else {
     await db.getPlaylistDB(ObjectId(settings.playlist)).then((playlist) => {
-      // if (!playlist.creatorID) db.removePlaylistDB(party.playlistID);
       party.playlistMaxGames = playlist.gameIDs.length;
       party.playlistID = ObjectId(settings.playlist);
     });

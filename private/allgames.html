@@ -25,7 +25,7 @@
 
 <body>
     <header>
-        <button id="filter"><i class="icon">🗄</i> categories</button>
+        <button id="filter"><i class="icon"></i> filter</button>
         <div class="categories">
             {{#categories}}
             <div class="oneline">
@@ -37,7 +37,7 @@
 
         <div id="searchBar">
             <input type="text" autocomplete="off" placeholder="Search and press Enter...">
-            <button><i class="icon">▶</i></button>
+            <button><i class="icon">🔍</i></button>
         </div>
     </header>
 
@@ -45,7 +45,7 @@
         <div>
             {{#userID_query}} <h1>Games of {{userName}}</h1> {{/userID_query}}
             {{^userID_query}} <h1>All Games</h1> {{/userID_query}}
-            
+
             <div id="game-list">
                 <!-- game-box inserted with allgames.js -->
             </div>

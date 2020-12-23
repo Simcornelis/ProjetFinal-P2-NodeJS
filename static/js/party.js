@@ -14,6 +14,7 @@ window.addEventListener("load", async () => {
   const playerListDiv = document.getElementById("players-list");
   const partySettingsButton = document.getElementById("partySettings");
   const readyButton = document.getElementById("isReady");
+  const readyCount = readyButton.childNodes.item(2);
   const startButton = document.getElementById("start");
   const gameIDH4 = document.getElementById("gameID");
   const authorH4 = document.getElementById("author");
@@ -137,7 +138,7 @@ window.addEventListener("load", async () => {
   function updateReadyPlayers(readyPlayers) {
     ready.splice(0); // empty players array
     readyPlayers.forEach((player) => ready.push(player));
-    readyButton.firstElementChild.textContent = ` (${ready.length}/${players.length})`;
+    readyCount.textContent = ` (${ready.length}/${players.length})`;
   }
 
   function loadPage(html, id, oldPage) {
