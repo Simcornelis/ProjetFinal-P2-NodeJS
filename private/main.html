@@ -37,17 +37,17 @@
       <img id="logo" src="/img/logo.png" alt="Let's Drink">
       <div id="code" class="oneline">
         <h2>Party code</h2>
-        <input type="text" placeholder="Any code...">
+        <input name="codeInput" type="text" placeholder="Any code...">
       </div>
 
       <button id="toparty">Join or create party</button>
 
       <div class="oneline half">
-        <button onclick="window.location.href = '/games/addgame'">New game</button>
-        <button onclick="window.location.href = '/games/allgames'">All games</button>
+        <button name="createGame" onclick="window.location.href = '/games/addgame'">New game</button>
+        <button name="allGames" onclick="window.location.href = '/games/allgames'">All games</button>
       </div>
 
-      <button onclick="window.location.href = '/playlists'">New playlist</button>
+      <button name="createPlaylist" onclick="window.location.href = '/playlists'">New playlist</button>
     </div>
   </main>
 

@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "\"Projet Final Group P\"",
   "main": "server.js",
+  "jest":{
+    "verbose":true
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "start https://localhost:8080 & nodemon server.js",
     "mongod": "mongod --dbpath ./data --bind_ip 127.0.0.1 --quiet",
     "initdb": "node ./utils/initialise_db.js",
@@ -29,8 +32,11 @@
     "express-session": "^1.17.1",
     "hogan": "^1.0.2",
     "https": "^1.0.0",
+    "jest": "^26.6.3",
     "mongodb": "^3.6.3",
     "multer": "^1.4.2",
+    "selenium": "^2.20.0",
+    "selenium-webdriver": "^4.0.0-alpha.8",
     "sharp": "^0.26.3",
     "socket.io": "^3.0.3"
   },

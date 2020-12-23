@@ -27,7 +27,7 @@
 <body>
     <header>
         <div class="dropdown">
-            <button onclick="showCategoriesFilter()" class="dropDownButton">Categories Filter</button>
+            <button name="filterButton" onclick="showCategoriesFilter()" class="dropDownButton">Categories Filter</button>
             <div class="dropdown-content" id="dropDownCategories">
                 <div>
                     <input class="filter_category" type="checkbox" id="category1" name="categories" value="Culture" />
@@ -113,7 +113,7 @@
         {{/userID}}
         <h1>All Games</h1>
         {{/userID_query}}
-        <div class="game-list">
+        <div name="game-list" class="game-list">
             <!-- game-box create through javascript-->
         </div>
     </main>
