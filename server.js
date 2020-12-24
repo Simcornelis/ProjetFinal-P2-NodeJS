@@ -3,6 +3,7 @@ const session = require("express-session");
 const consolidate = require("consolidate");
 const { MongoClient } = require("mongodb");
 const https = require("https");
+const http = require("http");
 const fs = require("fs");
 
 if (process.env.ENV !== "production" && require("dotenv").config().error)
@@ -19,9 +20,16 @@ const credentials = {
   passphrase: process.env.CERT_PASS,
 };
 
-module.exports.server = https
-  .createServer(credentials, app)
-  .listen(process.env.PORT, initServer);
+// HEROKU requires a http server
+if (process.env.ENV === "production") {
+  module.exports.server = http
+    .createServer(app)
+    .listen(process.env.PORT, initServer);
+} else {
+  module.exports.server = https
+    .createServer(credentials, app)
+    .listen(process.env.PORT, initServer);
+}
 
 function initServer() {
   console.log("[SERVER] Web server is running.");
