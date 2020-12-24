@@ -2,11 +2,11 @@ const express = require("express");
 const session = require("express-session");
 const consolidate = require("consolidate");
 const { MongoClient } = require("mongodb");
-const dotenv = require("dotenv");
 const https = require("https");
 const fs = require("fs");
 
-// if (dotenv.config().error) throw new Error("Error while parsing .env file.");
+if (process.env.ENV !== "production" && require("dotenv").config().error)
+  throw new Error("Error while parsing .env file.");
 
 const client = new MongoClient(process.env.DATABASE_URL, {
   useUnifiedTopology: true,
