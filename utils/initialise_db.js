@@ -1,7 +1,7 @@
 const dotenv = require("dotenv");
 const { ObjectId, MongoClient } = require("mongodb");
 
-if (dotenv.config().error) throw new Error("Error while parsing .env file.");
+// if (dotenv.config().error) throw new Error("Error while parsing .env file.");
 
 const client = new MongoClient(process.env.DATABASE_URL, {
   useUnifiedTopology: true,
