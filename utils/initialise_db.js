@@ -3,10 +3,9 @@ const { ObjectId, MongoClient } = require("mongodb");
 
 if (dotenv.config().error) throw new Error("Error while parsing .env file.");
 
-const client = new MongoClient(
-  `mongodb://${process.env.DATABASE_HOSTNAME}:${process.env.DATABASE_PORT}`,
-  { useUnifiedTopology: true }
-);
+const client = new MongoClient(process.env.DATABASE_URL, {
+  useUnifiedTopology: true,
+});
 
 client.connect(async (err, client) => {
   if (err) {

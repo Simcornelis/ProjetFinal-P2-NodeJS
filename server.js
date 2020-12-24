@@ -1,15 +1,14 @@
 const express = require("express");
 const session = require("express-session");
 const consolidate = require("consolidate");
-const mongodb = require("mongodb");
+const { MongoClient } = require("mongodb");
 const dotenv = require("dotenv");
 const https = require("https");
 const fs = require("fs");
 
 if (dotenv.config().error) throw new Error("Error while parsing .env file.");
 
-const MONGO_URL = `mongodb://${process.env.DATABASE_HOSTNAME}:${process.env.DATABASE_PORT}`;
-const MongoClient = new mongodb.MongoClient(MONGO_URL, {
+const client = new MongoClient(process.env.DATABASE_URL, {
   useUnifiedTopology: true,
 });
 
@@ -22,11 +21,11 @@ const credentials = {
 
 module.exports.server = https
   .createServer(credentials, app)
-  .listen(process.env.PORT, process.env.HOST, initServer);
+  .listen(process.env.PORT, initServer);
 
 function initServer() {
   console.log("[SERVER] Web server is running.");
-  MongoClient.connect(async (err, client) => {
+  client.connect(async (err, client) => {
     if (err) {
       console.error(`[ERROR] Can't connect to database.\n${err}`);
       return process.exit(-1);
