@@ -93,21 +93,15 @@ function getSearchedGames(searchQuery, userIDQuery) {
   const { gamesCollection } = require("../server.js");
   if (userIDQuery) {
     return gamesCollection
-      .find(
-        {
-          creatorID: userIDQuery,
-          $text: { $search: searchQuery, $language: "en" },
-        },
-        { score: { $meta: "textScore" } }
-      )
+      .find({
+        creatorID: userIDQuery,
+        $text: { $search: searchQuery, $language: "en" },
+      })
       .sort({ score: { $meta: "textScore" } })
       .toArray();
   } else {
     return gamesCollection
-      .find(
-        { $text: { $search: searchQuery, $language: "en" } },
-        { score: { $meta: "textScore" } }
-      )
+      .find({ $text: { $search: searchQuery, $language: "en" } })
       .sort({ score: { $meta: "textScore" } })
       .toArray();
   }
