@@ -97,11 +97,13 @@ function getSearchedGames(searchQuery, userIDQuery) {
         creatorID: userIDQuery,
         $text: { $search: searchQuery, $language: "en" },
       })
+      .project({ score: { $meta: "textScore" } })
       .sort({ score: { $meta: "textScore" } })
       .toArray();
   } else {
     return gamesCollection
       .find({ $text: { $search: searchQuery, $language: "en" } })
+      .project({ score: { $meta: "textScore" } })
       .sort({ score: { $meta: "textScore" } })
       .toArray();
   }
@@ -134,6 +136,7 @@ function getFilteredSearchedGames(filterQuery, searchQuery, userIDQuery) {
         categories: { $all: selectedCategories },
         $text: { $search: searchQuery, $language: "en" },
       })
+      .project({ score: { $meta: "textScore" } })
       .sort({ score: { $meta: "textScore" } })
       .toArray();
   } else {
@@ -142,6 +145,7 @@ function getFilteredSearchedGames(filterQuery, searchQuery, userIDQuery) {
         categories: { $all: selectedCategories },
         $text: { $search: searchQuery, $language: "en" },
       })
+      .project({ score: { $meta: "textScore" } })
       .sort({ score: { $meta: "textScore" } })
       .toArray();
   }
